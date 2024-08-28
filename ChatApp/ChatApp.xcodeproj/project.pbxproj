@@ -106,6 +106,40 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4C7FADA32C7F0CB300C0C6F5 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				4CE181BB2C787754000F882A /* ChatApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		4C7FADA42C7F0CBC00C0C6F5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4CE181C32C787755000F882A /* Preview Content */,
+				4CE181C12C787755000F882A /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4C7FADA52C7F0CC900C0C6F5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4CE181BF2C787754000F882A /* Item.swift */,
+				4CE181E72C788289000F882A /* AppModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4C7FADA62C7F0CD100C0C6F5 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				4CE181BD2C787754000F882A /* RootView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		4CE181AF2C787754000F882A = {
 			isa = PBXGroup;
 			children = (
@@ -131,12 +165,10 @@
 		4CE181BA2C787754000F882A /* ChatApp */ = {
 			isa = PBXGroup;
 			children = (
-				4CE181BB2C787754000F882A /* ChatApp.swift */,
-				4CE181BD2C787754000F882A /* RootView.swift */,
-				4CE181BF2C787754000F882A /* Item.swift */,
-				4CE181C12C787755000F882A /* Assets.xcassets */,
-				4CE181C32C787755000F882A /* Preview Content */,
-				4CE181E72C788289000F882A /* AppModel.swift */,
+				4C7FADA62C7F0CD100C0C6F5 /* UI */,
+				4C7FADA52C7F0CC900C0C6F5 /* Model */,
+				4C7FADA42C7F0CBC00C0C6F5 /* Resources */,
+				4C7FADA32C7F0CB300C0C6F5 /* App */,
 			);
 			path = ChatApp;
 			sourceTree = "<group>";
@@ -590,7 +622,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ChatApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"ChatApp/Resources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -624,7 +656,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ChatApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"ChatApp/Resources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
