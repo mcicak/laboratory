@@ -12,7 +12,7 @@ import SwiftData
 @MainActor
 class AppModel: ObservableObject {
     
-    @Published var selectedItem: (any Identifiable)?
+    @Published var selectedItem: (any Entity)?
     @Published var selectedTab: MainTab = .chats
     
     @Published var mainPath: [AnyHashable] = []
@@ -22,19 +22,4 @@ class AppModel: ObservableObject {
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
     }
-}
-
-protocol Entity: Identifiable, Hashable {
-    
-}
-
-struct Chat: Entity {
-    let id = UUID()
-    let name: String
-}
-
-struct Contact: Entity {
-    let id = UUID()
-    let name: String
-    let phoneNumber: String
 }
