@@ -234,10 +234,10 @@
 		4CE181BA2C787754000F882A /* ChatApp */ = {
 			isa = PBXGroup;
 			children = (
-				4C7FADA62C7F0CD100C0C6F5 /* UI */,
+				4C7FADA32C7F0CB300C0C6F5 /* App */,
 				4C7FADA52C7F0CC900C0C6F5 /* Model */,
 				4C7FADA42C7F0CBC00C0C6F5 /* Resources */,
-				4C7FADA32C7F0CB300C0C6F5 /* App */,
+				4C7FADA62C7F0CD100C0C6F5 /* UI */,
 			);
 			path = ChatApp;
 			sourceTree = "<group>";

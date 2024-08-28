@@ -41,8 +41,6 @@ struct RootView: View {
     }
 }
 
-
-
 #Preview {
     RootView()
         .modelContainer(for: Item.self, inMemory: true)
