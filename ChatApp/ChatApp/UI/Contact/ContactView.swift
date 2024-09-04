@@ -8,6 +8,19 @@
 import Foundation
 import SwiftUI
 
+struct ContactDetailRootView: View {
+    
+    @EnvironmentObject var appModel: AppModel
+    
+    var body: some View {
+        if let contact = appModel.selectedItem as? Contact {
+            ContactDetailView(contact: contact)
+        }else{
+            Text("No selected contact")
+        }
+    }
+}
+
 struct ContactDetailView: View {
     let contact: Contact
     

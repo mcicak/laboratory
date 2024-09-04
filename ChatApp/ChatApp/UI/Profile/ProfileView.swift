@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct MyProfileView: View {
+struct ProfileView: View {
     var body: some View {
         VStack {
             Text("My Profile")

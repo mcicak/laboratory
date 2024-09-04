@@ -31,11 +31,14 @@ struct SplitView: View {
                     }
                     .tag(MainTab.contacts)
 
-                MyProfileView()
+                ProfileView()
                     .tabItem {
                         Label("My Profile", systemImage: "person.crop.circle")
                     }
                     .tag(MainTab.profile)
+            }
+            .toolbar {
+                MyTabView.mainTabsToolbar(appModel)
             }
         } detail: {
             if let selectedChat = appModel.selectedItem as? Chat {

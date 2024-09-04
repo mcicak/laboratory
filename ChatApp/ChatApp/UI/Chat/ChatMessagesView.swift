@@ -9,7 +9,21 @@ import Foundation
 import SwiftUI
 import ExyteChat
 
+struct ChatMessagesRootView: View {
+    
+    @EnvironmentObject var appModel: AppModel
+    
+    var body: some View {
+        if let chat = appModel.selectedItem as? Chat {
+            ChatMessagesView(chat: chat)
+        } else {
+            Text("No selected chat")
+        }
+    }
+}
+
 struct ChatMessagesView: View {
+    
     let chat: Chat
     
     var body: some View {
