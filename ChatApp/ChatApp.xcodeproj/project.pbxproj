@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0410C003BCC8ADA5398D8AA7 /* Pods_ChatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199EA32FF1EF8D3DFB40E760 /* Pods_ChatApp.framework */; };
-		4C584DE02C89955B008275B3 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584DDF2C89955B008275B3 /* DataProvider.swift */; };
+		4C584DE02C89955B008275B3 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584DDF2C89955B008275B3 /* ApiService.swift */; };
 		4C584DE22C89D347008275B3 /* Dto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584DE12C89D347008275B3 /* Dto.swift */; };
 		4C7FADA82C7F0FB200C0C6F5 /* SplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FADA72C7F0FB200C0C6F5 /* SplitView.swift */; };
 		4C7FADAA2C7F0FD900C0C6F5 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FADA92C7F0FD900C0C6F5 /* TabView.swift */; };
@@ -54,7 +54,7 @@
 		199EA32FF1EF8D3DFB40E760 /* Pods_ChatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E246C3902F3B4CABC19D9A8 /* Pods-ChatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp.debug.xcconfig"; path = "Target Support Files/Pods-ChatApp/Pods-ChatApp.debug.xcconfig"; sourceTree = "<group>"; };
 		47972A59153D1F1B710BB0EC /* Pods-ChatAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAppTests.debug.xcconfig"; path = "Target Support Files/Pods-ChatAppTests/Pods-ChatAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		4C584DDF2C89955B008275B3 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
+		4C584DDF2C89955B008275B3 /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		4C584DE12C89D347008275B3 /* Dto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dto.swift; sourceTree = "<group>"; };
 		4C7FADA72C7F0FB200C0C6F5 /* SplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitView.swift; sourceTree = "<group>"; };
 		4C7FADA92C7F0FD900C0C6F5 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
@@ -138,7 +138,7 @@
 		4C584DDE2C899553008275B3 /* DataProvider */ = {
 			isa = PBXGroup;
 			children = (
-				4C584DDF2C89955B008275B3 /* DataProvider.swift */,
+				4C584DDF2C89955B008275B3 /* ApiService.swift */,
 				4C584DE12C89D347008275B3 /* Dto.swift */,
 			);
 			path = DataProvider;
@@ -570,7 +570,7 @@
 				4C7FADB42C7F106E00C0C6F5 /* ContactsView.swift in Sources */,
 				4C7FADB02C7F103400C0C6F5 /* ProfileView.swift in Sources */,
 				4CE181E82C788289000F882A /* AppModel.swift in Sources */,
-				4C584DE02C89955B008275B3 /* DataProvider.swift in Sources */,
+				4C584DE02C89955B008275B3 /* ApiService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

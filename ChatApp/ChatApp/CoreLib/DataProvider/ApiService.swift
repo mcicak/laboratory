@@ -28,7 +28,7 @@ class ApiServiceMock: ApiService {
     
     func login(username: String, password: String) async throws -> LoginResult {
         try await withCheckedThrowingContinuation { continuation in
-            Thread.sleep(forTimeInterval: 2)
+            Thread.sleep(forTimeInterval: 1)
             continuation.resume(returning: LoginResult(success: true))
         }
     }

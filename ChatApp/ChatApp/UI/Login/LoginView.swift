@@ -8,6 +8,19 @@
 import Foundation
 import SwiftUI
 
+struct LoginRootView: View {
+    
+    @Environment(AppModel.self) private var appModel
+    
+    var body: some View {
+        if let _ = appModel.context.user {
+            Text("User logged in")
+        } else {
+            LoginView()
+        }
+    }
+}
+
 struct LoginView: View {
     
     @State private var username: String = ""
@@ -92,9 +105,30 @@ struct LoginView: View {
                 if response.success {
                     DispatchQueue.main.async {
                         let user = AppUser(username: username, password: password)
+                        
+                        let chat1 = Chat(name: "C1")
+                        let chat2 = Chat(name: "C2")
+                        
+                        let contact1 = Contact(name: "Ali Baba 1", phoneNumber: "+381637364533")
+                        let contact2 = Contact(name: "Ali Baba 2", phoneNumber: "+381637364533")
+                        
+                        modelContext.insert(chat1)
+                        modelContext.insert(chat2)
+                        modelContext.insert(contact1)
+                        modelContext.insert(contact2)
+                        
+                        do{
+                            try modelContext.save()
+                            appModel.chats = [chat1, chat2]
+                            appModel.contacts = [contact1, contact2]
+                        }catch{
+                            print("Error: \(error.localizedDescription)")
+                        }
+                        
                         modelContext.insert(user)
                         try? modelContext.save()
                         appModel.context.user = user
+                        print("Login completed")
                     }
                 }
             } catch {

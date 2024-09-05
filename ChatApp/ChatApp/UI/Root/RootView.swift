@@ -64,7 +64,7 @@ struct MacGridLayout: View {
     
     // Array of views, each corresponding to a screen
     private let views: [AnyView] = [
-        AnyView(LoginView().frame(width: 375, height: 667)),
+        AnyView(LoginRootView().frame(width: 375, height: 667)),
         AnyView(MyTabView().frame(width: 375, height: 667)),
         AnyView(ChatsView().frame(width: 375, height: 667)),
         AnyView(ChatMessagesRootView().frame(width: 375, height: 667)),
