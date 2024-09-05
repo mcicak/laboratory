@@ -7,6 +7,7 @@ target 'ChatApp' do
 
   # Pods for ChatApp
   pod 'ExyteChat'
+  pod 'ActivityIndicatorView'
 
   target 'ChatAppTests' do
     inherit! :search_paths

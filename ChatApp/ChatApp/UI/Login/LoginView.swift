@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import ActivityIndicatorView
 
 struct LoginRootView: View {
     
@@ -25,6 +26,8 @@ struct LoginView: View {
     
     @State private var username: String = ""
     @State private var password: String = ""
+    @State private var loginInProgress = false
+
     @Environment(\.apiService) var api
     @Environment(AppModel.self) private var appModel
     @Environment(\.modelContext) private var modelContext
@@ -40,8 +43,8 @@ struct LoginView: View {
         case password
     }
     
-    var body: some View {
-        VStack {
+    fileprivate func loginForm() -> some View {
+        return VStack {
             Spacer()
             
             // App logo (system image)
@@ -56,6 +59,7 @@ struct LoginView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal, 40)
                 .focused($focusedField, equals: .username)
+                .autocapitalization(.none)
                 .submitLabel(.next)
                 .onSubmit {
                     focusedField = .password
@@ -66,6 +70,7 @@ struct LoginView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal, 40)
                 .padding(.top, 20)
+                .autocapitalization(.none)
                 .focused($focusedField, equals: .password)
                 .submitLabel(.go)
                 .onSubmit {
@@ -83,7 +88,7 @@ struct LoginView: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }
-            .disabled(!canLogin)
+            .disabled(!canLogin || loginInProgress)
             .opacity(canLogin ? 1.0 : 0.5)
             .frame(height: 50)
             .padding(.horizontal, 40)
@@ -97,7 +102,19 @@ struct LoginView: View {
         }
     }
     
+    var body: some View {
+        ZStack {
+            loginForm()
+            
+            if loginInProgress {
+                ActivityIndicatorView(isVisible: $loginInProgress, type: .gradient([.white, .blue]))
+                    .frame(width: 50, height: 50)
+            }
+        }
+    }
+    
     private func hideKeyboardAndLogin() {
+        loginInProgress = true
         hideKeyboard()
         Task {
             do {
@@ -128,11 +145,13 @@ struct LoginView: View {
                         modelContext.insert(user)
                         try? modelContext.save()
                         appModel.context.user = user
+                        loginInProgress = false
                         print("Login completed")
                     }
                 }
             } catch {
                 print("Login error: \(error.localizedDescription)")
+                loginInProgress = false
             }
         }
     }
