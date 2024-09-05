@@ -10,11 +10,12 @@ import SwiftUI
 
 struct MyTabView: View {
     
-    @EnvironmentObject var appModel: AppModel
+    @Environment(AppModel.self) private var appModel
+    @EnvironmentObject var uiModel: UIModel
     
-    static func mainTabsToolbar(_ appModel: AppModel) -> ToolbarItemGroup<TupleView<(Button<Label<Text, Image>>?, Button<Label<Text, Image>>?)>> {
+    static func mainTabsToolbar(_ uiModel: UIModel) -> ToolbarItemGroup<TupleView<(Button<Label<Text, Image>>?, Button<Label<Text, Image>>?)>> {
         return ToolbarItemGroup {
-            if appModel.selectedTab == .chats {
+            if uiModel.selectedTab == .chats {
                 Button {
                     // TODO: show new chat dialog
                 } label: {
@@ -22,7 +23,7 @@ struct MyTabView: View {
                 }
             }
             
-            if appModel.selectedTab == .contacts {
+            if uiModel.selectedTab == .contacts {
                 Button {
                     // TODO: show new chat dialog
                 } label: {
@@ -33,8 +34,8 @@ struct MyTabView: View {
     }
     
     var body: some View {
-        NavigationStack(path: $appModel.mainPath) {
-            TabView(selection: $appModel.selectedTab) {
+        NavigationStack(path: $uiModel.mainPath) {
+            TabView(selection: $uiModel.selectedTab) {
                 ChatsView()
                     .tabItem {
                         Label("Chats", systemImage: "message")
@@ -53,16 +54,15 @@ struct MyTabView: View {
                     }
                     .tag(MainTab.profile)
             }
-            .navigationTitle(appModel.selectedTab.title)
+            .navigationTitle(uiModel.selectedTab.title)
             .toolbar {
-                MyTabView.mainTabsToolbar(appModel)
+                MyTabView.mainTabsToolbar(uiModel)
             }
             .navigationDestination(for: AnyHashable.self) { entity in
                 if let chat = entity as? Chat {
                     ChatMessagesView(chat: chat)
                 } else if let contact = entity as? Contact {
                     ContactDetailView(contact: contact)
-                        .animation(nil)
                 } else {
                     Text("Unknown item")
                 }

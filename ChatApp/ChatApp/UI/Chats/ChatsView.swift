@@ -10,7 +10,8 @@ import SwiftUI
 
 struct ChatsView: View {
 
-    @EnvironmentObject var appModel: AppModel
+    @Environment(AppModel.self) private var appModel
+    @EnvironmentObject var uiModel: UIModel
         
     var body: some View {
         if appModel.chats.isEmpty {
@@ -19,7 +20,7 @@ struct ChatsView: View {
             List(appModel.chats) { chat in
                 Button(action: {
                     appModel.selectedItem = chat
-                    appModel.mainPath = [chat]
+                    uiModel.mainPath = [chat]
                 }) {
                     Text(chat.name)
                 }

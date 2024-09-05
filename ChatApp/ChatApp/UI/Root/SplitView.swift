@@ -10,13 +10,13 @@ import SwiftUI
 
 struct SplitView: View {
     
-    @EnvironmentObject var appModel: AppModel
+    @Environment(AppModel.self) private var appModel
+    @EnvironmentObject var uiModel: UIModel
     @State var cv: NavigationSplitViewVisibility = .doubleColumn
     
     var body: some View {
         NavigationSplitView(columnVisibility: $cv) {
-            TabView(selection: $appModel.selectedTab) {
-
+            TabView(selection: $uiModel.selectedTab) {
                 Text("") // needed when Tab is in SplitView
 
                 ChatsView()
@@ -37,8 +37,9 @@ struct SplitView: View {
                     }
                     .tag(MainTab.profile)
             }
+            .navigationTitle(uiModel.selectedTab.title)
             .toolbar {
-                MyTabView.mainTabsToolbar(appModel)
+                MyTabView.mainTabsToolbar(uiModel)
             }
         } detail: {
             if let selectedChat = appModel.selectedItem as? Chat {

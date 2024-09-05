@@ -11,7 +11,7 @@ import ExyteChat
 
 struct ChatMessagesRootView: View {
     
-    @EnvironmentObject var appModel: AppModel
+    @Environment(AppModel.self) private var appModel
     
     var body: some View {
         if let chat = appModel.selectedItem as? Chat {

@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+@Observable
+class SelectedTab {
+    var selection: MainTab = .chats
+}
+
 enum MainTab {
     case chats
     case contacts
@@ -28,7 +33,9 @@ struct RootView: View {
     
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @EnvironmentObject var appModel: AppModel
+    @Environment(AppModel.self) private var appModel
+    @EnvironmentObject var uiModel: UIModel
+
     
     var body: some View {
         Group {
@@ -54,7 +61,7 @@ struct RootView: View {
 }
 
 struct MacGridLayout: View {
-
+    
     // Array of views, each corresponding to a screen
     private let views: [AnyView] = [
         AnyView(LoginView().frame(width: 375, height: 667)),

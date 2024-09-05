@@ -11,7 +11,8 @@ import SwiftData
 @main
 struct ChatApp: App {
     
-    @StateObject private var appModel: AppModel
+    @State private var appModel = AppModel()
+    @StateObject private var uiModel = UIModel()
     
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -27,16 +28,56 @@ struct ChatApp: App {
         }
     }()
     
-    init() {
-        let modelContext = sharedModelContainer.mainContext
-        _appModel = StateObject(wrappedValue: AppModel(modelContext: modelContext))
-    }
-
     var body: some Scene {
         WindowGroup {
-            RootView()
+            RootView().task {
+                printAppDirectory()
+                
+                let chatsFetch = FetchDescriptor<Chat>()
+                let contactsFetch = FetchDescriptor<Contact>()
+                
+                do {
+                    let chats = try sharedModelContainer.mainContext.fetch(chatsFetch)
+                    let contacts = try sharedModelContainer.mainContext.fetch(contactsFetch)
+                    
+                    if !chats.isEmpty {
+                        appModel.chats = chats
+                        appModel.contacts = contacts
+                        return
+                    }
+                } catch {
+                    print("Error fetching chats: \(error)")
+                }
+                
+                let chat1 = Chat(name: "C1")
+                let chat2 = Chat(name: "C2")
+                
+                let contact1 = Contact(name: "Ali Baba 1", phoneNumber: "+381637364533")
+                let contact2 = Contact(name: "Ali Baba 2", phoneNumber: "+381637364533")
+                
+                sharedModelContainer.mainContext.insert(chat1)
+                sharedModelContainer.mainContext.insert(chat2)
+                sharedModelContainer.mainContext.insert(contact1)
+                sharedModelContainer.mainContext.insert(contact2)
+                
+                do{
+                    try sharedModelContainer.mainContext.save()
+                    appModel.chats = [chat1, chat2]
+                    appModel.contacts = [contact1, contact2]
+                }catch{
+                    print("Error: \(error.localizedDescription)")
+                }
+            }
         }
         .modelContainer(sharedModelContainer)
-        .environmentObject(appModel)
+        .environmentObject(uiModel)
+        .environment(appModel)
+    }
+    
+    private func printAppDirectory() {
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        if let documentsDirectory = paths.first {
+            print(documentsDirectory)
+        }
     }
 }

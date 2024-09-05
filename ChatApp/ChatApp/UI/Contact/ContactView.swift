@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ContactDetailRootView: View {
     
-    @EnvironmentObject var appModel: AppModel
+    @Environment(AppModel.self) private var appModel
     
     var body: some View {
         if let contact = appModel.selectedItem as? Contact {

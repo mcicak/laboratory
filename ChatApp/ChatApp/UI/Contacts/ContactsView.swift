@@ -10,7 +10,8 @@ import SwiftUI
 
 struct ContactsView: View {
     
-    @EnvironmentObject var appModel: AppModel
+    @Environment(AppModel.self) private var appModel
+    @EnvironmentObject var uiModel: UIModel
     
     var body: some View {
         if appModel.contacts.isEmpty {
@@ -20,7 +21,7 @@ struct ContactsView: View {
                 Button(action: {
                     //selectedContact = contact
                     appModel.selectedItem = contact
-                    appModel.mainPath = [contact]
+                    uiModel.mainPath = [contact]
                 }) {
                     Text(contact.name)
                 }
@@ -31,7 +32,7 @@ struct ContactsView: View {
 
 struct ContactView: View {
     
-    @EnvironmentObject var appModel: AppModel
+    @Environment(AppModel.self) private var appModel
     
     var body: some View {
         if let contact = appModel.selectedItem as? Contact {
