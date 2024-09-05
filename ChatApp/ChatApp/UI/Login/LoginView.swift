@@ -12,6 +12,9 @@ struct LoginView: View {
     
     @State private var username: String = ""
     @State private var password: String = ""
+    @Environment(\.apiService) var api
+    @Environment(AppModel.self) private var appModel
+    @Environment(\.modelContext) private var modelContext
     
     @FocusState private var focusedField: Field? // Manage focus between text fields
     
@@ -53,14 +56,12 @@ struct LoginView: View {
                 .focused($focusedField, equals: .password)
                 .submitLabel(.go)
                 .onSubmit {
-                    hideKeyboard()
-                    print("Logging in")
+                    hideKeyboardAndLogin()
                 }
             
             // Login Button
             Button(action: {
-                hideKeyboard()
-                print("Logging in...")
+                hideKeyboardAndLogin()
             }) {
                 Text("Login")
                     .frame(maxWidth: .infinity)
@@ -80,6 +81,25 @@ struct LoginView: View {
         .contentShape(Rectangle()) // Detect taps on empty areas
         .onTapGesture {
             hideKeyboard() // Dismiss the keyboard when the background is tapped
+        }
+    }
+    
+    private func hideKeyboardAndLogin() {
+        hideKeyboard()
+        Task {
+            do {
+                let response = try await api.login(username:username, password:password)
+                if response.success {
+                    DispatchQueue.main.async {
+                        let user = AppUser(username: username, password: password)
+                        modelContext.insert(user)
+                        try? modelContext.save()
+                        appModel.context.user = user
+                    }
+                }
+            } catch {
+                print("Login error: \(error.localizedDescription)")
+            }
         }
     }
     
