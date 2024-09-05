@@ -26,18 +26,5 @@ class AppModel {
 @Observable
 class AppContext {
     
-    //var user: AppUser?
-    var user: AppUser? = AppUser(username: "u1", password: "p1")
-}
-
-@Observable
-class AppUser {
-    
-    let username: String
-    let password: String
-    
-    init(username: String, password: String) {
-        self.username = username
-        self.password = password
-    }
+    var user: AppUser?
 }

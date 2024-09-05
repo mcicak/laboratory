@@ -31,3 +31,15 @@ final class Contact: Entity {
         self.phoneNumber = phoneNumber
     }
 }
+
+@Model
+final class AppUser: Entity {
+    let id = UUID()
+    let username: String
+    let password: String
+    
+    init(username: String, password: String) {
+        self.username = username
+        self.password = password
+    }
+}

@@ -18,6 +18,7 @@ struct ChatApp: App {
         let schema = Schema([
             Contact.self,
             Chat.self,
+            AppUser.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -33,14 +34,17 @@ struct ChatApp: App {
             RootView().task {
                 printAppDirectory()
                 
+                let userFetch = FetchDescriptor<AppUser>()
                 let chatsFetch = FetchDescriptor<Chat>()
                 let contactsFetch = FetchDescriptor<Contact>()
                 
                 do {
+                    let users = try sharedModelContainer.mainContext.fetch(userFetch)
                     let chats = try sharedModelContainer.mainContext.fetch(chatsFetch)
                     let contacts = try sharedModelContainer.mainContext.fetch(contactsFetch)
                     
-                    if !chats.isEmpty {
+                    if let user = users.first {
+                        appModel.context.user = user
                         appModel.chats = chats
                         appModel.contacts = contacts
                         return
