@@ -39,14 +39,18 @@ struct ProfileView: View {
     }
     
     private func logout() {
-        appModel.reset()
-        uiModel.reset()
-        do {
-            try modelContext.delete(model: AppUser.self)
-            try modelContext.delete(model: Chat.self)
-            try modelContext.delete(model: Contact.self)
-        } catch {
-            print("Failed to delete entities: \(error.localizedDescription)")
+        withAnimation {
+            appModel.context.user = nil
+            do {
+                try modelContext.delete(model: AppUser.self)
+                try modelContext.delete(model: Chat.self)
+                try modelContext.delete(model: Contact.self)
+            } catch {
+                print("Failed to delete entities: \(error.localizedDescription)")
+            }
+        }completion: {
+            appModel.reset()
+            uiModel.reset()
         }
     }
 }

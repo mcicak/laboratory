@@ -144,7 +144,9 @@ struct LoginView: View {
                         
                         modelContext.insert(user)
                         try? modelContext.save()
-                        appModel.context.user = user
+                        withAnimation {
+                            appModel.context.user = user
+                        }
                         loginInProgress = false
                         print("Login completed")
                     }

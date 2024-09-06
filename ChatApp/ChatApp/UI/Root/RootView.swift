@@ -45,11 +45,14 @@ struct RootView: View {
                 if let _ = appModel.context.user {
                     if horizontalSizeClass == .regular {
                         SplitView()
+                            .transition(.opacity)
                     } else {
                         MyTabView()
+                            .transition(.opacity)
                     }
                 } else {
                     LoginView()
+                        .transition(.opacity)
                 }
             }
         }
