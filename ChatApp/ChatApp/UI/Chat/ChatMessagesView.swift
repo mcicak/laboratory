@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import ExyteChat
+import SwiftData
 
 struct ChatMessagesRootView: View {
     
@@ -25,21 +26,37 @@ struct ChatMessagesRootView: View {
 struct ChatMessagesView: View {
     
     let chat: Chat
+    @Environment(AppModel.self) private var appModel
+    @Environment(\.apiService) private var api
+    @Environment(\.modelContext) private var modelContext
+    
+    var interactor: ChatInteractor {
+        ChatInteractor(chat: chat, appModel: appModel, api: api, moc: modelContext)
+    }
     
     var body: some View {
         let user1 = User(id: "1", name: "John Doe", avatarURL: nil, isCurrentUser: true)
-        let user2 = User(id: "2", name: "Alexander McWallace", avatarURL: nil, isCurrentUser: false)
         
-        let messages = [
-            Message(id: "1", user: user1, text: "Hello!"),
-            Message(id: "2", user: user2, text: "Hey man, 'sup"),
-            Message(id: "3", user: user1, text: "Nadda"),
-            Message(id: "4", user: user1, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
-        ]
+        let messages = appModel.messages.map {
+            Message(id: $0.id.uuidString, user: user1, status: $0.exyteStatus, text: $0.text)
+        }
         
         ChatView(messages: messages, didSendMessage: { draft in
-            print("Sending message: \(draft.text)")
+            interactor.send(draft: draft)
         })
         .navigationTitle(chat.name)
+    }
+}
+
+extension DBMessage {
+    
+    var exyteStatus: Message.Status {
+        switch status {
+        case .pending: return .sending
+        case .sending: return .sending
+        case .sent: return .sent
+        case .read: return .read
+        case .error: return .error(DraftMessage(text: text, medias: [], recording: nil, replyMessage: nil, createdAt: Date()))
+        }
     }
 }

@@ -10,3 +10,7 @@ import Foundation
 struct LoginResult {
     let success: Bool
 }
+
+struct SendMessageResult {
+    let id: String
+}

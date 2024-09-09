@@ -26,6 +26,7 @@ class AppModel {
     var chats = [Chat]()
     var contacts = [Contact]()    
     var selectedItem: (any Entity)?
+    var messages = [DBMessage]()
     
     func reset() {
         chats.removeAll()

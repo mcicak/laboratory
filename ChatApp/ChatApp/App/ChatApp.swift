@@ -18,7 +18,8 @@ struct ChatApp: App {
         let schema = Schema([
             Contact.self,
             Chat.self,
-            AppUser.self
+            AppUser.self,
+            DBMessage.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

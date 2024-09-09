@@ -33,6 +33,36 @@ final class Contact: Entity {
 }
 
 @Model
+final class DBMessage: Entity {
+    
+    enum Status: Int32 {
+        case pending
+        case sending
+        case sent
+        case read
+        case error
+    }
+        
+    let id: UUID = UUID()
+    var serverId: String?
+    var text: String
+    var chat: String
+    var rawStatus: Int32
+    
+    var status: Status {
+        get { Status(rawValue: rawStatus) ?? .pending }
+        set { rawStatus = newValue.rawValue }
+    }
+    
+    init(serverId: String? = nil, text: String, chat: String, rawStatus: Int32) {
+        self.serverId = serverId
+        self.text = text
+        self.chat = chat
+        self.rawStatus = rawStatus
+    }
+}
+
+@Model
 final class AppUser: Entity {
     let id = UUID()
     let username: String
