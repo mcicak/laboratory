@@ -13,7 +13,7 @@ enum SymbolHandle: CaseIterable {
 }
 
 protocol GenericSelectionHandler {
-    func paintSelectionHandles(context: GraphicsContext, selection: SelectionModel, transform: CGAffineTransform)
+    func paintSelectionHandles(context: GraphicsContext, selection: Set<Symbol>, transform: CGAffineTransform)
     func paintSelectionHandle(context: GraphicsContext, position: CGPoint, transform: CGAffineTransform)
     func getHandlePoint(topLeft: CGPoint, size: CGSize, handlePosition: SymbolHandle) -> CGPoint
     func isPointInHandle(symbol: Symbol, point: CGPoint, handle: SymbolHandle, scale: CGFloat) -> Bool
@@ -22,8 +22,8 @@ protocol GenericSelectionHandler {
 
 class SelectionHandleHandler: GenericSelectionHandler {
     
-    func paintSelectionHandles(context: GraphicsContext, selection: SelectionModel, transform: CGAffineTransform) {
-        for symbol in selection.elements {
+    func paintSelectionHandles(context: GraphicsContext, selection: Set<Symbol>, transform: CGAffineTransform) {
+        for symbol in selection {
             SymbolHandle.allCases
                 .filter { $0 != .none }
                 .forEach { symbolHandler in

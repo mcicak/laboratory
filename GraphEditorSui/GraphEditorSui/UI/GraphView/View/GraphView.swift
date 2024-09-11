@@ -8,20 +8,57 @@
 import Foundation
 import SwiftUI
 
+struct LasoSelectionView: View {
+    
+    let transform: CGAffineTransform
+    let rect: CGRect
+    
+    var body: some View {
+        Canvas { context, size in
+            print("LASO REDRAW")
+            
+            //context.transform = transform
+            let transformedRect = rect.applying(transform)
+            
+            // Create a path for the rectangle (adjusted for the transform)
+            let path = Path { p in
+                p.addRect(transformedRect)
+            }
+            
+            // Define a dashed stroke style
+            let dashPattern: [CGFloat] = [5, 3] // dash length, gap length
+            
+            // Set the stroke style with the dash pattern
+            let strokeStyle = StrokeStyle(
+                lineWidth: 2,
+                dash: dashPattern,
+                dashPhase: 0
+            )
+            
+            // Draw the dashed rectangle
+            context.stroke(path, with: .color(.blue), style: strokeStyle)
+        }
+    }
+}
+
 struct GraphView: View {
     
-    @Binding var viewModel: GraphViewModel
+    let symbols: [Symbol]
+    let selection: Set<Symbol>
+    let transform: CGAffineTransform
+    let stateMachine: GraphStateMachine
     let selectionHandler = SelectionHandleHandler()
-    @Bindable var stateMachine: GraphStateMachine
     
     var body: some View {
         Canvas { context, size in
             
+            print("GRAPH REDRAW")
+            
             // either set transform on entire drawing context,
             // or use it when drawing elements to calculate proper positions
-            context.transform = viewModel.transform
+            context.transform = transform
             
-            for symbol in viewModel.symbols {
+            for symbol in symbols {
                 let rect = CGRect(origin: symbol.position, size: symbol.size)
                 
                 switch symbol.type {
@@ -35,31 +72,18 @@ struct GraphView: View {
             }
             
             selectionHandler.paintSelectionHandles(context: context,
-                                                   selection: stateMachine.selectionModel,
-                                                   transform: viewModel.transform)
+                                                   selection: selection,
+                                                   transform: transform)
         }
         .gesture(
             DragGesture(minimumDistance: 0)
-                .onChanged { value in
-                    stateMachine.dragChanged(value: value)
-                }
-                .onEnded { value in
-                    print("gesture end")
-                    stateMachine.dragEnded(value: value)
-                }
+                .onChanged { stateMachine.dragChanged(value: $0) }
+                .onEnded { stateMachine.dragEnded(value: $0) }
         )
         .gesture(
             MagnifyGesture()
-                .onChanged { value in
-                    print("magnification update")
-                    
-                    stateMachine.magnifyChanged(value: value)
-                }
-                .onEnded { _ in
-                    print("magnification end")
-                    stateMachine.magnifyEnded()
-                }
+                .onChanged { stateMachine.magnifyChanged(value: $0) }
+                .onEnded { _ in stateMachine.magnifyEnded() }
         )
-        //.background(Color.yellow)
     }
 }

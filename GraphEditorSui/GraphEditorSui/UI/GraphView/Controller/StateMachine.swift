@@ -15,7 +15,7 @@ protocol GenericState {
     func stateDidFinish(viewModel: GraphViewModel, selection: SelectionModel)
     
     func dragChanged(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState?
-    func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel) -> GenericState?
+    func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState?
     func magnifyChanged(value: MagnifyGesture.Value, viewModel: GraphViewModel) -> GenericState?
     func magnifyEnded(viewModel: GraphViewModel) -> GenericState?
     
@@ -34,7 +34,7 @@ class GestureState: GenericState {
     
     func dragChanged(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState? {nil}
     
-    func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel) -> GenericState? {nil}
+    func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState? {nil}
     
     func magnifyChanged(value: MagnifyGesture.Value, viewModel: GraphViewModel) -> GenericState? {nil}
     
@@ -81,7 +81,7 @@ class GraphStateMachine {
     }
     
     func dragEnded(value: DragGesture.Value) {
-        if let nextState = currentState.dragEnded(value: value, viewModel: viewModel) {
+        if let nextState = currentState.dragEnded(value: value, viewModel: viewModel, selection: selectionModel) {
             currentState = nextState
         }
     }

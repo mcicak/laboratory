@@ -21,6 +21,9 @@ class GraphViewModel: ObservableObject {
     var initialOffset: CGSize = .zero
     var initialScale: CGFloat = 1.0
     var lastLocation: CGPoint = .zero
+    
+    var lasoRect: CGRect = .zero
+    var isLasoOn = false
 }
 
 extension GraphViewModel {

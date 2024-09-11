@@ -37,7 +37,7 @@ class MoveState: GestureState {
         return nil
     }
     
-    override func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel) -> (any GenericState)? {
+    override func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState? {
         return SelectionState()
     }
 }

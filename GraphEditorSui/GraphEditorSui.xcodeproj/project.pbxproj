@@ -15,6 +15,7 @@
 		4C584E382C918287008275B3 /* SelectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E372C918287008275B3 /* SelectionState.swift */; };
 		4C584E3A2C919ED6008275B3 /* ZoomState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E392C919ED6008275B3 /* ZoomState.swift */; };
 		4C584E3C2C91BDA8008275B3 /* MoveState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E3B2C91BDA8008275B3 /* MoveState.swift */; };
+		4C584E3E2C91C0EF008275B3 /* LasoSelectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E3D2C91C0EF008275B3 /* LasoSelectionState.swift */; };
 		4C7FADC82C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FADC72C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift */; };
 		4C7FADCA2C81C4AE00C0C6F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FADC92C81C4AE00C0C6F5 /* ContentView.swift */; };
 		4C7FADCC2C81C4AF00C0C6F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C7FADCB2C81C4AF00C0C6F5 /* Assets.xcassets */; };
@@ -53,6 +54,7 @@
 		4C584E372C918287008275B3 /* SelectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionState.swift; sourceTree = "<group>"; };
 		4C584E392C919ED6008275B3 /* ZoomState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomState.swift; sourceTree = "<group>"; };
 		4C584E3B2C91BDA8008275B3 /* MoveState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveState.swift; sourceTree = "<group>"; };
+		4C584E3D2C91C0EF008275B3 /* LasoSelectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LasoSelectionState.swift; sourceTree = "<group>"; };
 		4C7FADC42C81C4AE00C0C6F5 /* GraphEditorSui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraphEditorSui.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7FADC72C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphEditorSuiApp.swift; sourceTree = "<group>"; };
 		4C7FADC92C81C4AE00C0C6F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -159,11 +161,12 @@
 		4C584E342C917F70008275B3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4C7FADF52C85E56D00C0C6F5 /* StateMachine.swift */,
 				4C584E352C91825A008275B3 /* DragState.swift */,
-				4C584E372C918287008275B3 /* SelectionState.swift */,
-				4C584E392C919ED6008275B3 /* ZoomState.swift */,
+				4C584E3D2C91C0EF008275B3 /* LasoSelectionState.swift */,
 				4C584E3B2C91BDA8008275B3 /* MoveState.swift */,
+				4C584E372C918287008275B3 /* SelectionState.swift */,
+				4C7FADF52C85E56D00C0C6F5 /* StateMachine.swift */,
+				4C584E392C919ED6008275B3 /* ZoomState.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				4C584E282C907CB1008275B3 /* SelectionHandleHandler.swift in Sources */,
 				4C584E382C918287008275B3 /* SelectionState.swift in Sources */,
 				4C584E2E2C907D86008275B3 /* GraphViewModel.swift in Sources */,
+				4C584E3E2C91C0EF008275B3 /* LasoSelectionState.swift in Sources */,
 				4C7FADF22C81C58700C0C6F5 /* CGGeometry.swift in Sources */,
 				4C584E262C9041D1008275B3 /* GraphView.swift in Sources */,
 			);

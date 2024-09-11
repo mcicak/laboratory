@@ -52,13 +52,13 @@ class SelectionState: GestureState {
             if let _ = symbol {
                 return MoveState()
             } else {
-                print("GOTO LASO SELTION STATE")
+                return LasoSelectionState()
             }
         }
         return nil
     }
     
-    override func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel) -> GenericState? {
+    override func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState? {
         var position = transformToUserSpace(point: value.location, transform: viewModel.transform)
         position -= CGPoint(x: 37, y: 37)
         

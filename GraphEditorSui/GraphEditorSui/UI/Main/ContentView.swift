@@ -34,6 +34,16 @@ class Symbol: Identifiable, Equatable, Hashable {
     var asRectangle: CGRect { return CGRect(origin: position, size: size) }
 }
 
+struct DummyView: View {
+    
+    var body: some View {
+        Canvas { context, size in
+            print("DUMMY REDRAW!")
+            context.fill(Path(CGRect(x: 10, y: 10, width: 50, height: 50)), with: .color(.cyan))
+        }
+    }
+}
+
 struct ContentView: View {
     
     @State var stateMachine = GraphStateMachine(viewModel: GraphViewModel(), selectionModel: SelectionModel())
@@ -43,7 +53,18 @@ struct ContentView: View {
             SymbolsListView(symbols: $stateMachine.viewModel.symbols, selectionModel: $stateMachine.selectionModel)
         } detail: {
             ZStack {
-                GraphView(viewModel: $stateMachine.viewModel, stateMachine: stateMachine)
+                DummyView()
+                GraphView(symbols: stateMachine.viewModel.symbols,
+                          selection: stateMachine.selectionModel.elements,
+                          transform: stateMachine.viewModel.transform,
+                          stateMachine: stateMachine)
+//                GraphView(viewModel: $stateMachine.viewModel, stateMachine: stateMachine)
+//                    .drawingGroup()
+                if stateMachine.viewModel.isLasoOn {
+                    LasoSelectionView(transform: stateMachine.viewModel.transform,
+                                      rect: stateMachine.viewModel.lasoRect)
+                    
+                }
             }
             .navigationBarItems(trailing: HStack{
                 Button(action: {
