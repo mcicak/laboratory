@@ -9,11 +9,7 @@ import Foundation
 import SwiftUI
 
 class DragState: GestureState {
-    
-    override func stateDidStart() {
         
-    }
-    
     override func dragChanged(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState? {
         // Adjust the translation by the current scale to ensure consistent movement
         let scaledTranslation = CGSize(

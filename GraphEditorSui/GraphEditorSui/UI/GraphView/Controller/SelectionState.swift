@@ -49,8 +49,8 @@ class SelectionState: GestureState {
                 }
             }
             
-            if let symbol = symbol {
-                print("GOTO MOVE ELEMENTS STATE")
+            if let _ = symbol {
+                return MoveState()
             } else {
                 print("GOTO LASO SELTION STATE")
             }

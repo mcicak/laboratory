@@ -9,10 +9,10 @@ import Foundation
 import SwiftUI
 
 protocol GenericState {
-    func stateWillStart()
-    func stateDidStart()
-    func stateWillFinish()
-    func stateDidFinish()
+    func stateWillStart(viewModel: GraphViewModel, selection: SelectionModel)
+    func stateDidStart(viewModel: GraphViewModel, selection: SelectionModel)
+    func stateWillFinish(viewModel: GraphViewModel, selection: SelectionModel)
+    func stateDidFinish(viewModel: GraphViewModel, selection: SelectionModel)
     
     func dragChanged(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState?
     func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel) -> GenericState?
@@ -24,13 +24,13 @@ protocol GenericState {
 
 class GestureState: GenericState {
     
-    func stateWillStart() {}
+    func stateWillStart(viewModel: GraphViewModel, selection: SelectionModel) {}
     
-    func stateDidStart() {}
+    func stateDidStart(viewModel: GraphViewModel, selection: SelectionModel) {}
     
-    func stateWillFinish() {}
+    func stateWillFinish(viewModel: GraphViewModel, selection: SelectionModel) {}
     
-    func stateDidFinish() {}
+    func stateDidFinish(viewModel: GraphViewModel, selection: SelectionModel) {}
     
     func dragChanged(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState? {nil}
     
@@ -58,14 +58,14 @@ class GraphStateMachine {
         set {
             let oldState = _currentState
             
-            oldState.stateWillFinish()
-            newValue.stateWillStart()
+            oldState.stateWillFinish(viewModel: viewModel, selection: selectionModel)
+            newValue.stateWillStart(viewModel: viewModel, selection: selectionModel)
             
             _currentState = newValue
             print("NEW STATE: \(newValue)")
             
-            oldState.stateDidFinish()
-            newValue.stateDidStart()
+            oldState.stateDidFinish(viewModel: viewModel, selection: selectionModel)
+            newValue.stateDidStart(viewModel: viewModel, selection: selectionModel)
         }
     }
     

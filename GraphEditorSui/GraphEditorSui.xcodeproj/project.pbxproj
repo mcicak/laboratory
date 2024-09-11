@@ -14,6 +14,7 @@
 		4C584E362C91825A008275B3 /* DragState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E352C91825A008275B3 /* DragState.swift */; };
 		4C584E382C918287008275B3 /* SelectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E372C918287008275B3 /* SelectionState.swift */; };
 		4C584E3A2C919ED6008275B3 /* ZoomState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E392C919ED6008275B3 /* ZoomState.swift */; };
+		4C584E3C2C91BDA8008275B3 /* MoveState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E3B2C91BDA8008275B3 /* MoveState.swift */; };
 		4C7FADC82C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FADC72C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift */; };
 		4C7FADCA2C81C4AE00C0C6F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FADC92C81C4AE00C0C6F5 /* ContentView.swift */; };
 		4C7FADCC2C81C4AF00C0C6F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C7FADCB2C81C4AF00C0C6F5 /* Assets.xcassets */; };
@@ -51,6 +52,7 @@
 		4C584E352C91825A008275B3 /* DragState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragState.swift; sourceTree = "<group>"; };
 		4C584E372C918287008275B3 /* SelectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionState.swift; sourceTree = "<group>"; };
 		4C584E392C919ED6008275B3 /* ZoomState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomState.swift; sourceTree = "<group>"; };
+		4C584E3B2C91BDA8008275B3 /* MoveState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveState.swift; sourceTree = "<group>"; };
 		4C7FADC42C81C4AE00C0C6F5 /* GraphEditorSui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraphEditorSui.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7FADC72C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphEditorSuiApp.swift; sourceTree = "<group>"; };
 		4C7FADC92C81C4AE00C0C6F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				4C584E352C91825A008275B3 /* DragState.swift */,
 				4C584E372C918287008275B3 /* SelectionState.swift */,
 				4C584E392C919ED6008275B3 /* ZoomState.swift */,
+				4C584E3B2C91BDA8008275B3 /* MoveState.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C584E3C2C91BDA8008275B3 /* MoveState.swift in Sources */,
 				4C7FADCA2C81C4AE00C0C6F5 /* ContentView.swift in Sources */,
 				4C584E362C91825A008275B3 /* DragState.swift in Sources */,
 				4C7FADC82C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift in Sources */,
