@@ -37,5 +37,3 @@ class TransitionView: UIView {
         currentContext.restoreGState()
     }
 }
-
-
