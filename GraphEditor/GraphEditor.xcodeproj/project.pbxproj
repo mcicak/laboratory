@@ -1,0 +1,619 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C207034F218C5593002586E7 /* SymbolPainter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C207034E218C5593002586E7 /* SymbolPainter.swift */; };
+		C2070351218C5727002586E7 /* PainterRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2070350218C5727002586E7 /* PainterRectangle.swift */; };
+		C21842BC2188A03D003CB121 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21842BB2188A03D003CB121 /* AppDelegate.swift */; };
+		C21842BE2188A03D003CB121 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21842BD2188A03D003CB121 /* MainViewController.swift */; };
+		C21842C12188A03D003CB121 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C21842BF2188A03D003CB121 /* Main.storyboard */; };
+		C21842C32188A03D003CB121 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C21842C22188A03D003CB121 /* Assets.xcassets */; };
+		C21842C62188A03D003CB121 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C21842C42188A03D003CB121 /* LaunchScreen.storyboard */; };
+		C21DCEF92192D6AF001C2229 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21DCEF82192D6AF001C2229 /* Command.swift */; };
+		C21DCEFB2192D826001C2229 /* CommandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21DCEFA2192D826001C2229 /* CommandManager.swift */; };
+		C21DCEFD2192DD66001C2229 /* CommandAbstract.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21DCEFC2192DD66001C2229 /* CommandAbstract.swift */; };
+		C21DCEFF2192DDCD001C2229 /* CommandAddSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21DCEFE2192DDCD001C2229 /* CommandAddSymbols.swift */; };
+		C21DCF0121930E70001C2229 /* ActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21DCF0021930E70001C2229 /* ActionManager.swift */; };
+		C21DCF0321930EB7001C2229 /* ActionEditUndo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21DCF0221930EB7001C2229 /* ActionEditUndo.swift */; };
+		C21DCF0521930FB1001C2229 /* ActionAbstract.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21DCF0421930FB1001C2229 /* ActionAbstract.swift */; };
+		C21DCF07219319DD001C2229 /* ActionEditRedo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21DCF06219319DD001C2229 /* ActionEditRedo.swift */; };
+		C22259AF2189AD27002373CA /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22259AE2189AD27002373CA /* GraphView.swift */; };
+		C22259B22189E866002373CA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22259B12189E866002373CA /* Extensions.swift */; };
+		C226ED65219068C40028C640 /* ModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C226ED64219068C40028C640 /* ModelHelper.swift */; };
+		C226ED672190713A0028C640 /* SelectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C226ED662190713A0028C640 /* SelectionModel.swift */; };
+		C226ED69219078830028C640 /* GenericSelectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C226ED68219078830028C640 /* GenericSelectionHandler.swift */; };
+		C226ED6B21907ABB0028C640 /* SelectionHandleHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C226ED6A21907ABB0028C640 /* SelectionHandleHandler.swift */; };
+		C23E0F9821AEDFC900F2654C /* SymbolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23E0F9721AEDFC900F2654C /* SymbolFactory.swift */; };
+		C24694E02189979500775B4F /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24694DF2189979500775B4F /* Model.swift */; };
+		C248AD5A2191D82000E7993E /* ResizeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C248AD592191D82000E7993E /* ResizeState.swift */; };
+		C25E7ED8219C23680072D4DF /* CommandResizeSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E7ED7219C23680072D4DF /* CommandResizeSymbol.swift */; };
+		C25E7EDA219C2ABD0072D4DF /* ActionDeleteSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E7ED9219C2ABD0072D4DF /* ActionDeleteSelection.swift */; };
+		C25E7EDC219C2B030072D4DF /* CommandDeleteSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25E7EDB219C2B030072D4DF /* CommandDeleteSymbols.swift */; };
+		C278B61021A7F88A009E757F /* Ellipse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278B60F21A7F88A009E757F /* Ellipse.swift */; };
+		C278B61221A7F904009E757F /* PainterEllipse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278B61121A7F904009E757F /* PainterEllipse.swift */; };
+		C28C77B2218AF29000E70265 /* ServiceRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28C77B1218AF29000E70265 /* ServiceRegistry.swift */; };
+		C28C77B4218AF88A00E70265 /* GenericState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28C77B3218AF88A00E70265 /* GenericState.swift */; };
+		C28C77B6218AF9E000E70265 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28C77B5218AF9E000E70265 /* State.swift */; };
+		C28C77B8218B2DF300E70265 /* SelectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28C77B7218B2DF300E70265 /* SelectionState.swift */; };
+		C28C77BC218B341900E70265 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28C77BB218B341900E70265 /* Context.swift */; };
+		C29FC793219D791D001F1220 /* ActionMenuEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FC792219D791D001F1220 /* ActionMenuEdit.swift */; };
+		C29FC795219D7DA5001F1220 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FC794219D7DA5001F1220 /* EditViewController.swift */; };
+		C29FC797219DA300001F1220 /* ActionEditSelectAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FC796219DA300001F1220 /* ActionEditSelectAll.swift */; };
+		C29FC799219DA488001F1220 /* Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FC798219DA488001F1220 /* Clipboard.swift */; };
+		C29FC79B219DA698001F1220 /* ActionEditCut.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FC79A219DA698001F1220 /* ActionEditCut.swift */; };
+		C29FC79D219DA78A001F1220 /* ActionEditPaste.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FC79C219DA78A001F1220 /* ActionEditPaste.swift */; };
+		C29FC79F219DA91D001F1220 /* ActionEditCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C29FC79E219DA91D001F1220 /* ActionEditCopy.swift */; };
+		C2AC44542188A3BD00AD7F86 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C2AC44532188A3BD00AD7F86 /* Default-568h@2x.png */; };
+		C2AC44592188A9C800AD7F86 /* GenericModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AC44582188A9C800AD7F86 /* GenericModel.swift */; };
+		C2AC445E2188AB5500AD7F86 /* Symbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2AC445D2188AB5500AD7F86 /* Symbol.swift */; };
+		C2B1E5CB21A2B21200B382B2 /* ZoomState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B1E5CA21A2B21200B382B2 /* ZoomState.swift */; };
+		C2BB148321A4421C006FB545 /* ActionResetZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BB148221A4421C006FB545 /* ActionResetZoom.swift */; };
+		C2BB148521A443A5006FB545 /* ActionDeleteAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BB148421A443A5006FB545 /* ActionDeleteAll.swift */; };
+		C2C47D7621A6B5FB009C5268 /* Rectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C47D7521A6B5FB009C5268 /* Rectangle.swift */; };
+		C2C47D7821A6DCEC009C5268 /* SymbolsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C47D7721A6DCEC009C5268 /* SymbolsTableViewController.swift */; };
+		C2E16E5A219AC23C003CF8EF /* MoveState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E16E59219AC23C003CF8EF /* MoveState.swift */; };
+		C2E16E5C219AC74A003CF8EF /* CommandMoveSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E16E5B219AC74A003CF8EF /* CommandMoveSymbols.swift */; };
+		C2E16E5E219B0633003CF8EF /* TransitionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E16E5D219B0633003CF8EF /* TransitionView.swift */; };
+		C2E16E60219B0811003CF8EF /* LasoSelectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E16E5F219B0811003CF8EF /* LasoSelectionState.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C207034E218C5593002586E7 /* SymbolPainter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolPainter.swift; sourceTree = "<group>"; };
+		C2070350218C5727002586E7 /* PainterRectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PainterRectangle.swift; sourceTree = "<group>"; };
+		C21842B82188A03D003CB121 /* GraphEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraphEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C21842BB2188A03D003CB121 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C21842BD2188A03D003CB121 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		C21842C02188A03D003CB121 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C21842C22188A03D003CB121 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C21842C52188A03D003CB121 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C21842C72188A03D003CB121 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C21DCEF82192D6AF001C2229 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		C21DCEFA2192D826001C2229 /* CommandManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandManager.swift; sourceTree = "<group>"; };
+		C21DCEFC2192DD66001C2229 /* CommandAbstract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandAbstract.swift; sourceTree = "<group>"; };
+		C21DCEFE2192DDCD001C2229 /* CommandAddSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandAddSymbols.swift; sourceTree = "<group>"; };
+		C21DCF0021930E70001C2229 /* ActionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionManager.swift; sourceTree = "<group>"; };
+		C21DCF0221930EB7001C2229 /* ActionEditUndo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEditUndo.swift; sourceTree = "<group>"; };
+		C21DCF0421930FB1001C2229 /* ActionAbstract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionAbstract.swift; sourceTree = "<group>"; };
+		C21DCF06219319DD001C2229 /* ActionEditRedo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEditRedo.swift; sourceTree = "<group>"; };
+		C22259AE2189AD27002373CA /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
+		C22259B12189E866002373CA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		C226ED64219068C40028C640 /* ModelHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelHelper.swift; sourceTree = "<group>"; };
+		C226ED662190713A0028C640 /* SelectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionModel.swift; sourceTree = "<group>"; };
+		C226ED68219078830028C640 /* GenericSelectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericSelectionHandler.swift; sourceTree = "<group>"; };
+		C226ED6A21907ABB0028C640 /* SelectionHandleHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionHandleHandler.swift; sourceTree = "<group>"; };
+		C23E0F9721AEDFC900F2654C /* SymbolFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolFactory.swift; sourceTree = "<group>"; };
+		C24694DF2189979500775B4F /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		C248AD592191D82000E7993E /* ResizeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeState.swift; sourceTree = "<group>"; };
+		C25E7ED7219C23680072D4DF /* CommandResizeSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandResizeSymbol.swift; sourceTree = "<group>"; };
+		C25E7ED9219C2ABD0072D4DF /* ActionDeleteSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionDeleteSelection.swift; sourceTree = "<group>"; };
+		C25E7EDB219C2B030072D4DF /* CommandDeleteSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandDeleteSymbols.swift; sourceTree = "<group>"; };
+		C278B60F21A7F88A009E757F /* Ellipse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ellipse.swift; sourceTree = "<group>"; };
+		C278B61121A7F904009E757F /* PainterEllipse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PainterEllipse.swift; sourceTree = "<group>"; };
+		C28C77B1218AF29000E70265 /* ServiceRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRegistry.swift; sourceTree = "<group>"; };
+		C28C77B3218AF88A00E70265 /* GenericState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericState.swift; sourceTree = "<group>"; };
+		C28C77B5218AF9E000E70265 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		C28C77B7218B2DF300E70265 /* SelectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionState.swift; sourceTree = "<group>"; };
+		C28C77BB218B341900E70265 /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
+		C29FC792219D791D001F1220 /* ActionMenuEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionMenuEdit.swift; sourceTree = "<group>"; };
+		C29FC794219D7DA5001F1220 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		C29FC796219DA300001F1220 /* ActionEditSelectAll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEditSelectAll.swift; sourceTree = "<group>"; };
+		C29FC798219DA488001F1220 /* Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipboard.swift; sourceTree = "<group>"; };
+		C29FC79A219DA698001F1220 /* ActionEditCut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEditCut.swift; sourceTree = "<group>"; };
+		C29FC79C219DA78A001F1220 /* ActionEditPaste.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEditPaste.swift; sourceTree = "<group>"; };
+		C29FC79E219DA91D001F1220 /* ActionEditCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEditCopy.swift; sourceTree = "<group>"; };
+		C2AC44532188A3BD00AD7F86 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		C2AC44582188A9C800AD7F86 /* GenericModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericModel.swift; sourceTree = "<group>"; };
+		C2AC445D2188AB5500AD7F86 /* Symbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbol.swift; sourceTree = "<group>"; };
+		C2B1E5CA21A2B21200B382B2 /* ZoomState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomState.swift; sourceTree = "<group>"; };
+		C2BB148221A4421C006FB545 /* ActionResetZoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionResetZoom.swift; sourceTree = "<group>"; };
+		C2BB148421A443A5006FB545 /* ActionDeleteAll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionDeleteAll.swift; sourceTree = "<group>"; };
+		C2C47D7521A6B5FB009C5268 /* Rectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rectangle.swift; sourceTree = "<group>"; };
+		C2C47D7721A6DCEC009C5268 /* SymbolsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolsTableViewController.swift; sourceTree = "<group>"; };
+		C2E16E59219AC23C003CF8EF /* MoveState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveState.swift; sourceTree = "<group>"; };
+		C2E16E5B219AC74A003CF8EF /* CommandMoveSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandMoveSymbols.swift; sourceTree = "<group>"; };
+		C2E16E5D219B0633003CF8EF /* TransitionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionView.swift; sourceTree = "<group>"; };
+		C2E16E5F219B0811003CF8EF /* LasoSelectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LasoSelectionState.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C21842B52188A03D003CB121 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C207034D218C5580002586E7 /* Painters */ = {
+			isa = PBXGroup;
+			children = (
+				C278B61121A7F904009E757F /* PainterEllipse.swift */,
+				C2070350218C5727002586E7 /* PainterRectangle.swift */,
+				C207034E218C5593002586E7 /* SymbolPainter.swift */,
+			);
+			path = Painters;
+			sourceTree = "<group>";
+		};
+		C21842AF2188A03C003CB121 = {
+			isa = PBXGroup;
+			children = (
+				C21842BA2188A03D003CB121 /* GraphEditor */,
+				C21842B92188A03D003CB121 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C21842B92188A03D003CB121 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C21842B82188A03D003CB121 /* GraphEditor.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C21842BA2188A03D003CB121 /* GraphEditor */ = {
+			isa = PBXGroup;
+			children = (
+				C28C77AF218AF23F00E70265 /* Actions */,
+				C28C77B0218AF24B00E70265 /* Commands */,
+				C22259B02189E84E002373CA /* Helper */,
+				C21842CE2188A190003CB121 /* Main */,
+				C2AC44552188A4C900AD7F86 /* Model */,
+				C21842CD2188A175003CB121 /* Resources */,
+				C2AC44572188A51400AD7F86 /* StateMachine */,
+				C2AC44562188A4D200AD7F86 /* View */,
+			);
+			path = GraphEditor;
+			sourceTree = "<group>";
+		};
+		C21842CD2188A175003CB121 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C2AC44532188A3BD00AD7F86 /* Default-568h@2x.png */,
+				C21842C22188A03D003CB121 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		C21842CE2188A190003CB121 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				C21842C72188A03D003CB121 /* Info.plist */,
+				C21842BB2188A03D003CB121 /* AppDelegate.swift */,
+				C28C77B1218AF29000E70265 /* ServiceRegistry.swift */,
+				C21842C42188A03D003CB121 /* LaunchScreen.storyboard */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		C22259B02189E84E002373CA /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				C22259B12189E866002373CA /* Extensions.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		C28C77AF218AF23F00E70265 /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				C21DCF0421930FB1001C2229 /* ActionAbstract.swift */,
+				C2BB148421A443A5006FB545 /* ActionDeleteAll.swift */,
+				C25E7ED9219C2ABD0072D4DF /* ActionDeleteSelection.swift */,
+				C29FC79E219DA91D001F1220 /* ActionEditCopy.swift */,
+				C29FC79A219DA698001F1220 /* ActionEditCut.swift */,
+				C29FC79C219DA78A001F1220 /* ActionEditPaste.swift */,
+				C21DCF06219319DD001C2229 /* ActionEditRedo.swift */,
+				C29FC796219DA300001F1220 /* ActionEditSelectAll.swift */,
+				C21DCF0221930EB7001C2229 /* ActionEditUndo.swift */,
+				C21DCF0021930E70001C2229 /* ActionManager.swift */,
+				C29FC792219D791D001F1220 /* ActionMenuEdit.swift */,
+				C2BB148221A4421C006FB545 /* ActionResetZoom.swift */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
+		C28C77B0218AF24B00E70265 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				C21DCEF82192D6AF001C2229 /* Command.swift */,
+				C21DCEFC2192DD66001C2229 /* CommandAbstract.swift */,
+				C21DCEFE2192DDCD001C2229 /* CommandAddSymbols.swift */,
+				C25E7EDB219C2B030072D4DF /* CommandDeleteSymbols.swift */,
+				C21DCEFA2192D826001C2229 /* CommandManager.swift */,
+				C2E16E5B219AC74A003CF8EF /* CommandMoveSymbols.swift */,
+				C25E7ED7219C23680072D4DF /* CommandResizeSymbol.swift */,
+			);
+			path = Commands;
+			sourceTree = "<group>";
+		};
+		C2AC44552188A4C900AD7F86 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C29FC798219DA488001F1220 /* Clipboard.swift */,
+				C2AC44582188A9C800AD7F86 /* GenericModel.swift */,
+				C24694DF2189979500775B4F /* Model.swift */,
+				C226ED64219068C40028C640 /* ModelHelper.swift */,
+				C226ED662190713A0028C640 /* SelectionModel.swift */,
+				C2AC445A2188AA3100AD7F86 /* Symbols */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C2AC44562188A4D200AD7F86 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C29FC794219D7DA5001F1220 /* EditViewController.swift */,
+				C226ED68219078830028C640 /* GenericSelectionHandler.swift */,
+				C22259AE2189AD27002373CA /* GraphView.swift */,
+				C21842BF2188A03D003CB121 /* Main.storyboard */,
+				C21842BD2188A03D003CB121 /* MainViewController.swift */,
+				C207034D218C5580002586E7 /* Painters */,
+				C226ED6A21907ABB0028C640 /* SelectionHandleHandler.swift */,
+				C2C47D7721A6DCEC009C5268 /* SymbolsTableViewController.swift */,
+				C2E16E5D219B0633003CF8EF /* TransitionView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C2AC44572188A51400AD7F86 /* StateMachine */ = {
+			isa = PBXGroup;
+			children = (
+				C28C77BB218B341900E70265 /* Context.swift */,
+				C28C77B3218AF88A00E70265 /* GenericState.swift */,
+				C2E16E5F219B0811003CF8EF /* LasoSelectionState.swift */,
+				C2E16E59219AC23C003CF8EF /* MoveState.swift */,
+				C248AD592191D82000E7993E /* ResizeState.swift */,
+				C28C77B7218B2DF300E70265 /* SelectionState.swift */,
+				C28C77B5218AF9E000E70265 /* State.swift */,
+				C2B1E5CA21A2B21200B382B2 /* ZoomState.swift */,
+			);
+			path = StateMachine;
+			sourceTree = "<group>";
+		};
+		C2AC445A2188AA3100AD7F86 /* Symbols */ = {
+			isa = PBXGroup;
+			children = (
+				C278B60F21A7F88A009E757F /* Ellipse.swift */,
+				C2C47D7521A6B5FB009C5268 /* Rectangle.swift */,
+				C2AC445D2188AB5500AD7F86 /* Symbol.swift */,
+				C23E0F9721AEDFC900F2654C /* SymbolFactory.swift */,
+			);
+			path = Symbols;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C21842B72188A03D003CB121 /* GraphEditor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C21842CA2188A03D003CB121 /* Build configuration list for PBXNativeTarget "GraphEditor" */;
+			buildPhases = (
+				C21842B42188A03D003CB121 /* Sources */,
+				C21842B52188A03D003CB121 /* Frameworks */,
+				C21842B62188A03D003CB121 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GraphEditor;
+			productName = GraphEditor;
+			productReference = C21842B82188A03D003CB121 /* GraphEditor.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C21842B02188A03C003CB121 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1000;
+				LastUpgradeCheck = 1000;
+				ORGANIZATIONNAME = "Dragoslav Ignjatovic";
+				TargetAttributes = {
+					C21842B72188A03D003CB121 = {
+						CreatedOnToolsVersion = 10.0;
+					};
+				};
+			};
+			buildConfigurationList = C21842B32188A03C003CB121 /* Build configuration list for PBXProject "GraphEditor" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C21842AF2188A03C003CB121;
+			productRefGroup = C21842B92188A03D003CB121 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C21842B72188A03D003CB121 /* GraphEditor */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C21842B62188A03D003CB121 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C21842C62188A03D003CB121 /* LaunchScreen.storyboard in Resources */,
+				C2AC44542188A3BD00AD7F86 /* Default-568h@2x.png in Resources */,
+				C21842C32188A03D003CB121 /* Assets.xcassets in Resources */,
+				C21842C12188A03D003CB121 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C21842B42188A03D003CB121 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C29FC79F219DA91D001F1220 /* ActionEditCopy.swift in Sources */,
+				C2E16E5C219AC74A003CF8EF /* CommandMoveSymbols.swift in Sources */,
+				C2E16E5A219AC23C003CF8EF /* MoveState.swift in Sources */,
+				C21842BE2188A03D003CB121 /* MainViewController.swift in Sources */,
+				C21DCF07219319DD001C2229 /* ActionEditRedo.swift in Sources */,
+				C2AC445E2188AB5500AD7F86 /* Symbol.swift in Sources */,
+				C23E0F9821AEDFC900F2654C /* SymbolFactory.swift in Sources */,
+				C226ED672190713A0028C640 /* SelectionModel.swift in Sources */,
+				C22259AF2189AD27002373CA /* GraphView.swift in Sources */,
+				C226ED6B21907ABB0028C640 /* SelectionHandleHandler.swift in Sources */,
+				C28C77BC218B341900E70265 /* Context.swift in Sources */,
+				C2E16E60219B0811003CF8EF /* LasoSelectionState.swift in Sources */,
+				C2070351218C5727002586E7 /* PainterRectangle.swift in Sources */,
+				C25E7EDA219C2ABD0072D4DF /* ActionDeleteSelection.swift in Sources */,
+				C25E7EDC219C2B030072D4DF /* CommandDeleteSymbols.swift in Sources */,
+				C21DCEFB2192D826001C2229 /* CommandManager.swift in Sources */,
+				C29FC79D219DA78A001F1220 /* ActionEditPaste.swift in Sources */,
+				C278B61221A7F904009E757F /* PainterEllipse.swift in Sources */,
+				C28C77B6218AF9E000E70265 /* State.swift in Sources */,
+				C21DCF0521930FB1001C2229 /* ActionAbstract.swift in Sources */,
+				C2C47D7821A6DCEC009C5268 /* SymbolsTableViewController.swift in Sources */,
+				C29FC793219D791D001F1220 /* ActionMenuEdit.swift in Sources */,
+				C29FC797219DA300001F1220 /* ActionEditSelectAll.swift in Sources */,
+				C22259B22189E866002373CA /* Extensions.swift in Sources */,
+				C21DCEFF2192DDCD001C2229 /* CommandAddSymbols.swift in Sources */,
+				C29FC799219DA488001F1220 /* Clipboard.swift in Sources */,
+				C29FC79B219DA698001F1220 /* ActionEditCut.swift in Sources */,
+				C207034F218C5593002586E7 /* SymbolPainter.swift in Sources */,
+				C21DCEF92192D6AF001C2229 /* Command.swift in Sources */,
+				C28C77B8218B2DF300E70265 /* SelectionState.swift in Sources */,
+				C226ED69219078830028C640 /* GenericSelectionHandler.swift in Sources */,
+				C21DCF0121930E70001C2229 /* ActionManager.swift in Sources */,
+				C29FC795219D7DA5001F1220 /* EditViewController.swift in Sources */,
+				C2C47D7621A6B5FB009C5268 /* Rectangle.swift in Sources */,
+				C21DCF0321930EB7001C2229 /* ActionEditUndo.swift in Sources */,
+				C24694E02189979500775B4F /* Model.swift in Sources */,
+				C28C77B2218AF29000E70265 /* ServiceRegistry.swift in Sources */,
+				C2AC44592188A9C800AD7F86 /* GenericModel.swift in Sources */,
+				C278B61021A7F88A009E757F /* Ellipse.swift in Sources */,
+				C226ED65219068C40028C640 /* ModelHelper.swift in Sources */,
+				C21842BC2188A03D003CB121 /* AppDelegate.swift in Sources */,
+				C25E7ED8219C23680072D4DF /* CommandResizeSymbol.swift in Sources */,
+				C21DCEFD2192DD66001C2229 /* CommandAbstract.swift in Sources */,
+				C28C77B4218AF88A00E70265 /* GenericState.swift in Sources */,
+				C2BB148521A443A5006FB545 /* ActionDeleteAll.swift in Sources */,
+				C2E16E5E219B0633003CF8EF /* TransitionView.swift in Sources */,
+				C2B1E5CB21A2B21200B382B2 /* ZoomState.swift in Sources */,
+				C2BB148321A4421C006FB545 /* ActionResetZoom.swift in Sources */,
+				C248AD5A2191D82000E7993E /* ResizeState.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C21842BF2188A03D003CB121 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C21842C02188A03D003CB121 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C21842C42188A03D003CB121 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C21842C52188A03D003CB121 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C21842C82188A03D003CB121 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C21842C92188A03D003CB121 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C21842CB2188A03D003CB121 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WF5L7UK565;
+				INFOPLIST_FILE = "$(SRCROOT)/GraphEditor/Main/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.NSIDDevelopment.GraphEditor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		C21842CC2188A03D003CB121 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WF5L7UK565;
+				INFOPLIST_FILE = "$(SRCROOT)/GraphEditor/Main/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.NSIDDevelopment.GraphEditor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C21842B32188A03C003CB121 /* Build configuration list for PBXProject "GraphEditor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C21842C82188A03D003CB121 /* Debug */,
+				C21842C92188A03D003CB121 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C21842CA2188A03D003CB121 /* Build configuration list for PBXNativeTarget "GraphEditor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C21842CB2188A03D003CB121 /* Debug */,
+				C21842CC2188A03D003CB121 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C21842B02188A03C003CB121 /* Project object */;
+}
