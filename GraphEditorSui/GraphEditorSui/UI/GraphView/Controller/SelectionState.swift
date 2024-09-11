@@ -12,8 +12,8 @@ class SelectionState: GestureState {
     
     let selectionHandler = SelectionHandleHandler()
     var shouldAddNewSymbol = true
-    
-    override func dragChanged(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) {
+        
+    override func dragChanged(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState? {
         let position = transformToUserSpace(point: value.location, transform: viewModel.transform)
         let symbol = viewModel.symbolAt(point: position)
         
@@ -22,7 +22,7 @@ class SelectionState: GestureState {
                 for s in selection.elements {
                     let handle = selectionHandler.getHandleForSymbol(symbol: s, point: position, scale: viewModel.transform.scale())
                     if handle != .none {
-                        return
+                        return nil
                     }
                 }
             }
@@ -44,7 +44,7 @@ class SelectionState: GestureState {
                     let handle = selectionHandler.getHandleForSymbol(symbol: s, point: position, scale: viewModel.transform.scale())
                     if handle != .none {
                         print("GOTO RESIZE STATE")
-                        return
+                        return nil
                     }
                 }
             }
@@ -55,9 +55,10 @@ class SelectionState: GestureState {
                 print("GOTO LASO SELTION STATE")
             }
         }
+        return nil
     }
     
-    override func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel) {
+    override func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel) -> GenericState? {
         var position = transformToUserSpace(point: value.location, transform: viewModel.transform)
         position -= CGPoint(x: 37, y: 37)
         
@@ -67,34 +68,10 @@ class SelectionState: GestureState {
         } else {
             shouldAddNewSymbol = true
         }
+        return nil
     }
     
-    override func magnifyChanged(value: MagnifyGesture.Value, viewModel: GraphViewModel) {
-        print("GOTO ZOOM STATE")
-        
-        let middlePoint = value.startLocation
-        
-        // Calculate the new scale based on the magnification gesture
-        let scale = viewModel.transform.a * value.magnification
-        if scale < 0.3 { return }
-        
-        // Calculate the old position before applying the new scale
-        let oldPosition = transformToUserSpace(point: middlePoint, transform: viewModel.transform)
-        
-        // Update the transform with the new scale
-        var newTransform = viewModel.initialTransform.scaledBy(x: value.magnification, y: value.magnification)
-        
-        // Calculate the new position after scaling
-        let newPosition = transformToUserSpace(point: middlePoint, transform: newTransform)
-        
-        // Adjust the transform to keep the middle point in place
-        newTransform = newTransform.translatedBy(x: newPosition.x - oldPosition.x, y: newPosition.y - oldPosition.y)
-        
-        // Update the view model with the new transform
-        viewModel.transform = newTransform
-    }
-    
-    override func magnifyEnded(viewModel: GraphViewModel) {
-        viewModel.initialTransform = viewModel.transform
+    override func magnifyChanged(value: MagnifyGesture.Value, viewModel: GraphViewModel) -> GenericState? {
+        ZoomState()
     }
 }

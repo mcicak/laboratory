@@ -14,15 +14,15 @@ protocol GenericState {
     func stateWillFinish()
     func stateDidFinish()
     
-    func dragChanged(value: DragGesture.Value, viewModel: GraphViewModel)
-    func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel)
-    func magnifyChanged(value: MagnifyGesture.Value, viewModel: GraphViewModel)
-    func magnifyEnded(viewModel: GraphViewModel)
+    func dragChanged(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState?
+    func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel) -> GenericState?
+    func magnifyChanged(value: MagnifyGesture.Value, viewModel: GraphViewModel) -> GenericState?
+    func magnifyEnded(viewModel: GraphViewModel) -> GenericState?
     
     func transformToUserSpace(point: CGPoint, transform: CGAffineTransform) -> CGPoint
 }
 
-class GestureState {
+class GestureState: GenericState {
     
     func stateWillStart() {}
     
@@ -32,13 +32,13 @@ class GestureState {
     
     func stateDidFinish() {}
     
-    func dragChanged(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) {}
+    func dragChanged(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState? {nil}
     
-    func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel) {}
+    func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel) -> GenericState? {nil}
     
-    func magnifyChanged(value: MagnifyGesture.Value, viewModel: GraphViewModel) {}
+    func magnifyChanged(value: MagnifyGesture.Value, viewModel: GraphViewModel) -> GenericState? {nil}
     
-    func magnifyEnded(viewModel: GraphViewModel) {}
+    func magnifyEnded(viewModel: GraphViewModel) -> GenericState? {nil}
     
     func transformToUserSpace(point: CGPoint, transform: CGAffineTransform) -> CGPoint {
         point.applying(transform.inverted())
@@ -50,8 +50,8 @@ class GraphStateMachine {
     
     var viewModel: GraphViewModel
     var selectionModel: SelectionModel
-    private var _currentState: GestureState = SelectionState()
-    var currentState: GestureState {
+    private var _currentState: GenericState = SelectionState()
+    var currentState: GenericState {
         get {
             _currentState
         }
@@ -62,6 +62,7 @@ class GraphStateMachine {
             newValue.stateWillStart()
             
             _currentState = newValue
+            print("NEW STATE: \(newValue)")
             
             oldState.stateDidFinish()
             newValue.stateDidStart()
@@ -74,23 +75,30 @@ class GraphStateMachine {
     }
 
     func dragChanged(value: DragGesture.Value) {
-        currentState.dragChanged(value: value, viewModel: viewModel, selection: selectionModel)
+        if let nextState = currentState.dragChanged(value: value, viewModel: viewModel, selection: selectionModel) {
+            currentState = nextState
+        }
     }
     
     func dragEnded(value: DragGesture.Value) {
-        currentState.dragEnded(value: value, viewModel: viewModel)
+        if let nextState = currentState.dragEnded(value: value, viewModel: viewModel) {
+            currentState = nextState
+        }
     }
     
     func magnifyChanged(value: MagnifyGesture.Value) {
-        currentState.magnifyChanged(value: value, viewModel: viewModel)
+        if let nextState = currentState.magnifyChanged(value: value, viewModel: viewModel) {
+            currentState = nextState
+        }
     }
     
     func magnifyEnded() {
-        currentState.magnifyEnded(viewModel: viewModel)
+        if let nextState = currentState.magnifyEnded(viewModel: viewModel) {
+            currentState = nextState
+        }
     }
     
     private func transformToUserSpace(point: CGPoint, transform: CGAffineTransform) -> CGPoint {
         return point.applying(transform.inverted())
     }
 }
-
