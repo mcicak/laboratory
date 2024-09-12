@@ -36,7 +36,7 @@ class Symbol: Identifiable, Equatable, Hashable {
 
 struct ContentView: View {
     
-    @State var stateMachine = GraphStateMachine(viewModel: GraphViewModel(), selectionModel: SelectionModel())
+    @State var stateMachine = GraphStateMachine()
     
     var body: some View {
         NavigationSplitView {

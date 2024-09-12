@@ -18,7 +18,9 @@ class MoveState: GestureState {
         }
     }
     
-    override func dragChanged(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> (any GenericState)? {
+    override func dragChanged(value: DragGesture.Value, 
+                              viewModel: GraphViewModel,
+                              selection: SelectionModel) -> (any GenericState)? {
         let scale = viewModel.transform.scale()
         let translation = CGSize(
             width: value.translation.width / scale,
@@ -37,7 +39,10 @@ class MoveState: GestureState {
         return nil
     }
     
-    override func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState? {
+    override func dragEnded(value: DragGesture.Value, 
+                            viewModel: GraphViewModel,
+                            selection: SelectionModel,
+                            commandManager: CommandManager) -> GenericState? {
         return SelectionState()
     }
 }

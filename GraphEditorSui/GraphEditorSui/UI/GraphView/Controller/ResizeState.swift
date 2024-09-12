@@ -100,7 +100,10 @@ class ResizeState: GestureState {
         return nil
     }
     
-    override func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> (any GenericState)? {
+    override func dragEnded(value: DragGesture.Value, 
+                            viewModel: GraphViewModel,
+                            selection: SelectionModel,
+                            commandManager: CommandManager) -> (any GenericState)? {
         // TODO: add resize command
         return SelectionState()
     }

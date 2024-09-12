@@ -22,7 +22,10 @@ class DragState: GestureState {
         return nil
     }
     
-    override func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState? {
+    override func dragEnded(value: DragGesture.Value, 
+                            viewModel: GraphViewModel,
+                            selection: SelectionModel,
+                            commandManager: CommandManager) -> GenericState? {
         viewModel.initialTransform = viewModel.transform
         return nil
     }

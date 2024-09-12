@@ -15,7 +15,10 @@ protocol GenericState {
     func stateDidFinish(viewModel: GraphViewModel, selection: SelectionModel)
     
     func dragChanged(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState?
-    func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState?
+    func dragEnded(value: DragGesture.Value, 
+                   viewModel: GraphViewModel,
+                   selection: SelectionModel,
+                   commandManager: CommandManager) -> GenericState?
     func magnifyChanged(value: MagnifyGesture.Value, viewModel: GraphViewModel) -> GenericState?
     func magnifyEnded(viewModel: GraphViewModel) -> GenericState?
     
@@ -34,7 +37,10 @@ class GestureState: GenericState {
     
     func dragChanged(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState? {nil}
     
-    func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState? {nil}
+    func dragEnded(value: DragGesture.Value, 
+                   viewModel: GraphViewModel,
+                   selection: SelectionModel,
+                   commandManager: CommandManager) -> GenericState? {nil}
     
     func magnifyChanged(value: MagnifyGesture.Value, viewModel: GraphViewModel) -> GenericState? {nil}
     
@@ -48,8 +54,10 @@ class GestureState: GenericState {
 @Observable
 class GraphStateMachine {
     
-    var viewModel: GraphViewModel
-    var selectionModel: SelectionModel
+    var viewModel = GraphViewModel()
+    var selectionModel = SelectionModel()
+    var commandManager = CommandManager()
+    
     private var _currentState: GenericState = SelectionState()
     var currentState: GenericState {
         get {
@@ -68,11 +76,6 @@ class GraphStateMachine {
             newValue.stateDidStart(viewModel: viewModel, selection: selectionModel)
         }
     }
-    
-    init(viewModel: GraphViewModel, selectionModel: SelectionModel) {
-        self.viewModel = viewModel
-        self.selectionModel = selectionModel
-    }
 
     func dragChanged(value: DragGesture.Value) {
         if let nextState = currentState.dragChanged(value: value, viewModel: viewModel, selection: selectionModel) {
@@ -81,7 +84,10 @@ class GraphStateMachine {
     }
     
     func dragEnded(value: DragGesture.Value) {
-        if let nextState = currentState.dragEnded(value: value, viewModel: viewModel, selection: selectionModel) {
+        if let nextState = currentState.dragEnded(value: value, 
+                                                  viewModel: viewModel,
+                                                  selection: selectionModel,
+                                                  commandManager: commandManager) {
             currentState = nextState
         }
     }
