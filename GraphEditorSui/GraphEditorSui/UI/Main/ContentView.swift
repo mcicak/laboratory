@@ -53,25 +53,79 @@ struct ContentView: View {
                     
                 }
             }
-            .navigationBarItems(trailing: HStack{
-                Button(action: {
-                    stateMachine.currentState = SelectionState()
-                }) {
-                    Image(systemName: "hand.point.up.left")
-                        .padding(8)
-                        .background(!(stateMachine.currentState is DragState) ? Color.blue.opacity(0.3) : Color.clear)
-                        .cornerRadius(8)
-                }
-                
-                Button(action: {
-                    stateMachine.currentState = DragState()
-                }) {
-                    Image(systemName: "arrow.up.and.down.and.arrow.left.and.right")
-                        .padding(8)
-                        .background(stateMachine.currentState is DragState ? Color.blue.opacity(0.3) : Color.clear)
-                        .cornerRadius(8)
-                }
-            })
+            .navigationBarItems(
+                leading: HStack {
+                    Button(action: {
+                        print("UNDO")
+                    }, label: {
+                        Image(systemName: "arrow.uturn.backward")
+                    })
+                    .disabled(stateMachine.commandManager.currentCommandIsFirst())
+                    
+                    Button(action: {
+                        print("REDO")
+                    }, label: {
+                        Image(systemName: "arrow.uturn.forward")
+                    })
+                    .disabled(stateMachine.commandManager.currentCommandIsLast())
+                    
+                    Spacer(minLength: 40)
+                    
+                    Button(action: {
+                        print("CUT")
+                    }, label: {
+                        Image(systemName: "scissors")
+                    })
+                    //.disabled(stateMachine.commandManager.currentCommandIsLast())
+                    
+                    Button(action: {
+                        print("COPY")
+                    }, label: {
+                        Image(systemName: "square.2.layers.3d")
+                    })
+                    //.disabled(stateMachine.commandManager.currentCommandIsLast())
+                    
+                    Button(action: {
+                        print("PASTE")
+                    }, label: {
+                        Image(systemName: "list.clipboard")
+                    })
+                    //.disabled(stateMachine.commandManager.currentCommandIsLast())
+                    
+                    Spacer(minLength: 40)
+                    
+                    Button(action: {
+                        print("DELETE")
+                    }, label: {
+                        Image(systemName: "trash")
+                    })
+                    
+                },
+                trailing: HStack {
+                    Button(action: {
+                        print("RESET-ZOOM")
+                    }, label: {
+                        Image(systemName: "1.magnifyingglass")
+                    })
+                    
+                    Button(action: {
+                        stateMachine.currentState = SelectionState()
+                    }) {
+                        Image(systemName: "hand.point.up.left")
+                            .padding(8)
+                            .background(!(stateMachine.currentState is DragState) ? Color.blue.opacity(0.3) : Color.clear)
+                            .cornerRadius(8)
+                    }
+                    
+                    Button(action: {
+                        stateMachine.currentState = DragState()
+                    }) {
+                        Image(systemName: "arrow.up.and.down.and.arrow.left.and.right")
+                            .padding(8)
+                            .background(stateMachine.currentState is DragState ? Color.blue.opacity(0.3) : Color.clear)
+                            .cornerRadius(8)
+                    }
+                })
         }
         .onAppear {
             // Add some initial symbols
