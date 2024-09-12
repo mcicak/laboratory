@@ -15,27 +15,20 @@ struct LasoSelectionView: View {
     
     var body: some View {
         Canvas { context, size in
-            print("LASO REDRAW")
-            
-            //context.transform = transform
             let transformedRect = rect.applying(transform)
             
-            // Create a path for the rectangle (adjusted for the transform)
             let path = Path { p in
                 p.addRect(transformedRect)
             }
             
-            // Define a dashed stroke style
             let dashPattern: [CGFloat] = [5, 3] // dash length, gap length
             
-            // Set the stroke style with the dash pattern
             let strokeStyle = StrokeStyle(
                 lineWidth: 2,
                 dash: dashPattern,
                 dashPhase: 0
             )
             
-            // Draw the dashed rectangle
             context.stroke(path, with: .color(.blue), style: strokeStyle)
         }
     }
@@ -51,9 +44,6 @@ struct GraphView: View {
     
     var body: some View {
         Canvas { context, size in
-            
-            print("GRAPH REDRAW")
-            
             // either set transform on entire drawing context,
             // or use it when drawing elements to calculate proper positions
             context.transform = transform

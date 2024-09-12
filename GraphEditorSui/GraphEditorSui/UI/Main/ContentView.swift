@@ -34,16 +34,6 @@ class Symbol: Identifiable, Equatable, Hashable {
     var asRectangle: CGRect { return CGRect(origin: position, size: size) }
 }
 
-struct DummyView: View {
-    
-    var body: some View {
-        Canvas { context, size in
-            print("DUMMY REDRAW!")
-            context.fill(Path(CGRect(x: 10, y: 10, width: 50, height: 50)), with: .color(.cyan))
-        }
-    }
-}
-
 struct ContentView: View {
     
     @State var stateMachine = GraphStateMachine(viewModel: GraphViewModel(), selectionModel: SelectionModel())
@@ -53,13 +43,10 @@ struct ContentView: View {
             SymbolsListView(symbols: $stateMachine.viewModel.symbols, selectionModel: $stateMachine.selectionModel)
         } detail: {
             ZStack {
-                DummyView()
                 GraphView(symbols: stateMachine.viewModel.symbols,
                           selection: stateMachine.selectionModel.elements,
                           transform: stateMachine.viewModel.transform,
                           stateMachine: stateMachine)
-//                GraphView(viewModel: $stateMachine.viewModel, stateMachine: stateMachine)
-//                    .drawingGroup()
                 if stateMachine.viewModel.isLasoOn {
                     LasoSelectionView(transform: stateMachine.viewModel.transform,
                                       rect: stateMachine.viewModel.lasoRect)
@@ -89,12 +76,12 @@ struct ContentView: View {
         .onAppear {
             // Add some initial symbols
             stateMachine.viewModel.symbols = [
-                Symbol(position: CGPoint(x: 100, y: 100), size: CGSize(width: 50, height: 50), type: .oval),
-                Symbol(position: CGPoint(x: 200, y: 200), size: CGSize(width: 75, height: 75), type: .rectangle),
-                Symbol(position: CGPoint(x: 300, y: 300), size: CGSize(width: 75, height: 75), type: .rectangle)
+                Symbol(position: CGPoint(x: 100, y: 100), size: CGSize(width: 100, height: 100), type: .oval),
+                Symbol(position: CGPoint(x: 150, y: 250), size: CGSize(width: 200, height: 100), type: .rectangle),
+                Symbol(position: CGPoint(x: 200, y: 400), size: CGSize(width: 200, height: 100), type: .rectangle)
             ]
             
-            stateMachine.selectionModel.addToSelection(symbol: stateMachine.viewModel.symbols.first!)
+            stateMachine.selectionModel.addToSelection(symbol: stateMachine.viewModel.symbols[1])
         }
     }
 }

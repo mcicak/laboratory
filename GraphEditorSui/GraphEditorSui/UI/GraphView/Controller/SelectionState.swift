@@ -11,11 +11,13 @@ import SwiftUI
 class SelectionState: GestureState {
     
     let selectionHandler = SelectionHandleHandler()
-    var shouldAddNewSymbol = true
+    private var shouldAddNewSymbol = true
+    private var freshlySelected = false
+    private var symbolHit: Symbol?
         
     override func dragChanged(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState? {
         let position = transformToUserSpace(point: value.location, transform: viewModel.transform)
-        let symbol = viewModel.symbolAt(point: position)
+        symbolHit = viewModel.symbolAt(point: position)
         
         if value.translation == .zero {
             if !selection.isEmpty {
@@ -27,9 +29,10 @@ class SelectionState: GestureState {
                 }
             }
             
-            if let symbol = symbol {
+            if let symbol = symbolHit {
                 if !selection.elements.contains(symbol) {
                     shouldAddNewSymbol = false
+                    freshlySelected = true
                     selection.addToSelection(symbol: symbol)
                 }
             } else {
@@ -43,13 +46,12 @@ class SelectionState: GestureState {
                 for s in selection.elements {
                     let handle = selectionHandler.getHandleForSymbol(symbol: s, point: position, scale: viewModel.transform.scale())
                     if handle != .none {
-                        print("GOTO RESIZE STATE")
-                        return nil
+                        return ResizeState(s, handle)
                     }
                 }
             }
             
-            if let _ = symbol {
+            if let _ = symbolHit {
                 return MoveState()
             } else {
                 return LasoSelectionState()
@@ -60,9 +62,17 @@ class SelectionState: GestureState {
     
     override func dragEnded(value: DragGesture.Value, viewModel: GraphViewModel, selection: SelectionModel) -> GenericState? {
         var position = transformToUserSpace(point: value.location, transform: viewModel.transform)
-        position -= CGPoint(x: 37, y: 37)
+        
+        if let symbol = symbolHit {
+            if !freshlySelected {
+                selection.removeFromSelection(symbol: symbol)
+                return nil
+            }
+        }
+        freshlySelected = false
         
         if shouldAddNewSymbol {
+            position -= CGPoint(x: 37, y: 37)
             let newSymbol = Symbol(position: position, size: CGSize(width: 75, height: 75), type: .rectangle)
             viewModel.symbols.append(newSymbol)
         } else {
