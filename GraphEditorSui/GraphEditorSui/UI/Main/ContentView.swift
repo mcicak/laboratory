@@ -95,7 +95,8 @@ struct ContentView: View {
                     Spacer(minLength: 40)
                     
                     Button(action: {
-                        print("DELETE")
+                        let deleteCommand = DeleteCommand(symbols: stateMachine.selectionModel.elements)
+                        stateMachine.commandManager.addCommand(command: deleteCommand, graph: stateMachine)
                     }, label: {
                         Image(systemName: "trash")
                     })
