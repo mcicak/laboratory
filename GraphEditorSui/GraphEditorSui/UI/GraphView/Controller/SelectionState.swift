@@ -61,14 +61,12 @@ class SelectionState: GestureState {
     }
     
     override func dragEnded(value: DragGesture.Value, 
-                            viewModel: GraphViewModel,
-                            selection: SelectionModel,
-                            commandManager: CommandManager) -> GenericState? {
-        var position = transformToUserSpace(point: value.location, transform: viewModel.transform)
+                            graph: GraphStateMachine) -> GenericState? {
+        var position = transformToUserSpace(point: value.location, transform: graph.viewModel.transform)
         
         if let symbol = symbolHit {
             if !freshlySelected {
-                selection.removeFromSelection(symbol: symbol)
+                graph.selectionModel.removeFromSelection(symbol: symbol)
                 return nil
             }
         }
@@ -77,8 +75,8 @@ class SelectionState: GestureState {
         if shouldAddNewSymbol {
             position -= CGPoint(x: 37, y: 37)
             let newSymbol = Symbol(position: position, size: CGSize(width: 75, height: 75), type: .rectangle)
-            
-            viewModel.symbols.append(newSymbol)
+            graph.commandManager.addCommand(command: AddSymbolCommand(symbols: [newSymbol]), graph: graph)
+            //viewModel.symbols.append(newSymbol)
         } else {
             shouldAddNewSymbol = true
         }

@@ -56,18 +56,18 @@ struct ContentView: View {
             .navigationBarItems(
                 leading: HStack {
                     Button(action: {
-                        print("UNDO")
+                        stateMachine.commandManager.undoCommand(stateMachine)
                     }, label: {
                         Image(systemName: "arrow.uturn.backward")
                     })
-                    .disabled(stateMachine.commandManager.currentCommandIsFirst())
+                    .disabled(stateMachine.commandManager.currentCommandIsFirst)
                     
                     Button(action: {
-                        print("REDO")
+                        stateMachine.commandManager.doCommand(stateMachine)
                     }, label: {
                         Image(systemName: "arrow.uturn.forward")
                     })
-                    .disabled(stateMachine.commandManager.currentCommandIsLast())
+                    .disabled(stateMachine.commandManager.currentCommandIsLast)
                     
                     Spacer(minLength: 40)
                     

@@ -8,53 +8,43 @@
 import Foundation
 
 protocol Command {
-    func doCommand()
-    func undoCommand()
+    func doCommand(_ graph: GraphStateMachine)
+    func undoCommand(_ graph: GraphStateMachine)
 }
 
+@Observable
 class CommandManager {
     
     var commands = [Command]()
     
     var currentCommandIndex = 0
+
+    var count: Int { commands.count }
+    var isEmpty: Bool { count == 0 }
+    var currentCommandIsFirst: Bool { currentCommandIndex == 0 }
+    var currentCommandIsLast: Bool { currentCommandIndex == commands.count }
     
-    var count: Int {
-        commands.count
-    }
-    
-    var isEmpty: Bool {
-        count == 0
-    }
-    
-    func addCommand(command: Command) {
+    func addCommand(command: Command, graph: GraphStateMachine) {
         while currentCommandIndex < commands.count {
             commands.remove(at: currentCommandIndex)
         }
         commands.append(command)
-        doCommand()
+        doCommand(graph)
     }
     
-    func doCommand() {
+    func doCommand(_ graph: GraphStateMachine) {
         if currentCommandIndex < commands.count {
             let currentCommand = commands[currentCommandIndex]
             currentCommandIndex += 1
-            currentCommand.doCommand()
+            currentCommand.doCommand(graph)
         }
     }
     
-    func undoCommand() {
+    func undoCommand(_ graph: GraphStateMachine) {
         if currentCommandIndex > 0 {
             currentCommandIndex -= 1
             let currentCommand = commands[currentCommandIndex]
-            currentCommand.undoCommand()
+            currentCommand.undoCommand(graph)
         }
-    }
-    
-    func currentCommandIsFirst() -> Bool {
-        return currentCommandIndex == 0
-    }
-    
-    func currentCommandIsLast() -> Bool {
-        return currentCommandIndex == commands.count
     }
 }

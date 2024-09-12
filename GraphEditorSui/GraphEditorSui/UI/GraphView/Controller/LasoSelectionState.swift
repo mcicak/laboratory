@@ -44,22 +44,19 @@ class LasoSelectionState: GestureState {
         return nil
     }
     
-    override func dragEnded(value: DragGesture.Value, 
-                            viewModel: GraphViewModel,
-                            selection: SelectionModel,
-                            commandManager: CommandManager) -> GenericState? {
+    override func dragEnded(value: DragGesture.Value, graph: GraphStateMachine) -> GenericState? {
         // End the lasso selection
-        viewModel.isLasoOn = false
+        graph.viewModel.isLasoOn = false
         
         // Check which elements are within the lasso rectangle
-        let lasoRect = viewModel.lasoRect
+        let lasoRect = graph.viewModel.lasoRect
         
         // Filter elements that are inside or intersect with the lasso rect
-        let selectedElements = viewModel.symbols.filter { element in
+        let selectedElements = graph.viewModel.symbols.filter { element in
             return element.asRectangle.intersects(lasoRect)
         }
         
-        selection.addMultipleSelection(symbols: selectedElements)
+        graph.selectionModel.addMultipleSelection(symbols: selectedElements)
         return SelectionState()
     }
 }

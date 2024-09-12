@@ -39,10 +39,17 @@ class MoveState: GestureState {
         return nil
     }
     
-    override func dragEnded(value: DragGesture.Value, 
-                            viewModel: GraphViewModel,
-                            selection: SelectionModel,
-                            commandManager: CommandManager) -> GenericState? {
+    override func dragEnded(value: DragGesture.Value, graph: GraphStateMachine) -> GenericState? {
+        guard let symbol = graph.selectionModel.elements.first,
+              let startPosition = initialPositions[symbol.id] else {
+            return SelectionState()
+        }
+        
+        let endPosition = symbol.position
+        let delta: CGPoint = endPosition - startPosition
+        
+        let moveCommand = MoveSymbolsCommand(symbols: Set(graph.selectionModel.elements), delta: delta)
+        graph.commandManager.addCommand(command: moveCommand, graph: graph)
         return SelectionState()
     }
 }

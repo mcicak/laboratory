@@ -18,6 +18,9 @@
 		4C584E3E2C91C0EF008275B3 /* LasoSelectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E3D2C91C0EF008275B3 /* LasoSelectionState.swift */; };
 		4C584E402C92CF2E008275B3 /* ResizeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E3F2C92CF2E008275B3 /* ResizeState.swift */; };
 		4C584E452C92F89B008275B3 /* CommandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E442C92F89B008275B3 /* CommandManager.swift */; };
+		4C584E472C9315F6008275B3 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E462C9315F6008275B3 /* Sequence.swift */; };
+		4C584E492C931A57008275B3 /* AddSymbolCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E482C931A57008275B3 /* AddSymbolCommand.swift */; };
+		4C584E4B2C931FB6008275B3 /* MoveSymbolsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E4A2C931FB6008275B3 /* MoveSymbolsCommand.swift */; };
 		4C7FADC82C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FADC72C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift */; };
 		4C7FADCA2C81C4AE00C0C6F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FADC92C81C4AE00C0C6F5 /* ContentView.swift */; };
 		4C7FADCC2C81C4AF00C0C6F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C7FADCB2C81C4AF00C0C6F5 /* Assets.xcassets */; };
@@ -59,6 +62,9 @@
 		4C584E3D2C91C0EF008275B3 /* LasoSelectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LasoSelectionState.swift; sourceTree = "<group>"; };
 		4C584E3F2C92CF2E008275B3 /* ResizeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeState.swift; sourceTree = "<group>"; };
 		4C584E442C92F89B008275B3 /* CommandManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandManager.swift; sourceTree = "<group>"; };
+		4C584E462C9315F6008275B3 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
+		4C584E482C931A57008275B3 /* AddSymbolCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSymbolCommand.swift; sourceTree = "<group>"; };
+		4C584E4A2C931FB6008275B3 /* MoveSymbolsCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveSymbolsCommand.swift; sourceTree = "<group>"; };
 		4C7FADC42C81C4AE00C0C6F5 /* GraphEditorSui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraphEditorSui.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7FADC72C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphEditorSuiApp.swift; sourceTree = "<group>"; };
 		4C7FADC92C81C4AE00C0C6F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -121,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				4C7FADF12C81C58700C0C6F5 /* CGGeometry.swift */,
+				4C584E462C9315F6008275B3 /* Sequence.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -181,6 +188,8 @@
 			isa = PBXGroup;
 			children = (
 				4C584E442C92F89B008275B3 /* CommandManager.swift */,
+				4C584E482C931A57008275B3 /* AddSymbolCommand.swift */,
+				4C584E4A2C931FB6008275B3 /* MoveSymbolsCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -377,6 +386,8 @@
 				4C7FADC82C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift in Sources */,
 				4C7FADF42C81E79C00C0C6F5 /* SelectionModel.swift in Sources */,
 				4C584E3A2C919ED6008275B3 /* ZoomState.swift in Sources */,
+				4C584E472C9315F6008275B3 /* Sequence.swift in Sources */,
+				4C584E492C931A57008275B3 /* AddSymbolCommand.swift in Sources */,
 				4C584E302C907E2C008275B3 /* SymbolsListView.swift in Sources */,
 				4C7FADF62C85E56D00C0C6F5 /* StateMachine.swift in Sources */,
 				4C584E282C907CB1008275B3 /* SelectionHandleHandler.swift in Sources */,
@@ -385,6 +396,7 @@
 				4C584E382C918287008275B3 /* SelectionState.swift in Sources */,
 				4C584E2E2C907D86008275B3 /* GraphViewModel.swift in Sources */,
 				4C584E3E2C91C0EF008275B3 /* LasoSelectionState.swift in Sources */,
+				4C584E4B2C931FB6008275B3 /* MoveSymbolsCommand.swift in Sources */,
 				4C7FADF22C81C58700C0C6F5 /* CGGeometry.swift in Sources */,
 				4C584E262C9041D1008275B3 /* GraphView.swift in Sources */,
 			);
