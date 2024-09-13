@@ -96,7 +96,8 @@ struct ContentView: View {
                     Button(action: {
                         let pastedElements = clipboard.getElements()
                         pastedElements.forEach { $0.position += CGPoint(x: 10, y: 10) }
-                        stateMachine.viewModel.symbols.append(contentsOf: pastedElements)
+                        let addCommand = AddSymbolCommand(symbols: pastedElements)
+                        stateMachine.commandManager.addCommand(command: addCommand, graph: stateMachine)
                         stateMachine.selectionModel.clearSelection()
                         stateMachine.selectionModel.addMultipleSelection(symbols: pastedElements)
                     }, label: {
@@ -148,7 +149,7 @@ struct ContentView: View {
                 Symbol(position: CGPoint(x: 200, y: 400), size: CGSize(width: 200, height: 100), type: .rectangle)
             ]
             
-            stateMachine.selectionModel.addToSelection(symbol: stateMachine.viewModel.symbols[1])
+            //stateMachine.selectionModel.addToSelection(symbol: stateMachine.viewModel.symbols[1])
         }
     }
 }
