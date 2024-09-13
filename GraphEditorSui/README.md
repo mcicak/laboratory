@@ -11,5 +11,6 @@ SwiftUI based
 - Laso selection
 - Cut, Copy, Paste
 - Undo / Redo
+- Delete
 
 ![Demo](gifs/demo.gif)
