@@ -21,6 +21,8 @@
 		4C584E472C9315F6008275B3 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E462C9315F6008275B3 /* Sequence.swift */; };
 		4C584E492C931A57008275B3 /* AddSymbolCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E482C931A57008275B3 /* AddSymbolCommand.swift */; };
 		4C584E4B2C931FB6008275B3 /* MoveSymbolsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E4A2C931FB6008275B3 /* MoveSymbolsCommand.swift */; };
+		4C584E4D2C941A0B008275B3 /* DeleteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E4C2C941A0B008275B3 /* DeleteCommand.swift */; };
+		4C584E4F2C9423E6008275B3 /* ResizeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E4E2C9423E6008275B3 /* ResizeCommand.swift */; };
 		4C7FADC82C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FADC72C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift */; };
 		4C7FADCA2C81C4AE00C0C6F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FADC92C81C4AE00C0C6F5 /* ContentView.swift */; };
 		4C7FADCC2C81C4AF00C0C6F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C7FADCB2C81C4AF00C0C6F5 /* Assets.xcassets */; };
@@ -65,6 +67,8 @@
 		4C584E462C9315F6008275B3 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		4C584E482C931A57008275B3 /* AddSymbolCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSymbolCommand.swift; sourceTree = "<group>"; };
 		4C584E4A2C931FB6008275B3 /* MoveSymbolsCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveSymbolsCommand.swift; sourceTree = "<group>"; };
+		4C584E4C2C941A0B008275B3 /* DeleteCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCommand.swift; sourceTree = "<group>"; };
+		4C584E4E2C9423E6008275B3 /* ResizeCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeCommand.swift; sourceTree = "<group>"; };
 		4C7FADC42C81C4AE00C0C6F5 /* GraphEditorSui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraphEditorSui.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7FADC72C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphEditorSuiApp.swift; sourceTree = "<group>"; };
 		4C7FADC92C81C4AE00C0C6F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -188,8 +192,10 @@
 			isa = PBXGroup;
 			children = (
 				4C584E442C92F89B008275B3 /* CommandManager.swift */,
+				4C584E4C2C941A0B008275B3 /* DeleteCommand.swift */,
 				4C584E482C931A57008275B3 /* AddSymbolCommand.swift */,
 				4C584E4A2C931FB6008275B3 /* MoveSymbolsCommand.swift */,
+				4C584E4E2C9423E6008275B3 /* ResizeCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -381,6 +387,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C584E3C2C91BDA8008275B3 /* MoveState.swift in Sources */,
+				4C584E4F2C9423E6008275B3 /* ResizeCommand.swift in Sources */,
 				4C7FADCA2C81C4AE00C0C6F5 /* ContentView.swift in Sources */,
 				4C584E362C91825A008275B3 /* DragState.swift in Sources */,
 				4C7FADC82C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift in Sources */,
@@ -396,6 +403,7 @@
 				4C584E382C918287008275B3 /* SelectionState.swift in Sources */,
 				4C584E2E2C907D86008275B3 /* GraphViewModel.swift in Sources */,
 				4C584E3E2C91C0EF008275B3 /* LasoSelectionState.swift in Sources */,
+				4C584E4D2C941A0B008275B3 /* DeleteCommand.swift in Sources */,
 				4C584E4B2C931FB6008275B3 /* MoveSymbolsCommand.swift in Sources */,
 				4C7FADF22C81C58700C0C6F5 /* CGGeometry.swift in Sources */,
 				4C584E262C9041D1008275B3 /* GraphView.swift in Sources */,

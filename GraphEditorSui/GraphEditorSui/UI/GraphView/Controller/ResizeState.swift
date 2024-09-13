@@ -101,7 +101,8 @@ class ResizeState: GestureState {
     }
     
     override func dragEnded(value: DragGesture.Value, graph: GraphStateMachine) -> (any GenericState)? {
-        // TODO: add resize command
+        let resizeCommand = ResizeCommand(symbol: symbol, startFrame: oldFrame, endFrame: symbol.asRectangle)
+        graph.commandManager.addCommand(command: resizeCommand, graph: graph)
         return SelectionState()
     }
 }

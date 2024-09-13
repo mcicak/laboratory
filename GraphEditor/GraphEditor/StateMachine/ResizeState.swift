@@ -129,3 +129,4 @@ class ResizeState: State {
         SREG.context.graphView?.setCurrentState(currentState: SelectionState())
     }
 }
+
