@@ -16,12 +16,7 @@ enum SymbolType {
 class GraphViewModel: ObservableObject {
     var symbols: [Symbol] = []
     var transform: CGAffineTransform = .identity
-    
-    var initialTransform: CGAffineTransform = .identity
-    var initialOffset: CGSize = .zero
-    var initialScale: CGFloat = 1.0
-    var lastLocation: CGPoint = .zero
-    
+        
     var lasoRect: CGRect = .zero
     var isLasoOn = false
 }

@@ -10,18 +10,23 @@ import SwiftUI
 
 class ZoomState: GestureState {
     
+    var initialTransform: CGAffineTransform!
+    
+    override func stateWillStart(viewModel: GraphViewModel, selection: SelectionModel) {
+        self.initialTransform = viewModel.transform
+    }
+    
     override func magnifyChanged(value: MagnifyGesture.Value, viewModel: GraphViewModel) -> GenericState? {
         let middlePoint = value.startLocation
-        
-        // Calculate the new scale based on the magnification gesture
-        let scale = viewModel.transform.a * value.magnification
-        if scale < 0.3 { return nil }
         
         // Calculate the old position before applying the new scale
         let oldPosition = transformToUserSpace(point: middlePoint, transform: viewModel.transform)
         
         // Update the transform with the new scale
-        var newTransform = viewModel.initialTransform.scaledBy(x: value.magnification, y: value.magnification)
+        var newTransform = initialTransform.scaledBy(x: value.magnification, y: value.magnification)
+        if newTransform.scale() < Constants.minScale {
+            return nil
+        }
         
         // Calculate the new position after scaling
         let newPosition = transformToUserSpace(point: middlePoint, transform: newTransform)
@@ -35,7 +40,6 @@ class ZoomState: GestureState {
     }
     
     override func magnifyEnded(viewModel: GraphViewModel) -> GenericState? {
-        viewModel.initialTransform = viewModel.transform
         return SelectionState()
     }
 }

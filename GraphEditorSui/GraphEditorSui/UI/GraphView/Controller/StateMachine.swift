@@ -64,7 +64,6 @@ class GraphStateMachine {
             newValue.stateWillStart(viewModel: viewModel, selection: selectionModel)
             
             _currentState = newValue
-            print("NEW STATE: \(newValue)")
             
             oldState.stateDidFinish(viewModel: viewModel, selection: selectionModel)
             newValue.stateDidStart(viewModel: viewModel, selection: selectionModel)

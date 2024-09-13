@@ -104,7 +104,7 @@ struct ContentView: View {
                 },
                 trailing: HStack {
                     Button(action: {
-                        print("RESET-ZOOM")
+                        stateMachine.viewModel.transform = .identity
                     }, label: {
                         Image(systemName: "1.magnifyingglass")
                     })
