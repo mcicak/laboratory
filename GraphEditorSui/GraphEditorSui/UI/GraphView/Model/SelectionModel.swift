@@ -23,7 +23,7 @@ class SelectionModel: ObservableObject {
         elements.insert(symbol)
     }
 
-    func addMultipleSelection(symbols: [Symbol]) {
+    func addMultipleSelection(symbols: Set<Symbol>) {
         for symbol in symbols {
             if !elements.contains(symbol) {
                 symbol.isSelected = true

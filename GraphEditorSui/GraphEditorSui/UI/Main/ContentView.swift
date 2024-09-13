@@ -32,11 +32,17 @@ class Symbol: Identifiable, Equatable, Hashable {
     }
     
     var asRectangle: CGRect { return CGRect(origin: position, size: size) }
+    
+    func copy() -> Symbol {
+        let newSymbol = Symbol(position: self.position, size: self.size, type: self.type)
+        return newSymbol
+    }
 }
 
 struct ContentView: View {
     
     @State var stateMachine = GraphStateMachine()
+    @State var clipboard = Clipboard()
     
     var body: some View {
         NavigationSplitView {
@@ -72,25 +78,31 @@ struct ContentView: View {
                     Spacer(minLength: 40)
                     
                     Button(action: {
-                        print("CUT")
+                        clipboard.setElements(stateMachine.selectionModel.elements)
+                        let deleteCommand = DeleteCommand(symbols: stateMachine.selectionModel.elements)
+                        stateMachine.commandManager.addCommand(command: deleteCommand, graph: stateMachine)
                     }, label: {
                         Image(systemName: "scissors")
                     })
-                    //.disabled(stateMachine.commandManager.currentCommandIsLast())
+                    .disabled(stateMachine.selectionModel.isEmpty)
                     
                     Button(action: {
-                        print("COPY")
+                        clipboard.setElements(stateMachine.selectionModel.elements)
                     }, label: {
                         Image(systemName: "square.2.layers.3d")
                     })
-                    //.disabled(stateMachine.commandManager.currentCommandIsLast())
+                    .disabled(stateMachine.selectionModel.isEmpty)
                     
                     Button(action: {
-                        print("PASTE")
+                        let pastedElements = clipboard.getElements()
+                        pastedElements.forEach { $0.position += CGPoint(x: 10, y: 10) }
+                        stateMachine.viewModel.symbols.append(contentsOf: pastedElements)
+                        stateMachine.selectionModel.clearSelection()
+                        stateMachine.selectionModel.addMultipleSelection(symbols: pastedElements)
                     }, label: {
                         Image(systemName: "list.clipboard")
                     })
-                    //.disabled(stateMachine.commandManager.currentCommandIsLast())
+                    .disabled(clipboard.isEmpty)
                     
                     Spacer(minLength: 40)
                     

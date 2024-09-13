@@ -12,6 +12,7 @@ protocol Command {
     func undoCommand(_ graph: GraphStateMachine)
 }
 
+// Supports undo/redo through command pattern
 @Observable
 class CommandManager {
     

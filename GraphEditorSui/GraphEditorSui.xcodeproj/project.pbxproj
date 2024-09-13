@@ -24,6 +24,7 @@
 		4C584E4D2C941A0B008275B3 /* DeleteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E4C2C941A0B008275B3 /* DeleteCommand.swift */; };
 		4C584E4F2C9423E6008275B3 /* ResizeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E4E2C9423E6008275B3 /* ResizeCommand.swift */; };
 		4C584E512C9427C3008275B3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E502C9427C3008275B3 /* Constants.swift */; };
+		4C584E532C942BEE008275B3 /* Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C584E522C942BEE008275B3 /* Clipboard.swift */; };
 		4C7FADC82C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FADC72C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift */; };
 		4C7FADCA2C81C4AE00C0C6F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7FADC92C81C4AE00C0C6F5 /* ContentView.swift */; };
 		4C7FADCC2C81C4AF00C0C6F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C7FADCB2C81C4AF00C0C6F5 /* Assets.xcassets */; };
@@ -71,6 +72,7 @@
 		4C584E4C2C941A0B008275B3 /* DeleteCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCommand.swift; sourceTree = "<group>"; };
 		4C584E4E2C9423E6008275B3 /* ResizeCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizeCommand.swift; sourceTree = "<group>"; };
 		4C584E502C9427C3008275B3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4C584E522C942BEE008275B3 /* Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipboard.swift; sourceTree = "<group>"; };
 		4C7FADC42C81C4AE00C0C6F5 /* GraphEditorSui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraphEditorSui.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7FADC72C81C4AE00C0C6F5 /* GraphEditorSuiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphEditorSuiApp.swift; sourceTree = "<group>"; };
 		4C7FADC92C81C4AE00C0C6F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			children = (
 				4C584E2D2C907D86008275B3 /* GraphViewModel.swift */,
 				4C7FADF32C81E79C00C0C6F5 /* SelectionModel.swift */,
+				4C584E522C942BEE008275B3 /* Clipboard.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				4C584E302C907E2C008275B3 /* SymbolsListView.swift in Sources */,
 				4C7FADF62C85E56D00C0C6F5 /* StateMachine.swift in Sources */,
 				4C584E282C907CB1008275B3 /* SelectionHandleHandler.swift in Sources */,
+				4C584E532C942BEE008275B3 /* Clipboard.swift in Sources */,
 				4C584E452C92F89B008275B3 /* CommandManager.swift in Sources */,
 				4C584E402C92CF2E008275B3 /* ResizeState.swift in Sources */,
 				4C584E382C918287008275B3 /* SelectionState.swift in Sources */,

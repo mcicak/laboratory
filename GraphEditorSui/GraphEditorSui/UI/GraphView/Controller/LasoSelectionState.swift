@@ -56,7 +56,7 @@ class LasoSelectionState: GestureState {
             return element.asRectangle.intersects(lasoRect)
         }
         
-        graph.selectionModel.addMultipleSelection(symbols: selectedElements)
+        graph.selectionModel.addMultipleSelection(symbols: Set(selectedElements))
         return SelectionState()
     }
 }
