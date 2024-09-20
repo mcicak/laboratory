@@ -60,3 +60,91 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+
+# ANDROID
+
+# Project-specific files
+.gradle/
+.idea/
+.DS_Store
+build/
+local.properties
+*.iml
+*.hprof
+
+# Android-specific
+**/build/
+**/generated/
+app/build/
+captures/
+outputs/
+*.apk
+*.ap_
+
+# iOS-specific
+iosApp/Pods/
+iosApp/Podfile.lock
+iosApp/.symlinks/
+iosApp/xcuserdata/
+iosApp/DerivedData/
+iosApp/build/
+iosApp/*.xcodeproj/project.xcworkspace/
+iosApp/*.xcodeproj/xcuserdata/
+iosApp/*.xcodeproj/xcshareddata/
+
+# KMP build output
+build/
+bin/
+*.jar
+*.war
+*.ear
+.gradle/
+.kts/
+*.kotlin_metadata/
+*.kotlin_module/
+
+# Temporary files and logs
+*.log
+*.tmp
+*.lock
+*.swp
+*.swo
+
+# Environment-specific files
+*.env
+.env.local
+.env.production
+.env.*.local
+
+# macOS-specific
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows-specific
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# JetBrains-specific
+.idea/
+*.ipr
+*.iws
+*.idea/**/workspace.xml
+*.idea/**/tasks.xml
+*.idea/**/gradle.xml
+*.idea/**/libraries/
+*.idea/**/modules.xml
+
+# Ktor server (if applicable)
+ktor-app/build/
+ktor-app/logs/
+
+# IntelliJ related
+out/
+.idea/
+*.iws
+*.iml
+*.ipr
