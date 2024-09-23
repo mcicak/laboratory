@@ -58,7 +58,10 @@ fun HomeScreen(viewModel: HomeViewModel) {
                     items(products.size) { index ->
                         ProductCard(item = products[index], onFavoriteToggle = {
                             viewModel.toggleFavorite(products[index].id)
-                        })
+                        },
+                            onAddToCart = {
+                                viewModel.addToCart(products[index].id)
+                            })
                     }
                 }
             }

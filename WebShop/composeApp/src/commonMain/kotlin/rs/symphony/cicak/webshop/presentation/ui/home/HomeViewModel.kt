@@ -42,4 +42,8 @@ class HomeViewModel(
             repository.toggleFavorite(productId)
         }
     }
+
+    fun addToCart(id: Long) {
+
+    }
 }

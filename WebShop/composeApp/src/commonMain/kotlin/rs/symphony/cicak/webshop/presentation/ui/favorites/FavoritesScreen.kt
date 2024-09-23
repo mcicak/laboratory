@@ -91,9 +91,14 @@ fun FavoritesGridView(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(favorites.size) { index ->
-            ProductCard(item = favorites[index], onFavoriteToggle = {
-                viewModel.toggleFavorite(favorites[index].id)
-            })
+            ProductCard(item = favorites[index],
+                onFavoriteToggle = {
+                    viewModel.toggleFavorite(favorites[index].id)
+                },
+                onAddToCart = {
+                    viewModel.addToCart(favorites[index].id)
+                }
+            )
         }
     }
 }

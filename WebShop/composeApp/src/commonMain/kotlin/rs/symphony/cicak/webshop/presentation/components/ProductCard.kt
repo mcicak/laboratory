@@ -19,6 +19,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -32,68 +33,104 @@ import rs.symphony.cicak.webshop.domain.Product
 import rs.symphony.cicak.webshop.domain.getImageResource
 
 @Composable
-fun ProductCard(item: Product, onFavoriteToggle: (Long) -> Unit) {
+fun ProductCard(
+    item: Product,
+    onFavoriteToggle: () -> Unit,
+    onAddToCart: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(1.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            //.padding(16.dp),
-            verticalArrangement = Arrangement.SpaceBetween
+        Box(
+            modifier = Modifier.fillMaxSize()
         ) {
-            // Placeholder image
-            Image(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(2.dp)
-                    .aspectRatio(1f), // Ensures the image is square
-                painter = painterResource(item.getImageResource()),
-                contentScale = ContentScale.Fit,
-                contentDescription = null,
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Product name
-            Text(
-                text = item.name,
-                style = MaterialTheme.typography.h6,
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            // Price and Favorite icon
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                    .fillMaxSize(),
+                //.padding(16.dp),
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
-                    text = "${item.price}$",
-                    style = MaterialTheme.typography.body1
+                // Placeholder image
+                Image(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(2.dp)
+                        .aspectRatio(1f), // Ensures the image is square
+                    painter = painterResource(item.getImageResource()),
+                    contentScale = ContentScale.Fit,
+                    contentDescription = null,
                 )
 
-                Box(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .clickable(
-                            onClick = { onFavoriteToggle(item.id) },
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Product name
+                Text(
+                    text = item.name,
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                // Price and Favorite icon
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        imageVector = if (item.favorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                        contentDescription = null,
-                        tint = if (item.favorite) Color.Red else Color.Gray
+                    Text(
+                        text = "${item.price}$",
+                        style = MaterialTheme.typography.body1
                     )
                 }
-
             }
+
+            FavoriteButton(Modifier.align(Alignment.TopEnd), item, onFavoriteToggle)
+            AddToCartButton(Modifier.align(Alignment.BottomEnd), onAddToCart)
         }
+    }
+}
+
+@Composable
+private fun AddToCartButton(
+    modifier: Modifier,
+    onAddToCart: () -> Unit
+) {
+    Box(
+        modifier = modifier.padding(8.dp)
+            .clickable(
+                onClick = onAddToCart,
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() })
+    ) {
+        Icon(
+            imageVector = Icons.Filled.ShoppingCart,
+            contentDescription = null,
+            tint = Color.Black
+        )
+    }
+}
+
+@Composable
+private fun FavoriteButton(
+    modifier: Modifier,
+    item: Product,
+    onFavoriteToggle: () -> Unit,
+) {
+    Box(
+        modifier = modifier.padding(8.dp)
+            .clickable(
+                onClick = onFavoriteToggle,
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() })
+    ) {
+        Icon(
+            imageVector = if (item.favorite) Icons.Filled.Favorite else
+                Icons.Outlined.FavoriteBorder,
+            contentDescription = null,
+            tint = if (item.favorite) Color.Red else Color.Gray
+        )
     }
 }

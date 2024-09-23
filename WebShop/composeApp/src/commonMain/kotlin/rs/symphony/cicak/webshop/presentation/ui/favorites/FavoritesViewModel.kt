@@ -29,4 +29,8 @@ class FavoritesViewModel(
     fun toggleGridView() {
         _isGridView.value = !_isGridView.value
     }
+
+    fun addToCart(id: Long) {
+
+    }
 }
