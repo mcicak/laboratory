@@ -25,7 +25,10 @@ class ProductRepositoryFake() : ProductRepository {
     // Initialize the repository with some fake products
     override fun initializeProducts() {
         val productList = List(100) {
-            Product(it.toLong(), "Product $it", it.toDouble() * 10)
+            Product(
+                it.toLong(), "Product $it", it.toDouble() * 10,
+                favorite = it.toLong() % 6 == 0.toLong()
+            )
         }
         _products.value = productList
     }

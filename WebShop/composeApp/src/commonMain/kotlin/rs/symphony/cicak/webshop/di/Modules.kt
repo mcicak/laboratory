@@ -12,6 +12,7 @@ import rs.symphony.cicak.webshop.dependencies.MyRepositoryImpl
 import rs.symphony.cicak.webshop.dependencies.MyViewModel
 import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesViewModel
 import rs.symphony.cicak.webshop.presentation.ui.home.HomeViewModel
+import rs.symphony.cicak.webshop.presentation.ui.favorites.FavoritesViewModel
 
 expect val platformModule: Module
 
@@ -25,4 +26,5 @@ val sharedModule = module {
     viewModelOf(::MyViewModel)
     viewModelOf(::HomeViewModel)
     viewModelOf(::CategoriesViewModel)
+    viewModelOf(::FavoritesViewModel)
 }

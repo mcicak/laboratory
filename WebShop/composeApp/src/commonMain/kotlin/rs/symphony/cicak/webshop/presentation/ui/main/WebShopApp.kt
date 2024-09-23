@@ -27,6 +27,7 @@ import rs.symphony.cicak.webshop.presentation.ui.cart.CartScreen
 import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesScreen
 import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesViewModel
 import rs.symphony.cicak.webshop.presentation.ui.favorites.FavoritesScreen
+import rs.symphony.cicak.webshop.presentation.ui.favorites.FavoritesViewModel
 import rs.symphony.cicak.webshop.presentation.ui.home.HomeScreen
 import rs.symphony.cicak.webshop.presentation.ui.home.HomeViewModel
 import rs.symphony.cicak.webshop.presentation.ui.profile.ProfileScreen
@@ -38,6 +39,7 @@ fun WebShopApp() {
 
     val homeViewModel = koinViewModel<HomeViewModel>()
     val categoriesViewModel = koinViewModel<CategoriesViewModel>()
+    val favoritesViewModel = koinViewModel<FavoritesViewModel>()
 
     Scaffold(
         bottomBar = {
@@ -100,7 +102,7 @@ fun WebShopApp() {
             when (selectedTab) {
                 0 -> HomeScreen(homeViewModel)
                 1 -> CategoriesScreen(categoriesViewModel)
-                2 -> FavoritesScreen()
+                2 -> FavoritesScreen(favoritesViewModel)
                 3 -> CartScreen()
                 4 -> ProfileScreen()
             }
