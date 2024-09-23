@@ -1,7 +1,10 @@
 package rs.symphony.cicak.webshop.presentation.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,13 +15,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,7 +32,7 @@ import rs.symphony.cicak.webshop.domain.Product
 import rs.symphony.cicak.webshop.domain.getImageResource
 
 @Composable
-fun ProductCard(item: Product, onFavoriteToggle: (Long) -> Unit = {}) {
+fun ProductCard(item: Product, onFavoriteToggle: (Long) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -38,7 +41,7 @@ fun ProductCard(item: Product, onFavoriteToggle: (Long) -> Unit = {}) {
         Column(
             modifier = Modifier
                 .fillMaxSize(),
-                //.padding(16.dp),
+            //.padding(16.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             // Placeholder image
@@ -52,7 +55,7 @@ fun ProductCard(item: Product, onFavoriteToggle: (Long) -> Unit = {}) {
                 contentDescription = null,
             )
 
-            Spacer(modifier = Modifier.height(8.dp)) // Adds some spacing
+            Spacer(modifier = Modifier.height(8.dp))
 
             // Product name
             Text(
@@ -61,7 +64,7 @@ fun ProductCard(item: Product, onFavoriteToggle: (Long) -> Unit = {}) {
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(4.dp)) // Adds some spacing
+            Spacer(modifier = Modifier.height(4.dp))
 
             // Price and Favorite icon
             Row(
@@ -74,13 +77,22 @@ fun ProductCard(item: Product, onFavoriteToggle: (Long) -> Unit = {}) {
                     style = MaterialTheme.typography.body1
                 )
 
-                IconButton(onClick = { onFavoriteToggle(item.id) }) {
+                Box(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clickable(
+                            onClick = { onFavoriteToggle(item.id) },
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
+                        )
+                ) {
                     Icon(
                         imageVector = if (item.favorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                         contentDescription = null,
                         tint = if (item.favorite) Color.Red else Color.Gray
                     )
                 }
+
             }
         }
     }

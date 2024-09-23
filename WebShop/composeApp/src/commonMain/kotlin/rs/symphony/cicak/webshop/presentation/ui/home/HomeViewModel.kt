@@ -1,13 +1,12 @@
 package rs.symphony.cicak.webshop.presentation.ui.home
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import rs.symphony.cicak.webshop.data.repository.ProductRepository
 import rs.symphony.cicak.webshop.domain.Product
 
 sealed class HomeScreenState {
@@ -17,23 +16,30 @@ sealed class HomeScreenState {
 }
 
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    private val repository: ProductRepository
+) : ViewModel() {
 
     private val _homeScreenState = MutableStateFlow<HomeScreenState>(HomeScreenState.Loading)
     val homeScreenState: StateFlow<HomeScreenState> = _homeScreenState
 
     fun fetchHomeProducts() {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch {
             delay(600L)
 
-            // Simulate some network or database fetching
-
-            val productList = List(100) {
-                Product(it.toLong(), "Product $it", it.toDouble() * 10)
+            repository.getProducts().collect { products ->
+                if (products.isNotEmpty()) {
+                    _homeScreenState.value = HomeScreenState.Success(products)
+                } else {
+                    _homeScreenState.value = HomeScreenState.Error("No products found")
+                }
             }
-            // Update the product list
-            _homeScreenState.value = HomeScreenState.Success(productList)
-            //_products.update { productList }
+        }
+    }
+
+    fun toggleFavorite(productId: Long) {
+        viewModelScope.launch {
+            repository.toggleFavorite(productId)
         }
     }
 }
