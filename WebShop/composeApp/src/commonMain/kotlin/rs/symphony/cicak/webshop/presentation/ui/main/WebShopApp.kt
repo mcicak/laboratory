@@ -26,7 +26,7 @@ import org.koin.core.annotation.KoinExperimentalAPI
 import rs.symphony.cicak.webshop.presentation.ui.cart.CartScreen
 import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesScreen
 import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesViewModel
-import rs.symphony.cicak.webshop.presentation.ui.favourites.FavoritesScreen
+import rs.symphony.cicak.webshop.presentation.ui.favorites.FavoritesScreen
 import rs.symphony.cicak.webshop.presentation.ui.home.HomeScreen
 import rs.symphony.cicak.webshop.presentation.ui.home.HomeViewModel
 import rs.symphony.cicak.webshop.presentation.ui.profile.ProfileScreen

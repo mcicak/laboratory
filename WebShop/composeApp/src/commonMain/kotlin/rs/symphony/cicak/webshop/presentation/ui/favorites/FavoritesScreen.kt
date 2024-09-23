@@ -1,4 +1,4 @@
-package rs.symphony.cicak.webshop.presentation.ui.favourites
+package rs.symphony.cicak.webshop.presentation.ui.favorites
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
