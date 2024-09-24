@@ -56,9 +56,10 @@ fun HomeScreen(viewModel: HomeViewModel) {
                 ) {
                     val products = (state as HomeScreenState.Success).products
                     items(products.size) { index ->
-                        ProductCard(item = products[index], onFavoriteToggle = {
-                            viewModel.toggleFavorite(products[index].id)
-                        },
+                        ProductCard(item = products[index],
+                            onFavoriteToggle = {
+                                viewModel.toggleFavorite(products[index].id)
+                            },
                             onAddToCart = {
                                 viewModel.addToCart(products[index].id)
                             })

@@ -1,7 +1,12 @@
 package rs.symphony.cicak.webshop.domain
 
 import org.jetbrains.compose.resources.DrawableResource
-import webshop.composeapp.generated.resources.*
+import webshop.composeapp.generated.resources.Res
+import webshop.composeapp.generated.resources.p1
+import webshop.composeapp.generated.resources.p2
+import webshop.composeapp.generated.resources.p3
+import webshop.composeapp.generated.resources.p4
+import webshop.composeapp.generated.resources.p5
 
 data class Product(
     val id: Long,
@@ -24,4 +29,9 @@ data class Category(
     val id: Long,
     val name: String,
     val price: Double
+)
+
+data class CartItem(
+    val productId: Long,
+    val quantity: Int
 )
