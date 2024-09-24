@@ -6,6 +6,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import rs.symphony.cicak.webshop.data.repository.CartRepository
 import rs.symphony.cicak.webshop.data.repository.ProductRepository
 import rs.symphony.cicak.webshop.domain.Product
 
@@ -17,7 +18,8 @@ sealed class HomeScreenState {
 
 
 class HomeViewModel(
-    private val repository: ProductRepository
+    private val productRepository: ProductRepository,
+    private val cartRepository: CartRepository
 ) : ViewModel() {
 
     private val _homeScreenState = MutableStateFlow<HomeScreenState>(HomeScreenState.Loading)
@@ -27,7 +29,7 @@ class HomeViewModel(
         viewModelScope.launch {
             delay(600L)
 
-            repository.getProducts().collect { products ->
+            productRepository.getProducts().collect { products ->
                 if (products.isNotEmpty()) {
                     _homeScreenState.value = HomeScreenState.Success(products)
                 } else {
@@ -39,11 +41,13 @@ class HomeViewModel(
 
     fun toggleFavorite(productId: Long) {
         viewModelScope.launch {
-            repository.toggleFavorite(productId)
+            productRepository.toggleFavorite(productId)
         }
     }
 
     fun addToCart(id: Long) {
-
+        viewModelScope.launch {
+            cartRepository.addToCart(id)
+        }
     }
 }

@@ -21,13 +21,12 @@ class AppModel {
     fun initializeProducts() {
         val productList = List(100) {
             Product(
-                it.toLong(), "Product $it", it.toDouble() * 10,
+                it.toLong(), "Product $it", (it.toDouble() + 10) * 10,
                 favorite = it.toLong() % 6 == 0.toLong()
             )
         }
         _products.value = productList
     }
-
 
     // Methods for repositories to update the data
     fun updateProducts(newProducts: List<Product>) {

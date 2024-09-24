@@ -1,13 +1,17 @@
 package rs.symphony.cicak.webshop.presentation.ui.favorites
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import rs.symphony.cicak.webshop.data.repository.CartRepository
 import rs.symphony.cicak.webshop.data.repository.ProductRepository
 import rs.symphony.cicak.webshop.domain.Product
 
 class FavoritesViewModel(
-    private val productRepository: ProductRepository
+    private val productRepository: ProductRepository,
+    private val cartRepository: CartRepository
 ) : ViewModel() {
 
     private val _favorites = MutableStateFlow<List<Product>>(emptyList())
@@ -31,6 +35,8 @@ class FavoritesViewModel(
     }
 
     fun addToCart(id: Long) {
-
+        viewModelScope.launch {
+            cartRepository.addToCart(id)
+        }
     }
 }

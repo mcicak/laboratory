@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import rs.symphony.cicak.webshop.presentation.ui.cart.CartScreen
+import rs.symphony.cicak.webshop.presentation.ui.cart.CartViewModel
 import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesScreen
 import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesViewModel
 import rs.symphony.cicak.webshop.presentation.ui.favorites.FavoritesScreen
@@ -40,6 +41,7 @@ fun WebShopApp() {
     val homeViewModel = koinViewModel<HomeViewModel>()
     val categoriesViewModel = koinViewModel<CategoriesViewModel>()
     val favoritesViewModel = koinViewModel<FavoritesViewModel>()
+    val cartViewModel = koinViewModel<CartViewModel>()
 
     Scaffold(
         bottomBar = {
@@ -103,7 +105,7 @@ fun WebShopApp() {
                 0 -> HomeScreen(homeViewModel)
                 1 -> CategoriesScreen(categoriesViewModel)
                 2 -> FavoritesScreen(favoritesViewModel)
-                3 -> CartScreen()
+                3 -> CartScreen(cartViewModel)
                 4 -> ProfileScreen()
             }
         }
