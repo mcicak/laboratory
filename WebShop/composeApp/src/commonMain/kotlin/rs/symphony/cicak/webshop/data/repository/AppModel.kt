@@ -36,4 +36,8 @@ class AppModel {
     fun updateCartItems(newCartItems: List<CartItem>) {
         _cartItems.value = newCartItems
     }
+
+    fun getProductById(id: Long): Product? {
+        return _products.value.find { it.id == id }
+    }
 }

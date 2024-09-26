@@ -1,30 +1,68 @@
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package rs.symphony.cicak.webshop.presentation.ui.cart
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Button
+import androidx.compose.material.DismissDirection
+import androidx.compose.material.DismissState
+import androidx.compose.material.DismissValue
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.rememberDismissState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.painterResource
+import rs.symphony.cicak.webshop.domain.CartItem
+import webshop.composeapp.generated.resources.Res
+import webshop.composeapp.generated.resources.p1
+
 
 @Composable
 fun CartScreen(viewModel: CartViewModel) {
@@ -44,7 +82,7 @@ fun CartScreen(viewModel: CartViewModel) {
     ) { padding ->
 
         if (cartItems.isNotEmpty()) {
-            CartList(padding, viewModel)
+            FullCartView(padding, viewModel)
         } else {
             EmptyCartView(padding)
         }
@@ -52,46 +90,266 @@ fun CartScreen(viewModel: CartViewModel) {
 }
 
 @Composable
-fun CartList(padding: PaddingValues, viewModel: CartViewModel) {
+fun FullCartView(padding: PaddingValues, viewModel: CartViewModel) {
     val cartItems by viewModel.cartItems.collectAsState()
     val totalCost by viewModel.totalCost.collectAsState()
 
-    LazyColumn {
-        items(cartItems.size) { index ->
-            val cartItem = cartItems[index]
-            Text(text = "Product ID: ${cartItem.productId} - Quantity: ${cartItem.quantity}")
-
-            // Add buttons to update quantity or remove items
-            Row {
-                Button(onClick = {
-                    viewModel.updateCartItemQuantity(
-                        cartItem.productId,
-                        cartItem.quantity + 1
-                    )
-                }) {
-                    Text("Increase")
-                }
-                Button(onClick = {
-                    viewModel.updateCartItemQuantity(
-                        cartItem.productId,
-                        cartItem.quantity - 1
-                    )
-                }) {
-                    Text("Decrease")
-                }
-                Button(onClick = { viewModel.removeFromCart(cartItem.productId) }) {
-                    Text("Remove")
-                }
-            }
+    Column(
+        modifier = Modifier
+            .padding(padding)
+            .fillMaxSize() // Ensures the Column takes the full height of the parent
+    ) {
+        // Content that will take the rest of the space
+        Box(
+            modifier = Modifier
+                .weight(1f) // Takes up the remaining space
+                .fillMaxWidth()
+        ) {
+            CartItemsListView(cartItems)
         }
 
-        item {
-            // Display total cost
-            Text(text = "Total Cost: $totalCost")
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            FooterCheckoutView()
+        }
+
+
+    }
+}
+
+@Composable
+private fun FooterCheckoutView() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text("Total cost: 115,65 RSD")
+        Spacer(modifier = Modifier.weight(1f))
+        Button(onClick = {
+            print("CONTINUE")
+        }) {
+            Text("CHECKOUT")
+        }
+    }
+}
+
+@Composable
+private fun CartItemsListView(cartItems: List<CartItem>) {
+    LazyColumn {
+        items(cartItems.size, key = { it }) { index ->
+            val cartItem = cartItems[index]
+
+            print("COMPOSE")
+            SwipeToDeleteContainer(cartItem,
+                onDelete = {
+                    print("onDelete: $cartItem")
+                    //cartItems -= it
+                    // TODO: implement onDelete
+
+                    print("Items: ${cartItems.size}")
+                }) {
+                CartItemRow(cartItem)
+            }
+        }
+    }
+}
+
+@Composable
+private fun CartItemRow(cartItem: CartItem) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Color.White)
+            .height(85.dp)
+            .padding(start = 8.dp, end = 8.dp)
+    ) {
+        Image(
+            modifier = Modifier
+                .height(80.dp)
+                .align(alignment = Alignment.CenterVertically)
+                .aspectRatio(1f),
+            // TODO: fetch product image here
+            painter = painterResource(Res.drawable.p1),
+            contentScale = ContentScale.Fit,
+            contentDescription = null,
+        )
+
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .padding(start = 4.dp),
+            //.background(color = Color.Blue),
+            contentAlignment = Alignment.CenterStart
+        ) {
+            Column(
+                modifier = Modifier
+                    //.background(color = Color.Yellow)
+                    .align(alignment = Alignment.TopStart)
+            ) {
+                Text(
+                    modifier = Modifier.padding(top = 4.dp, bottom = 2.dp),
+                    text = "YAMAHA ${cartItem.productId}",
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+
+            Row(
+                modifier = Modifier
+                    //.background(color = Color.Yellow)
+                    .padding(bottom = 2.dp)
+                    .align(alignment = Alignment.BottomStart),
+                verticalAlignment = Alignment.Bottom
+            ) {
+                Text(
+                    modifier = Modifier.padding(end = 2.dp),
+                    text = "140.000",
+                    style = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+                Text(modifier = Modifier
+                    .offset(y = 1.5.dp)
+                    .align(alignment = Alignment.Bottom),
+                    text = "RSD"
+                )
+            }
+
+            Row(
+                modifier = Modifier
+                    .padding(bottom = 4.dp, end = 4.dp)
+                    //.background(color = Color.Cyan)
+                    .align(alignment = Alignment.BottomEnd),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .border(0.5.dp, Color.Black)
+//                        .background(color = Color.Yellow)
+                        .size(30.dp)
+                        .clickable(
+                            onClick = {
+                                print("DECREASE")
+                            }
+                        ),
+                    contentAlignment = Alignment.Center) {
+                    Text(text = "-", fontSize = 20.sp)
+                }
+                Text(
+                    modifier = Modifier.width(30.dp),
+                    textAlign = TextAlign.Center,
+                    text = "5"
+                )
+                Box(
+                    modifier = Modifier
+                        .border(0.5.dp, Color.Black)
+//                        .background(color = Color.Yellow)
+                        .size(30.dp)
+                        .clickable(
+                            onClick = {
+                                print("INCREASE")
+                            }
+                        ),
+                    contentAlignment = Alignment.Center) {
+                    Text(text = "+", fontSize = 20.sp)
+                }
+            }
+
+            Box(
+                modifier = Modifier
+                    .align(alignment = Alignment.BottomStart)
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(color = Color(0xFFE3E3E3))
+            )
+        }
+    }
+}
+
+@Composable
+fun <T> SwipeToDeleteContainer(
+    item: T,
+    onDelete: (T) -> Unit,
+    animationDuration: Int = 500,
+    content: @Composable (T) -> Unit
+) {
+    var isRemoved by remember {
+        mutableStateOf(false)
+    }
+    val state = rememberDismissState(
+
+        confirmStateChange = { value ->
+            if (value == DismissValue.DismissedToStart) {
+                isRemoved = true
+                true
+            } else {
+                false
+            }
+        }
+    )
+
+    LaunchedEffect(key1 = isRemoved) {
+        if (isRemoved) {
+            delay(animationDuration.toLong())
+            onDelete(item)
         }
     }
 
+    AnimatedVisibility(
+        visible = !isRemoved,
+        exit = shrinkVertically(
+            animationSpec = tween(durationMillis = animationDuration),
+            shrinkTowards = Alignment.Top
+        ) + fadeOut()
+    ) {
+        SwipeToDismiss(
+            state = state,
+            background = {
+                DeleteBackground(swipeDismissState = state)
+            }
+        ) {
+            content(item)
+        }
 
+//        SwipeToDismissBox(
+//            enableDismissFromStartToEnd = false,
+//            state = state,
+//            backgroundContent = {
+//                DeleteBackground(swipeDismissState = state)
+//            },
+//            content = { content(item) },
+//        )
+    }
+}
+
+@Composable
+fun DeleteBackground(
+    swipeDismissState: DismissState
+) {
+    val color = if (swipeDismissState.dismissDirection == DismissDirection.EndToStart) {
+        Color.Red
+    } else Color.Transparent
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color)
+            .padding(16.dp),
+        contentAlignment = Alignment.CenterEnd
+    ) {
+        Icon(
+            imageVector = Icons.Default.Delete,
+            contentDescription = null,
+            tint = Color.White
+        )
+    }
 }
 
 @Composable
@@ -99,7 +357,9 @@ private fun EmptyCartView(padding: PaddingValues) {
     val lightGrayColor = Color.LightGray
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(padding),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(padding),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
