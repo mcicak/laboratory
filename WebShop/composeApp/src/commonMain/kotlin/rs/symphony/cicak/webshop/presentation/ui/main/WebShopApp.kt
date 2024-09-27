@@ -27,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.compose.viewmodel.koinViewModel
@@ -104,13 +105,14 @@ fun WebShopApp() {
                                 Box(
                                     modifier = Modifier
                                         .size(20.dp)
-                                        .offset(x = (8).dp, y = -8.dp)
+                                        .offset(x = (8).dp, y = (-8).dp)
                                         .background(Color.Red, CircleShape),
-                                    contentAlignment = Alignment.TopEnd
+                                    contentAlignment = Alignment.Center
                                 ) {
                                     Text(
-                                        modifier = Modifier.offset(x = -4.dp),
+                                        modifier = Modifier.offset(y = (-2).dp),
                                         text = totalCartItemCount.toString(),
+                                        textAlign = TextAlign.Center,
                                         color = Color.White,
                                         fontSize = 12.sp
                                     )
