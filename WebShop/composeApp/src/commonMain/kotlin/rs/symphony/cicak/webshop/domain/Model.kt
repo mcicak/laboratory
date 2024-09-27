@@ -35,3 +35,14 @@ data class CartItem(
     val productId: Long,
     val quantity: Int
 )
+
+data class Currency(
+    val name: String,
+    val symbol: String
+) {
+    companion object {
+        val USD = Currency("US Dollar", "USD")
+        val EUR = Currency("EURO", "EUR")
+        val RSD = Currency("Serbian Dinar", "RSD")
+    }
+}

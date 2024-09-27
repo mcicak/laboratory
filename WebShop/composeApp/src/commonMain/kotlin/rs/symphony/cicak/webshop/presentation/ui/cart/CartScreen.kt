@@ -59,16 +59,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
-import rs.symphony.cicak.webshop.domain.CartItem
-import webshop.composeapp.generated.resources.Res
-import webshop.composeapp.generated.resources.p1
+import rs.symphony.cicak.webshop.domain.Currency
+import rs.symphony.cicak.webshop.domain.getImageResource
 
 
 @Composable
 fun CartScreen(viewModel: CartViewModel) {
-
-    val cartItems by viewModel.cartItems.collectAsState()
-    val totalCost by viewModel.totalCost.collectAsState()
+    val cartItems by viewModel.cartItemsUi.collectAsState()
 
     Scaffold(
         topBar = {
@@ -91,8 +88,9 @@ fun CartScreen(viewModel: CartViewModel) {
 
 @Composable
 fun FullCartView(padding: PaddingValues, viewModel: CartViewModel) {
-    val cartItems by viewModel.cartItems.collectAsState()
+    val cartItems by viewModel.cartItemsUi.collectAsState()
     val totalCost by viewModel.totalCost.collectAsState()
+    val currency by viewModel.currency.collectAsState()
 
     Column(
         modifier = Modifier
@@ -105,7 +103,13 @@ fun FullCartView(padding: PaddingValues, viewModel: CartViewModel) {
                 .weight(1f) // Takes up the remaining space
                 .fillMaxWidth()
         ) {
-            CartItemsListView(cartItems)
+            CartItemsListView(cartItems, currency, onDelete = {
+                viewModel.removeFromCart(it.product.id)
+            }, onDecrease = {
+                viewModel.decreaseQuantity(it)
+            }, onIncrease = {
+                viewModel.increaseQuantity(it)
+            })
         }
 
         Box(
@@ -113,162 +117,163 @@ fun FullCartView(padding: PaddingValues, viewModel: CartViewModel) {
                 .fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
-            FooterCheckoutView()
+            FooterCheckoutView(totalCost, currency)
         }
-
-
     }
 }
 
 @Composable
-private fun FooterCheckoutView() {
+private fun CartItemsListView(
+    cartItems: List<CartItemUi>,
+    currency: Currency,
+    onDelete: (CartItemUi) -> Unit,
+    onIncrease: (CartItemUi) -> Unit,
+    onDecrease: (CartItemUi) -> Unit
+) {
+    LazyColumn {
+        items(cartItems.count(), key = { cartItems[it].product.id }) { index ->
+            val cartItem = cartItems[index]
+            SwipeToDeleteContainer(
+                cartItem,
+                onDelete = onDelete
+            ) {
+                CartItemRow(cartItem, currency, onIncrease = onIncrease, onDecrease = onDecrease)
+            }
+        }
+    }
+}
+
+@Composable
+private fun CartItemRow(
+    cartItem: CartItemUi,
+    currency: Currency,
+    onIncrease: (CartItemUi) -> Unit,
+    onDecrease: (CartItemUi) -> Unit
+) {
+    val product =
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = Color.White)
+                .height(85.dp)
+                .padding(start = 8.dp, end = 8.dp)
+        ) {
+            Image(
+                modifier = Modifier
+                    .height(80.dp)
+                    .align(alignment = Alignment.CenterVertically)
+                    .aspectRatio(1f),
+                // TODO: fetch product image here
+                painter = painterResource(cartItem.product.getImageResource()),
+                contentScale = ContentScale.Fit,
+                contentDescription = null,
+            )
+
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .padding(start = 4.dp),
+                //.background(color = Color.Blue),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Column(
+                    modifier = Modifier
+                        //.background(color = Color.Yellow)
+                        .align(alignment = Alignment.TopStart)
+                ) {
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp, bottom = 2.dp),
+                        text = cartItem.product.name,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+
+                Row(
+                    modifier = Modifier
+                        //.background(color = Color.Yellow)
+                        .padding(bottom = 2.dp)
+                        .align(alignment = Alignment.BottomStart),
+                    verticalAlignment = Alignment.Bottom
+                ) {
+                    Text(
+                        modifier = Modifier.padding(end = 2.dp),
+                        text = cartItem.product.price.toString(),
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                    Text(
+                        modifier = Modifier
+                            .offset(y = 1.5.dp)
+                            .align(alignment = Alignment.Bottom),
+                        text = currency.symbol
+                    )
+                }
+
+                Row(
+                    modifier = Modifier
+                        .padding(bottom = 4.dp, end = 4.dp)
+                        //.background(color = Color.Cyan)
+                        .align(alignment = Alignment.BottomEnd),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .border(0.5.dp, Color.Black)
+//                        .background(color = Color.Yellow)
+                            .size(30.dp)
+                            .clickable(
+                                onClick = { onDecrease(cartItem) }
+                            ),
+                        contentAlignment = Alignment.Center) {
+                        Text(text = "-", fontSize = 20.sp)
+                    }
+                    Text(
+                        modifier = Modifier.width(30.dp),
+                        textAlign = TextAlign.Center,
+                        text = cartItem.quantity.toString()
+                    )
+                    Box(
+                        modifier = Modifier
+                            .border(0.5.dp, Color.Black)
+//                        .background(color = Color.Yellow)
+                            .size(30.dp)
+                            .clickable(
+                                onClick = { onIncrease(cartItem) }
+                            ),
+                        contentAlignment = Alignment.Center) {
+                        Text(text = "+", fontSize = 20.sp)
+                    }
+                }
+
+                Box(
+                    modifier = Modifier
+                        .align(alignment = Alignment.BottomStart)
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(color = Color(0xFFE3E3E3))
+                )
+            }
+        }
+}
+
+@Composable
+private fun FooterCheckoutView(totalCost: Double, currency: Currency) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text("Total cost: 115,65 RSD")
+        Text("Total cost: $totalCost ${currency.symbol}")
         Spacer(modifier = Modifier.weight(1f))
         Button(onClick = {
             print("CONTINUE")
         }) {
             Text("CHECKOUT")
-        }
-    }
-}
-
-@Composable
-private fun CartItemsListView(cartItems: List<CartItem>) {
-    LazyColumn {
-        items(cartItems.size, key = { it }) { index ->
-            val cartItem = cartItems[index]
-
-            print("COMPOSE")
-            SwipeToDeleteContainer(cartItem,
-                onDelete = {
-                    print("onDelete: $cartItem")
-                    //cartItems -= it
-                    // TODO: implement onDelete
-
-                    print("Items: ${cartItems.size}")
-                }) {
-                CartItemRow(cartItem)
-            }
-        }
-    }
-}
-
-@Composable
-private fun CartItemRow(cartItem: CartItem) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(color = Color.White)
-            .height(85.dp)
-            .padding(start = 8.dp, end = 8.dp)
-    ) {
-        Image(
-            modifier = Modifier
-                .height(80.dp)
-                .align(alignment = Alignment.CenterVertically)
-                .aspectRatio(1f),
-            // TODO: fetch product image here
-            painter = painterResource(Res.drawable.p1),
-            contentScale = ContentScale.Fit,
-            contentDescription = null,
-        )
-
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .padding(start = 4.dp),
-            //.background(color = Color.Blue),
-            contentAlignment = Alignment.CenterStart
-        ) {
-            Column(
-                modifier = Modifier
-                    //.background(color = Color.Yellow)
-                    .align(alignment = Alignment.TopStart)
-            ) {
-                Text(
-                    modifier = Modifier.padding(top = 4.dp, bottom = 2.dp),
-                    text = "YAMAHA ${cartItem.productId}",
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-
-            Row(
-                modifier = Modifier
-                    //.background(color = Color.Yellow)
-                    .padding(bottom = 2.dp)
-                    .align(alignment = Alignment.BottomStart),
-                verticalAlignment = Alignment.Bottom
-            ) {
-                Text(
-                    modifier = Modifier.padding(end = 2.dp),
-                    text = "140.000",
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-                Text(modifier = Modifier
-                    .offset(y = 1.5.dp)
-                    .align(alignment = Alignment.Bottom),
-                    text = "RSD"
-                )
-            }
-
-            Row(
-                modifier = Modifier
-                    .padding(bottom = 4.dp, end = 4.dp)
-                    //.background(color = Color.Cyan)
-                    .align(alignment = Alignment.BottomEnd),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier
-                        .border(0.5.dp, Color.Black)
-//                        .background(color = Color.Yellow)
-                        .size(30.dp)
-                        .clickable(
-                            onClick = {
-                                print("DECREASE")
-                            }
-                        ),
-                    contentAlignment = Alignment.Center) {
-                    Text(text = "-", fontSize = 20.sp)
-                }
-                Text(
-                    modifier = Modifier.width(30.dp),
-                    textAlign = TextAlign.Center,
-                    text = "5"
-                )
-                Box(
-                    modifier = Modifier
-                        .border(0.5.dp, Color.Black)
-//                        .background(color = Color.Yellow)
-                        .size(30.dp)
-                        .clickable(
-                            onClick = {
-                                print("INCREASE")
-                            }
-                        ),
-                    contentAlignment = Alignment.Center) {
-                    Text(text = "+", fontSize = 20.sp)
-                }
-            }
-
-            Box(
-                modifier = Modifier
-                    .align(alignment = Alignment.BottomStart)
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(color = Color(0xFFE3E3E3))
-            )
         }
     }
 }

@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import rs.symphony.cicak.webshop.domain.CartItem
+import rs.symphony.cicak.webshop.domain.Currency
 
 interface CartRepository {
     fun getCartItems(): StateFlow<List<CartItem>>
@@ -14,6 +15,7 @@ interface CartRepository {
     fun removeFromCart(productId: Long)
     fun updateCartItemQuantity(productId: Long, quantity: Int)
     fun calculateTotalCost(): StateFlow<Double>
+    fun getCurrency(): StateFlow<Currency>
 }
 
 class CartRepositoryFake(private val appModel: AppModel) : CartRepository {
@@ -59,5 +61,9 @@ class CartRepositoryFake(private val appModel: AppModel) : CartRepository {
                 product?.price?.times(cartItem.quantity) ?: 0.0
             }
         }.stateIn(CoroutineScope(Dispatchers.Default), SharingStarted.Eagerly, 0.0)
+    }
+
+    override fun getCurrency(): StateFlow<Currency> {
+        return appModel.currency
     }
 }
