@@ -30,6 +30,7 @@ class CartRepositoryFake(private val appModel: AppModel) : CartRepository {
 
         if (existingItem != null) {
             // Increase quantity if product is already in the cart
+            if (existingItem.quantity >= 5) return
             val updatedItem = existingItem.copy(quantity = existingItem.quantity + 1)
             currentCart[currentCart.indexOf(existingItem)] = updatedItem
         } else {

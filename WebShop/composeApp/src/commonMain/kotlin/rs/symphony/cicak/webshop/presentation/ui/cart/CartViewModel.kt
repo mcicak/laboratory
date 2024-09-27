@@ -3,8 +3,11 @@ package rs.symphony.cicak.webshop.presentation.ui.cart
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import rs.symphony.cicak.webshop.data.repository.CartRepository
 import rs.symphony.cicak.webshop.data.repository.ProductRepository
@@ -42,6 +45,10 @@ class CartViewModel(
 
     val totalCost: StateFlow<Double> = cartRepository.calculateTotalCost()
     val currency: StateFlow<Currency> = cartRepository.getCurrency()
+
+    val totalCartItemCount: StateFlow<Int> = cartItemsUi.map { items ->
+        items.sumOf { it.quantity }  // Sum the quantities of all cart items
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, 0)
 
     fun addToCart(productId: Long) {
         cartRepository.addToCart(productId)

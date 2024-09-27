@@ -1,12 +1,17 @@
 package rs.symphony.cicak.webshop.presentation.ui.main
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Favorite
@@ -14,6 +19,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +27,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import rs.symphony.cicak.webshop.presentation.ui.cart.CartScreen
@@ -42,6 +50,8 @@ fun WebShopApp() {
     val categoriesViewModel = koinViewModel<CategoriesViewModel>()
     val favoritesViewModel = koinViewModel<FavoritesViewModel>()
     val cartViewModel = koinViewModel<CartViewModel>()
+
+    val totalCartItemCount by cartViewModel.totalCartItemCount.collectAsState()
 
     Scaffold(
         bottomBar = {
@@ -83,8 +93,31 @@ fun WebShopApp() {
                 BottomNavigationItem(
                     selected = selectedTab == 3,
                     onClick = { selectedTab = 3 },
-                    icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Cart") },
-//                    label = { Text("Cart") }
+                    icon = {
+                        Box(
+                            contentAlignment = Alignment.TopEnd
+                        ) {
+                            Icon(Icons.Default.ShoppingCart, contentDescription = "Cart")
+
+                            if (totalCartItemCount > 0) {
+                                // Place the badge using padding to control its placement
+                                Box(
+                                    modifier = Modifier
+                                        .size(20.dp)
+                                        .offset(x = (8).dp, y = -8.dp)
+                                        .background(Color.Red, CircleShape),
+                                    contentAlignment = Alignment.TopEnd
+                                ) {
+                                    Text(
+                                        modifier = Modifier.offset(x = -4.dp),
+                                        text = totalCartItemCount.toString(),
+                                        color = Color.White,
+                                        fontSize = 12.sp
+                                    )
+                                }
+                            }
+                        }
+                    }
                 )
                 BottomNavigationItem(
                     selected = selectedTab == 4,
