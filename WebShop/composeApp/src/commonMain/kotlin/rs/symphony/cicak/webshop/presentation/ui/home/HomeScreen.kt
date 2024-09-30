@@ -19,10 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import rs.symphony.cicak.webshop.domain.ProductId
 import rs.symphony.cicak.webshop.presentation.components.ProductCard
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel) {
+fun HomeScreen(viewModel: HomeViewModel, onProductClick: (ProductId) -> Unit) {
     val state by viewModel.homeScreenState.collectAsState()
 
     LaunchedEffect(true) {
@@ -57,6 +58,7 @@ fun HomeScreen(viewModel: HomeViewModel) {
                     val products = (state as HomeScreenState.Success).products
                     items(products.size) { index ->
                         ProductCard(item = products[index],
+                            onItemClicked = onProductClick,
                             onFavoriteToggle = {
                                 viewModel.toggleFavorite(products[index].id)
                             },

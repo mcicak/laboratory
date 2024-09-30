@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import rs.symphony.cicak.webshop.presentation.ui.cart.CartScreen
@@ -38,19 +39,24 @@ import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesScreen
 import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesViewModel
 import rs.symphony.cicak.webshop.presentation.ui.favorites.FavoritesScreen
 import rs.symphony.cicak.webshop.presentation.ui.favorites.FavoritesViewModel
-import rs.symphony.cicak.webshop.presentation.ui.home.HomeScreen
-import rs.symphony.cicak.webshop.presentation.ui.home.HomeViewModel
 import rs.symphony.cicak.webshop.presentation.ui.profile.ProfileScreen
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
 fun WebShopApp() {
     var selectedTab by remember { mutableStateOf(0) }
+    val navController = rememberNavController()
 
-    val homeViewModel = koinViewModel<HomeViewModel>()
+    //val homeViewModel = koinViewModel<HomeViewModel>()
     val categoriesViewModel = koinViewModel<CategoriesViewModel>()
     val favoritesViewModel = koinViewModel<FavoritesViewModel>()
     val cartViewModel = koinViewModel<CartViewModel>()
+
+    val homeNavController = rememberNavController()
+    val categoriesNavController = rememberNavController()
+    val favoritesNavController = rememberNavController()
+    val cartNavController = rememberNavController()
+    val profileNavController = rememberNavController()
 
     val totalCartItemCount by cartViewModel.totalCartItemCount.collectAsState()
 
@@ -137,7 +143,7 @@ fun WebShopApp() {
             contentAlignment = Alignment.Center
         ) {
             when (selectedTab) {
-                0 -> HomeScreen(homeViewModel)
+                0 -> HomeNavGraph(homeNavController)
                 1 -> CategoriesScreen(categoriesViewModel)
                 2 -> FavoritesScreen(favoritesViewModel)
                 3 -> CartScreen(cartViewModel)

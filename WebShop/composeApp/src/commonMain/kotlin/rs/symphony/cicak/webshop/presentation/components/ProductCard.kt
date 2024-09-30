@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -30,18 +31,23 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import rs.symphony.cicak.webshop.domain.Product
+import rs.symphony.cicak.webshop.domain.ProductId
 import rs.symphony.cicak.webshop.domain.getImageResource
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ProductCard(
+    modifier: Modifier = Modifier,
     item: Product,
-    onFavoriteToggle: () -> Unit,
-    onAddToCart: () -> Unit
+    onItemClicked: (ProductId) -> Unit = {},
+    onFavoriteToggle: () -> Unit = {},
+    onAddToCart: () -> Unit = {}
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(1.dp)
+            .padding(1.dp),
+        onClick = { onItemClicked(item.id) }
     ) {
         Box(
             modifier = Modifier.fillMaxSize()

@@ -8,8 +8,10 @@ import webshop.composeapp.generated.resources.p3
 import webshop.composeapp.generated.resources.p4
 import webshop.composeapp.generated.resources.p5
 
+typealias ProductId = Long
+
 data class Product(
-    val id: Long,
+    val id: ProductId,
     val name: String,
     val price: Double,
     val favorite: Boolean = false
@@ -25,6 +27,16 @@ fun Product.getImageResource(): DrawableResource {
     }
 }
 
+data class ProductDetails(
+    val id: ProductId,
+    val title: String,
+    val subtitle: String,
+    val description: String,
+    val images: List<Int>, // convert to URLs
+    val price: Double,
+    val currency: String
+)
+
 data class Category(
     val id: Long,
     val name: String,
@@ -32,7 +44,7 @@ data class Category(
 )
 
 data class CartItem(
-    val productId: Long,
+    val productId: ProductId,
     val quantity: Int
 )
 
