@@ -38,7 +38,7 @@ fun ProductRow(item: Product, onFavoriteToggle: (Long) -> Unit = {}) {
         )
 
         Column(modifier = Modifier.weight(1f)) {
-            Text(text = item.name, style = MaterialTheme.typography.h6)
+            Text(text = item.title, style = MaterialTheme.typography.h6)
             Text(text = "${item.price}$", style = MaterialTheme.typography.body1)
         }
 

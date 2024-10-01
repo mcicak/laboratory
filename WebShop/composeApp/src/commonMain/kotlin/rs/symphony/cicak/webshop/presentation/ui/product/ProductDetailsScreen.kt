@@ -3,6 +3,7 @@ package rs.symphony.cicak.webshop.presentation.ui.product
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,13 +13,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
@@ -32,39 +37,96 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.viewmodel.koinViewModel
 import rs.symphony.cicak.webshop.domain.Product
 import rs.symphony.cicak.webshop.domain.ProductDetails
+import rs.symphony.cicak.webshop.domain.ProductId
 import rs.symphony.cicak.webshop.presentation.components.ProductCard
+import rs.symphony.cicak.webshop.presentation.ui.home.HomeViewModel
 import webshop.composeapp.generated.resources.Res
 import webshop.composeapp.generated.resources.p1
 
-
 @Composable
-fun ProductDetailsScreen(product: ProductDetails, recommended: List<Product>) {
+fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit) {
 
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        ProductPage(product, recommended)
+    // TODO: use ProductDetailsViewModel here
+    val homeViewModel = koinViewModel<HomeViewModel>()
+    val product = homeViewModel.getProduct(productId)
 
-        Text(
-            modifier = Modifier.align(alignment = Alignment.TopStart),
-            text = "<"
+    val recommended = listOf(
+        Product(
+            id = 3,
+            title = "Lamborghini Countach",
+            subtitle = "",
+            price = 120000.0,
+            favorite = false
+        ),
+        Product(
+            id = 4,
+            title = "Marantz SR 2000 Stereo",
+            subtitle = "",
+            price = 220.0,
+            favorite = false
         )
+    )
+
+    val listState = rememberLazyListState()
+
+    val scrollOffset = calculateTotalScrollOffset(listState)
+    val topBarAlpha = if (scrollOffset <= 300) 1f - (scrollOffset / 300f) else 0f
+    val backgroundColor = Color.White.copy(alpha = 1f - topBarAlpha)
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Product content (image, details, etc.) without padding
+        ProductPage(product = product, recommended = recommended, listState = listState)
+
+        // TopBar is placed on top of the content
+        TopBar(backgroundColor = backgroundColor, onBack = onBack)
     }
 }
 
 @Composable
-fun ProductPage(product: ProductDetails, recommended: List<Product>) {
+fun TopBar(backgroundColor: Color, onBack: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(backgroundColor)
+            .height(70.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(start = 8.dp, top = 20.dp)
+                .clip(RoundedCornerShape(50))
+                .background(Color.White)
+                .size(40.dp)
+                .clickable(onClick = onBack)
+        ) {
+            Icon(
+                modifier = Modifier.align(alignment = Alignment.Center),
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = null,
+                tint = Color.Black
+            )
+        }
+    }
+}
+
+@Composable
+fun ProductPage(
+    product: ProductDetails,
+    recommended: List<Product>,
+    listState: LazyListState
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.White)
+            .background(color = Color.White),
+        state = listState
     ) {
         item {
             Image(
                 modifier = Modifier.fillMaxWidth(),
-                painter = painterResource(resource = Res.drawable.p1),
+                painter = painterResource(Res.drawable.p1),
                 contentDescription = null
             )
         }
@@ -95,6 +157,7 @@ fun ProductPage(product: ProductDetails, recommended: List<Product>) {
                 modifier = Modifier.padding(8.dp)
             ) {
                 Text(
+                    modifier = Modifier.padding(bottom = 8.dp),
                     text = "Description",
                     fontWeight = FontWeight.Bold
                 )
@@ -215,4 +278,27 @@ private fun ProductButton(
             tint = Color(0xFFd0dff7) // Neon yellow icon for contrast
         )
     }
+}
+
+// Function to calculate total scroll offset including all previous items' heights
+private fun calculateTotalScrollOffset(listState: LazyListState): Int {
+    val layoutInfo = listState.layoutInfo
+    val visibleItems = layoutInfo.visibleItemsInfo
+
+    // If there are no visible items, return 0
+    if (visibleItems.isEmpty()) return 0
+
+    // Get the first visible item index and offset
+    val firstVisibleItem = visibleItems.first()
+    val firstVisibleItemIndex = listState.firstVisibleItemIndex
+    val firstVisibleItemScrollOffset = listState.firstVisibleItemScrollOffset
+
+    // Calculate total offset by adding the cumulative height of all previous items to the scroll offset
+    var totalOffset = firstVisibleItemScrollOffset
+    for (i in 0 until firstVisibleItemIndex) {
+        val itemHeight = visibleItems.firstOrNull { it.index == i }?.size ?: firstVisibleItem.size
+        totalOffset += itemHeight
+    }
+
+    return totalOffset
 }

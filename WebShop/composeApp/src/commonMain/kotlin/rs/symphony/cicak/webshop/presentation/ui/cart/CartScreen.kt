@@ -184,7 +184,7 @@ private fun CartItemRow(
                 ) {
                     Text(
                         modifier = Modifier.padding(top = 4.dp, bottom = 2.dp),
-                        text = cartItem.product.name,
+                        text = cartItem.product.title,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )

@@ -12,7 +12,8 @@ typealias ProductId = Long
 
 data class Product(
     val id: ProductId,
-    val name: String,
+    val title: String,
+    val subtitle: String,
     val price: Double,
     val favorite: Boolean = false
 )
@@ -32,7 +33,7 @@ data class ProductDetails(
     val title: String,
     val subtitle: String,
     val description: String,
-    val images: List<Int>, // convert to URLs
+    val images: List<DrawableResource>, // convert to URLs
     val price: Double,
     val currency: String
 )

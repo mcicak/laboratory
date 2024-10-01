@@ -3,9 +3,9 @@ package rs.symphony.cicak.webshop.presentation.ui.main
 import kotlinx.serialization.Serializable
 
 @Serializable
-object HomeScreen
+object HomeDestination
 
 @Serializable
-data class ProductDetailsScreen(
+data class ProductDetailsDestination(
     val id: Long
 )

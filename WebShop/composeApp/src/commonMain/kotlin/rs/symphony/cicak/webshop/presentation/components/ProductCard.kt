@@ -73,7 +73,7 @@ fun ProductCard(
 
                 // Product name
                 Text(
-                    text = item.name,
+                    text = item.title,
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier.fillMaxWidth()
                 )

@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import rs.symphony.cicak.webshop.domain.ProductId
 import rs.symphony.cicak.webshop.presentation.components.ProductCard
+import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel, onProductClick: (ProductId) -> Unit) {
@@ -33,7 +34,7 @@ fun HomeScreen(viewModel: HomeViewModel, onProductClick: (ProductId) -> Unit) {
     Scaffold(
         topBar = {
             Text(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(16.dp, top = 16.dp + getPlatformPadding()),
                 text = "Home",
                 fontSize = 32.sp, // Larger font size for prominence
                 fontWeight = FontWeight.Bold, // Bold text for prominence

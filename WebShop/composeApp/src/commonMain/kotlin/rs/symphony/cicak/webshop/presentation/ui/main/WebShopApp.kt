@@ -40,6 +40,7 @@ import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesViewModel
 import rs.symphony.cicak.webshop.presentation.ui.favorites.FavoritesScreen
 import rs.symphony.cicak.webshop.presentation.ui.favorites.FavoritesViewModel
 import rs.symphony.cicak.webshop.presentation.ui.profile.ProfileScreen
+import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
@@ -62,14 +63,17 @@ fun WebShopApp() {
 
     Scaffold(
         bottomBar = {
-            BottomNavigation(backgroundColor = Color.White) {
+            BottomNavigation(
+                backgroundColor = Color.White) {
                 BottomNavigationItem(
+                    modifier = Modifier.padding(bottom = getPlatformPadding()),
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 },
                     icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
 //                    label = { Text("Home") }
                 )
                 BottomNavigationItem(
+                    modifier = Modifier.padding(bottom = getPlatformPadding()),
                     selected = selectedTab == 1,
                     onClick = { selectedTab = 1 },
                     icon = {
@@ -92,12 +96,14 @@ fun WebShopApp() {
 //                    }
                 )
                 BottomNavigationItem(
+                    modifier = Modifier.padding(bottom = getPlatformPadding()),
                     selected = selectedTab == 2,
                     onClick = { selectedTab = 2 },
                     icon = { Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
 //                    label = { Text("Favorites") }
                 )
                 BottomNavigationItem(
+                    modifier = Modifier.padding(bottom = getPlatformPadding()),
                     selected = selectedTab == 3,
                     onClick = { selectedTab = 3 },
                     icon = {
@@ -128,6 +134,7 @@ fun WebShopApp() {
                     }
                 )
                 BottomNavigationItem(
+                    modifier = Modifier.padding(bottom = getPlatformPadding()),
                     selected = selectedTab == 4,
                     onClick = { selectedTab = 4 },
                     icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
