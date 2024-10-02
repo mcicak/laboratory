@@ -39,9 +39,9 @@ data class ProductDetails(
 )
 
 data class Category(
-    val id: Long,
+    val id: String,
     val name: String,
-    val price: Double
+    val image: String
 )
 
 data class CartItem(

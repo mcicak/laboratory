@@ -26,7 +26,11 @@ fun HomeNavGraph(navController: NavHostController) {
 
         composable<ProductDetailsDestination> {
             val args = it.toRoute<ProductDetailsDestination>()
-            ProductDetailsScreen(args.id, onBack = { navController.popBackStack() })
+            ProductDetailsScreen(
+                productId = args.id,
+                onBack = { navController.popBackStack() },
+                onRecommendedProductClick = { navController.navigate(ProductDetailsDestination(it)) }
+            )
         }
     }
 }

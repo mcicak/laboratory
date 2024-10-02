@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
+    id("com.google.gms.google-services")
 }
 
 kotlin {
@@ -40,6 +41,8 @@ kotlin {
             implementation(libs.koin.androidx.compose)
 
             implementation(libs.ktor.client.okhttp)
+
+            implementation(project.dependencies.platform(libs.android.firebase.bom))
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -59,11 +62,9 @@ kotlin {
             implementation(libs.lifecycle.viewmodel)
             implementation(libs.navigation.compose)
 
-//            implementation(libs.androidx.material.icons.core)
-//            implementation(libs.androidx.material.icons.extended)
-
-
             implementation(compose.materialIconsExtended)
+
+            implementation(libs.gitlive.firebase.firestore)
         }
 
         nativeMain.dependencies {

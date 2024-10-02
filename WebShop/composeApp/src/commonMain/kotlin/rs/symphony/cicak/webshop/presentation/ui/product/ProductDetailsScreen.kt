@@ -38,20 +38,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 import rs.symphony.cicak.webshop.domain.Product
 import rs.symphony.cicak.webshop.domain.ProductDetails
 import rs.symphony.cicak.webshop.domain.ProductId
 import rs.symphony.cicak.webshop.presentation.components.ProductCard
-import rs.symphony.cicak.webshop.presentation.ui.home.HomeViewModel
 import webshop.composeapp.generated.resources.Res
 import webshop.composeapp.generated.resources.p1
 
 @Composable
-fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit) {
+fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit, onRecommendedProductClick: (ProductId) -> Unit) {
 
     // TODO: use ProductDetailsViewModel here
-    val homeViewModel = koinViewModel<HomeViewModel>()
-    val product = homeViewModel.getProduct(productId)
+    val productViewModel = koinViewModel<ProductViewModel>(
+        parameters = { parametersOf(productId) }
+    )
+    val product = productViewModel.getProduct(productId)
 
     val recommended = listOf(
         Product(

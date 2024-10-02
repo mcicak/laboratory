@@ -20,25 +20,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import rs.symphony.cicak.webshop.presentation.components.CategoryCard
+import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
 @Composable
 fun CategoriesScreen(viewModel: CategoriesViewModel) {
     val state by viewModel.screenState.collectAsState()
 
-    LaunchedEffect(true) {
+    LaunchedEffect(Unit) {
+        viewModel.observeCategories()
         viewModel.fetchCategories()
     }
 
     Scaffold(
         topBar = {
             Text(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(16.dp, top = 16.dp + getPlatformPadding()),
                 text = "Categories",
                 fontSize = 32.sp, // Larger font size for prominence
                 fontWeight = FontWeight.Bold, // Bold text for prominence
             )
         }
-    ) {
+    ) { padding ->
         when (state) {
             is CategoriesScreenState.Loading -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -62,7 +64,8 @@ fun CategoriesScreen(viewModel: CategoriesViewModel) {
             }
 
             is CategoriesScreenState.Error -> {
-                Text("Error fetching data")
+                val error = (state as CategoriesScreenState.Error).message
+                Text(text = error)
             }
         }
     }

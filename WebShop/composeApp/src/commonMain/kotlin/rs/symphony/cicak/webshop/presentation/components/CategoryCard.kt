@@ -25,7 +25,6 @@ fun CategoryCard(item: Category) {
         ) {
             Column {
                 Text(text = item.name)
-                Text(text = item.price.toString())
             }
         }
     }
