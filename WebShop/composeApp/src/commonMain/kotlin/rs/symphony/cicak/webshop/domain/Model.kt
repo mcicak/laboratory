@@ -1,5 +1,6 @@
 package rs.symphony.cicak.webshop.domain
 
+import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.DrawableResource
 import webshop.composeapp.generated.resources.Res
 import webshop.composeapp.generated.resources.p1
@@ -38,10 +39,12 @@ data class ProductDetails(
     val currency: String
 )
 
+@Serializable
 data class Category(
     val id: String,
     val name: String,
-    val image: String
+    val image: String,
+    val order: Int
 )
 
 data class CartItem(

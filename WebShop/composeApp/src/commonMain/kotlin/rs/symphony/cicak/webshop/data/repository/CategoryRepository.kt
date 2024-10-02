@@ -1,13 +1,31 @@
 package rs.symphony.cicak.webshop.data.repository
 
-import kotlinx.coroutines.delay
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.firestore.firestore
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import rs.symphony.cicak.webshop.domain.Category
 
 interface CategoryRepository {
 
-    fun getRootCategories(): StateFlow<List<Category>>
-    suspend fun fetchRootCategories()
+    fun getRootCategories(): Flow<List<Category>>
+}
+
+class CategoryRepositoryFirestore(
+    private val appModel: AppModel
+) : CategoryRepository {
+
+    private val firestore = Firebase.firestore
+
+    override fun getRootCategories() = flow {
+        firestore.collection("categories").snapshots.collect { snapshot ->
+            val categories = snapshot.documents.map { doc ->
+                doc.data<Category>()
+            }.sortedBy { it.order }
+            emit(categories)
+        }
+    }
 }
 
 class CategoryRepositoryFake(
@@ -15,16 +33,4 @@ class CategoryRepositoryFake(
 ) : CategoryRepository {
 
     override fun getRootCategories(): StateFlow<List<Category>> = appModel.categories
-
-    override suspend fun fetchRootCategories() {
-        delay(2000)
-
-        val fakeCategories = (1..10).map { i ->
-            Category(id = i.toString(), name = "Category $i", image = "")
-        }
-
-        //throw Exception("Failed to fetch categories")
-
-        appModel.updateCategories(fakeCategories)
-    }
 }

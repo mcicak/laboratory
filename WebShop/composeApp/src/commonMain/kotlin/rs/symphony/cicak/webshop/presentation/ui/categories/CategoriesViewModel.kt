@@ -22,31 +22,18 @@ class CategoriesViewModel(
         MutableStateFlow<CategoriesScreenState>(CategoriesScreenState.Loading)
     val screenState: StateFlow<CategoriesScreenState> = _screenState
 
-    private var _firstLoad = true
-
     fun observeCategories() {
         viewModelScope.launch {
-            categoryRepository.getRootCategories().collect { categories ->
-                if (categories.isEmpty() && _firstLoad) {
-                    _screenState.value = CategoriesScreenState.Loading
-                } else {
-                    _screenState.value = CategoriesScreenState.Success(categories)
-                }
-            }
-        }
-    }
-
-    fun fetchCategories() {
-        viewModelScope.launch {
             try {
-                // Only show loading the first time categories are fetched
-                if (_firstLoad) {
-                    _firstLoad = false
+                categoryRepository.getRootCategories().collect { categories ->
+                    if (categories.isEmpty()) {
+                        _screenState.value = CategoriesScreenState.Loading
+                    } else {
+                        _screenState.value = CategoriesScreenState.Success(categories)
+                    }
                 }
-
-                categoryRepository.fetchRootCategories()
-
             } catch (e: Exception) {
+                e.printStackTrace()
                 _screenState.value = CategoriesScreenState.Error("Failed to load categories")
             }
         }

@@ -28,7 +28,6 @@ fun CategoriesScreen(viewModel: CategoriesViewModel) {
 
     LaunchedEffect(Unit) {
         viewModel.observeCategories()
-        viewModel.fetchCategories()
     }
 
     Scaffold(
