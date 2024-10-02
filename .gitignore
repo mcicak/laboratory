@@ -148,3 +148,5 @@ out/
 *.iws
 *.iml
 *.ipr
+
+google-services.json
