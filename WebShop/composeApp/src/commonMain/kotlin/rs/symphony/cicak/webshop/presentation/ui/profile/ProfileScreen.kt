@@ -1,6 +1,8 @@
 package rs.symphony.cicak.webshop.presentation.ui.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -26,6 +28,7 @@ import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.LocalShipping
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,9 +36,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.koin.compose.koinInject
+import rs.symphony.cicak.webshop.data.repository.AppModel
 
 @Composable
 fun ProfileScreen() {
+    val appModel: AppModel = koinInject()
     Scaffold(
         topBar = {
             Text(
@@ -99,11 +105,12 @@ fun ProfileScreen() {
                     icon = Icons.AutoMirrored.Filled.Logout,
                     label = "Logout",
                     isLogout = true
-                )
+                ) {
+                    appModel.setUser(null)
+                }
             }
         }
     }
-
 }
 
 @Composable
@@ -117,12 +124,24 @@ private fun SectionTitle(title: String) {
 }
 
 @Composable
-private fun ProfileRow(icon: ImageVector, label: String, isLogout: Boolean = false) {
+private fun ProfileRow(
+    icon: ImageVector,
+    label: String,
+    isLogout: Boolean = false,
+    onClick: () -> Unit = {}
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp)
-            .background(color = Color(0xFFF5F5F5), shape = RoundedCornerShape(8.dp)),
+            .background(color = Color(0xFFF5F5F5), shape = RoundedCornerShape(8.dp))
+            .clickable(
+                onClick = {
+                    onClick()
+                },
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {

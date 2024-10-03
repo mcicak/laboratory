@@ -11,6 +11,11 @@ import webshop.composeapp.generated.resources.p5
 
 typealias ProductId = Long
 
+data class User(
+    val name: String,
+    val email: String
+)
+
 data class Product(
     val id: ProductId,
     val title: String,

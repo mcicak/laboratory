@@ -6,14 +6,17 @@ import rs.symphony.cicak.webshop.domain.CartItem
 import rs.symphony.cicak.webshop.domain.Category
 import rs.symphony.cicak.webshop.domain.Currency
 import rs.symphony.cicak.webshop.domain.Product
+import rs.symphony.cicak.webshop.domain.User
 
 class AppModel {
 
+    private val _user = MutableStateFlow<User?>(null)
     private val _categories = MutableStateFlow<List<Category>>(emptyList())
     private val _products = MutableStateFlow<List<Product>>(emptyList())
     private val _cartItems = MutableStateFlow<List<CartItem>>(emptyList())
     private val _currency = MutableStateFlow<Currency>(Currency.RSD)
 
+    val user: StateFlow<User?> = _user
     val categories: StateFlow<List<Category>> = _categories
     val products: StateFlow<List<Product>> = _products
     val cartItems: StateFlow<List<CartItem>> = _cartItems
@@ -31,6 +34,10 @@ class AppModel {
             )
         }
         _products.value = productList
+    }
+
+    fun setUser(newUser: User?) {
+        _user.value = newUser
     }
 
     fun updateCategories(newCategories: List<Category>) {
