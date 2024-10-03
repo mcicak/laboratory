@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -16,9 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import rs.symphony.cicak.webshop.presentation.components.CategoryCard
 import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
@@ -35,8 +34,7 @@ fun CategoriesScreen(viewModel: CategoriesViewModel) {
             Text(
                 modifier = Modifier.padding(16.dp, top = 16.dp + getPlatformPadding()),
                 text = "Categories",
-                fontSize = 32.sp, // Larger font size for prominence
-                fontWeight = FontWeight.Bold, // Bold text for prominence
+                style = MaterialTheme.typography.h1,
             )
         }
     ) { padding ->

@@ -41,8 +41,7 @@ fun ProfileScreen() {
             Text(
                 modifier = Modifier.padding(16.dp),
                 text = "Profile",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.h1,
             )
         }
     ) { padding ->

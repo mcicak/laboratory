@@ -1,8 +1,17 @@
 package rs.symphony.cicak.webshop.presentation.ui.main
 
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Typography
+import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.sp
+import org.jetbrains.compose.resources.Font
+import webshop.composeapp.generated.resources.AcPlus_IBM_VGA_9x16
+import webshop.composeapp.generated.resources.Res
+import webshop.composeapp.generated.resources.Road_Rage
 
 
 // Define the purple-based color palette
@@ -32,6 +41,19 @@ fun MyAppTheme(
 
     MaterialTheme(
         colors = colors,
-        content = content
+        content = content,
+        typography = Typography(
+            defaultFontFamily = FontFamily(Font(Res.font.AcPlus_IBM_VGA_9x16)),
+
+            h1 = TextStyle(
+                fontFamily = FontFamily(Font(Res.font.Road_Rage)),
+                fontSize = 32.sp
+            ),
+
+            subtitle2 = TextStyle(
+                fontFamily = FontFamily(Font(Res.font.AcPlus_IBM_VGA_9x16)),
+                fontSize = 20.sp
+            ),
+        )
     )
 }
