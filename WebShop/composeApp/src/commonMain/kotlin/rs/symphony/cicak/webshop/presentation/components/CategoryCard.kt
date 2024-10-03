@@ -1,31 +1,28 @@
 package rs.symphony.cicak.webshop.presentation.components
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import rs.symphony.cicak.webshop.domain.Category
 
 @Composable
 fun CategoryCard(item: Category) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f) // Make the item square
+    Column(
+        modifier = Modifier.fillMaxWidth()
     ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Column {
-                Text(text = item.name)
-            }
-        }
+        KamelImage(
+            modifier = Modifier.aspectRatio(1f),
+            resource = asyncPainterResource(item.image),
+            contentDescription = null
+        )
+
+        Text(
+            text = item.name
+        )
     }
 }

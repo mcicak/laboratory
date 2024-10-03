@@ -63,7 +63,7 @@ kotlin {
             implementation(libs.navigation.compose)
 
             implementation(compose.materialIconsExtended)
-
+            implementation(libs.kamel.image)
             implementation(libs.gitlive.firebase.firestore)
         }
 
