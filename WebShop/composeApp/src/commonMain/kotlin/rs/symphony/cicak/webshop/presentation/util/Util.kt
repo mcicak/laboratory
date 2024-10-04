@@ -10,3 +10,4 @@ fun getPlatformPadding(): Dp {
 }
 
 expect fun isAndroid(): Boolean
+expect fun isApple(): Boolean

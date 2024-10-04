@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.LocalShipping
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,12 +37,20 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.auth.auth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import rs.symphony.cicak.webshop.data.repository.AppModel
 
 @Composable
 fun ProfileScreen() {
     val appModel: AppModel = koinInject()
+    val user = appModel.user.collectAsState()
+
     Scaffold(
         topBar = {
             Text(
@@ -62,7 +71,7 @@ fun ProfileScreen() {
             item {
                 SectionTitle(
                     //icon = Icons.,
-                    title = "Account Settings"
+                    title = "${user.value?.name}\n${user.value?.email}"
                 )
             }
             item {
@@ -106,7 +115,10 @@ fun ProfileScreen() {
                     label = "Logout",
                     isLogout = true
                 ) {
-                    appModel.setUser(null)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        Firebase.auth.signOut()
+                        appModel.setUser(null)
+                    }
                 }
             }
         }

@@ -17,6 +17,8 @@ class MainActivity : ComponentActivity() {
 
         FirebaseApp.initializeApp(this)
 
+
+
         setContent {
             App()
         }
