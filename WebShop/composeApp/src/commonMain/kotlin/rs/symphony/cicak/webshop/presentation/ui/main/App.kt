@@ -34,49 +34,36 @@ import dev.gitlive.firebase.auth.auth
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
-import org.koin.compose.koinInject
-import rs.symphony.cicak.webshop.data.repository.AppModel
-import rs.symphony.cicak.webshop.domain.User
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 import rs.symphony.cicak.webshop.presentation.util.isApple
 import webshop.composeapp.generated.resources.Res
 import webshop.composeapp.generated.resources.login_background
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 @Preview
 fun App() {
     val WebClientId = "1055127789850-96lt2811ro71avvaji0cn8idbm94t9aj.apps.googleusercontent.com"
     GoogleAuthProvider.create(credentials = GoogleAuthCredentials(serverId = WebClientId))
 
+    val viewModel = koinViewModel<RootViewModel>()
+
     MyAppTheme {
         KoinContext {
-            val appModel: AppModel = koinInject()
-            val user = appModel.user.collectAsState()
-
+            val user = viewModel.user.collectAsState()
             val auth = remember { Firebase.auth }
 
             LaunchedEffect(auth.currentUser) {
-
-
                 auth.currentUser?.let { firebaseUser ->
-                    firebaseUser.email?.let { email ->
-                        appModel.setUser(
-                            User(firebaseUser.displayName ?: "N/A", email)
-                        )
-                    }
-                } ?: appModel.setUser(null)
+                    viewModel.handleUserLogin(firebaseUser)
+                }
             }
 
             if (user.value == null) {
-                LoginScreen(appModel = appModel) { result ->
+                LoginScreen { result ->
                     val firebaseUser = result.getOrNull()
-
-                    firebaseUser?.let { fbUser ->
-                        fbUser.email?.let { email ->
-                            appModel.setUser(
-                                User(fbUser.displayName ?: "N/A", email)
-                            )
-                        }
-                    }
+                    firebaseUser?.let { viewModel.handleUserLogin(it) }
                 }
             } else {
                 WebShopApp()
@@ -88,7 +75,6 @@ fun App() {
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
-    appModel: AppModel,
     onFirebaseResult: (Result<FirebaseUser?>) -> Unit
 ) {
     Box(
@@ -100,7 +86,7 @@ fun LoginScreen(
 //                    startY = 0f,
 //                    endY = Float.POSITIVE_INFINITY
 //                )
-//            ),
+//            )
         ,
         contentAlignment = Alignment.Center
     ) {
