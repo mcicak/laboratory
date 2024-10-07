@@ -38,7 +38,6 @@ data class Product(
     }
 }
 
-
 @Serializable
 data class Category(
     val id: String,

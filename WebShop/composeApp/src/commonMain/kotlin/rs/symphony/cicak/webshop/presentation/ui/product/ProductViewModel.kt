@@ -42,18 +42,6 @@ class ProductViewModel(
     }
 
     fun getProduct(productId: ProductId): Product {
-        return Product.empty()
-
-//        val thumb = productRepository.getProducts().value.first { it.id == productId }
-//        val ret = Product(
-//            id = thumb.id,
-//            title = thumb.title,
-//            subtitle = thumb.subtitle,
-//            price = thumb.price,
-//            currency = Currency.USD.symbol,
-//            description = "",
-//            images = listOf(thumb.getImageResource()),
-//        )
-//        return ret
+        return productRepository.getProduct(productId)
     }
 }

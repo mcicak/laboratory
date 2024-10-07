@@ -1,6 +1,5 @@
 package rs.symphony.cicak.webshop.presentation.ui.product
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -36,21 +35,19 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.jetbrains.compose.resources.painterResource
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import rs.symphony.cicak.webshop.domain.Product
 import rs.symphony.cicak.webshop.domain.ProductId
 import rs.symphony.cicak.webshop.presentation.components.ProductCard
-import webshop.composeapp.generated.resources.Res
-import webshop.composeapp.generated.resources.p1
 
 val placeholderImage = "https://www.valusource.com/wp-content/uploads/woocommerce-placeholder-600x600.png"
 
 @Composable
 fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit, onRecommendedProductClick: (ProductId) -> Unit) {
 
-    // TODO: use ProductDetailsViewModel here
     val productViewModel = koinViewModel<ProductViewModel>(
         parameters = { parametersOf(productId) }
     )
@@ -131,9 +128,9 @@ fun ProductPage(
         state = listState
     ) {
         item {
-            Image(
+            KamelImage(
                 modifier = Modifier.fillMaxWidth(),
-                painter = painterResource(Res.drawable.p1),
+                resource = asyncPainterResource(product.images.first()),
                 contentDescription = null
             )
         }

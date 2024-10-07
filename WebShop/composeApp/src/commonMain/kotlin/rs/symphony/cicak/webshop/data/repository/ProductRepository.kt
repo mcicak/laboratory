@@ -31,6 +31,7 @@ class ProductRepositoryImpl(
                 val products = snapshot.documents.map { doc ->
                     doc.data<Product>()
                 }.sortedBy { it.title }
+                appModel.updateProducts(products)
                 emit(products)
             }
     }
@@ -40,7 +41,7 @@ class ProductRepositoryImpl(
     }
 
     override fun getProduct(productId: ProductId): Product {
-        TODO("Not yet implemented")
+        return appModel.products.value.find { it.id == productId } ?: Product.empty()
     }
 }
 
