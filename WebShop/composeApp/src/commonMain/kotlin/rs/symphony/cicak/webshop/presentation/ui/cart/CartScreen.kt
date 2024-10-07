@@ -50,18 +50,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import kotlinx.coroutines.delay
-import org.jetbrains.compose.resources.painterResource
 import rs.symphony.cicak.webshop.domain.Currency
-import rs.symphony.cicak.webshop.domain.getImageResource
-
 
 @Composable
 fun CartScreen(viewModel: CartViewModel) {
@@ -158,15 +156,13 @@ private fun CartItemRow(
                 .height(85.dp)
                 .padding(start = 8.dp, end = 8.dp)
         ) {
-            Image(
+            KamelImage(
                 modifier = Modifier
                     .height(80.dp)
                     .align(alignment = Alignment.CenterVertically)
                     .aspectRatio(1f),
-                // TODO: fetch product image here
-                painter = painterResource(cartItem.product.getImageResource()),
-                contentScale = ContentScale.Fit,
-                contentDescription = null,
+                resource = asyncPainterResource(cartItem.product.images.first()),
+                contentDescription = null
             )
 
             Box(

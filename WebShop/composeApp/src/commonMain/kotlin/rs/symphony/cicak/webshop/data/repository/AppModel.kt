@@ -6,6 +6,7 @@ import rs.symphony.cicak.webshop.domain.CartItem
 import rs.symphony.cicak.webshop.domain.Category
 import rs.symphony.cicak.webshop.domain.Currency
 import rs.symphony.cicak.webshop.domain.Product
+import rs.symphony.cicak.webshop.domain.ProductId
 import rs.symphony.cicak.webshop.domain.User
 
 class AppModel {
@@ -21,20 +22,6 @@ class AppModel {
     val products: StateFlow<List<Product>> = _products
     val cartItems: StateFlow<List<CartItem>> = _cartItems
     val currency: StateFlow<Currency> = _currency
-
-    init {
-        initializeProducts()
-    }
-
-    fun initializeProducts() {
-        val productList = List(100) {
-            Product(
-                it.toLong(), "Product $it", "", (it.toDouble() + 10) * 10,
-                favorite = it.toLong() % 6 == 0.toLong()
-            )
-        }
-        _products.value = productList
-    }
 
     fun setUser(newUser: User?) {
         _user.value = newUser
@@ -52,7 +39,7 @@ class AppModel {
         _cartItems.value = newCartItems
     }
 
-    fun getProductById(id: Long): Product? {
+    fun getProductById(id: ProductId): Product? {
         return _products.value.find { it.id == id }
     }
 }

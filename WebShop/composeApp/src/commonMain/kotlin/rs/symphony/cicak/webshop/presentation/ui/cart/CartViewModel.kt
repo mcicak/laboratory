@@ -13,6 +13,7 @@ import rs.symphony.cicak.webshop.data.repository.CartRepository
 import rs.symphony.cicak.webshop.data.repository.ProductRepository
 import rs.symphony.cicak.webshop.domain.Currency
 import rs.symphony.cicak.webshop.domain.Product
+import rs.symphony.cicak.webshop.domain.ProductId
 
 data class CartItemUi(
     val product: Product,
@@ -50,15 +51,15 @@ class CartViewModel(
         items.sumOf { it.quantity }  // Sum the quantities of all cart items
     }.stateIn(viewModelScope, SharingStarted.Eagerly, 0)
 
-    fun addToCart(productId: Long) {
+    fun addToCart(productId: ProductId) {
         cartRepository.addToCart(productId)
     }
 
-    fun removeFromCart(productId: Long) {
+    fun removeFromCart(productId: ProductId) {
         cartRepository.removeFromCart(productId)
     }
 
-    fun updateCartItemQuantity(productId: Long, quantity: Int) {
+    fun updateCartItemQuantity(productId: ProductId, quantity: Int) {
         cartRepository.updateCartItemQuantity(productId, quantity)
     }
 

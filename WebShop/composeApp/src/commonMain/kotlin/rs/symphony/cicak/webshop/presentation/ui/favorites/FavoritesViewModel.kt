@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import rs.symphony.cicak.webshop.data.repository.CartRepository
 import rs.symphony.cicak.webshop.data.repository.ProductRepository
 import rs.symphony.cicak.webshop.domain.Product
+import rs.symphony.cicak.webshop.domain.ProductId
 
 class FavoritesViewModel(
     private val productRepository: ProductRepository,
@@ -25,7 +26,7 @@ class FavoritesViewModel(
     }
 
     // Toggle favorite status in repository
-    fun toggleFavorite(productId: Long) {
+    fun toggleFavorite(productId: ProductId) {
         productRepository.toggleFavorite(productId)
         fetchFavorites() // Refresh the favorite list
     }
@@ -34,7 +35,7 @@ class FavoritesViewModel(
         _isGridView.value = !_isGridView.value
     }
 
-    fun addToCart(id: Long) {
+    fun addToCart(id: ProductId) {
         viewModelScope.launch {
             cartRepository.addToCart(id)
         }

@@ -12,9 +12,7 @@ interface CategoryRepository {
     fun getRootCategories(): Flow<List<Category>>
 }
 
-class CategoryRepositoryFirestore(
-    private val appModel: AppModel
-) : CategoryRepository {
+class CategoryRepositoryFirestore() : CategoryRepository {
 
     private val firestore = Firebase.firestore
 

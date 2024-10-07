@@ -8,12 +8,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import rs.symphony.cicak.webshop.domain.CartItem
 import rs.symphony.cicak.webshop.domain.Currency
+import rs.symphony.cicak.webshop.domain.ProductId
 
 interface CartRepository {
     fun getCartItems(): StateFlow<List<CartItem>>
-    fun addToCart(productId: Long)
-    fun removeFromCart(productId: Long)
-    fun updateCartItemQuantity(productId: Long, quantity: Int)
+    fun addToCart(productId: ProductId)
+    fun removeFromCart(productId: ProductId)
+    fun updateCartItemQuantity(productId: ProductId, quantity: Int)
     fun calculateTotalCost(): StateFlow<Double>
     fun getCurrency(): StateFlow<Currency>
 }
@@ -24,7 +25,7 @@ class CartRepositoryFake(private val appModel: AppModel) : CartRepository {
         return appModel.cartItems
     }
 
-    override fun addToCart(productId: Long) {
+    override fun addToCart(productId: ProductId) {
         val currentCart = appModel.cartItems.value.toMutableList()
         val existingItem = currentCart.find { it.productId == productId }
 
@@ -41,12 +42,12 @@ class CartRepositoryFake(private val appModel: AppModel) : CartRepository {
         appModel.updateCartItems(currentCart)
     }
 
-    override fun removeFromCart(productId: Long) {
+    override fun removeFromCart(productId: ProductId) {
         val updatedCart = appModel.cartItems.value.filter { it.productId != productId }
         appModel.updateCartItems(updatedCart)
     }
 
-    override fun updateCartItemQuantity(productId: Long, quantity: Int) {
+    override fun updateCartItemQuantity(productId: ProductId, quantity: Int) {
         if (quantity < 1 || quantity > 5) return
 
         val updatedCart = appModel.cartItems.value.map { item ->

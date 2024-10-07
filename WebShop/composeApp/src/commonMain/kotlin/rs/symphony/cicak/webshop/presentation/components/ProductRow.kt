@@ -1,6 +1,5 @@
 package rs.symphony.cicak.webshop.presentation.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,24 +16,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.painterResource
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import rs.symphony.cicak.webshop.domain.Product
-import rs.symphony.cicak.webshop.domain.getImageResource
+import rs.symphony.cicak.webshop.domain.ProductId
 
 @Composable
-fun ProductRow(item: Product, onFavoriteToggle: (Long) -> Unit = {}) {
+fun ProductRow(item: Product, onFavoriteToggle: (ProductId) -> Unit = {}) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
     ) {
         // Placeholder image
-        Image(
-            painter = painterResource(item.getImageResource()),
-            contentDescription = null,
+
+        KamelImage(
             modifier = Modifier
                 .size(64.dp)
-                .padding(end = 8.dp)
+                .padding(end = 8.dp),
+            resource = asyncPainterResource(item.images.first()),
+            contentDescription = null
         )
 
         Column(modifier = Modifier.weight(1f)) {
@@ -44,9 +45,9 @@ fun ProductRow(item: Product, onFavoriteToggle: (Long) -> Unit = {}) {
 
         IconButton(onClick = { onFavoriteToggle(item.id) }) {
             Icon(
-                imageVector = if (item.favorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                imageVector = if (item.isFavorite(emptyList())) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                 contentDescription = null,
-                tint = if (item.favorite) Color.Red else Color.Gray
+                tint = if (item.isFavorite(emptyList())) Color.Red else Color.Gray
             )
         }
     }

@@ -12,7 +12,7 @@ import rs.symphony.cicak.webshop.data.repository.CartRepositoryFake
 import rs.symphony.cicak.webshop.data.repository.CategoryRepository
 import rs.symphony.cicak.webshop.data.repository.CategoryRepositoryFirestore
 import rs.symphony.cicak.webshop.data.repository.ProductRepository
-import rs.symphony.cicak.webshop.data.repository.ProductRepositoryFake
+import rs.symphony.cicak.webshop.data.repository.ProductRepositoryImpl
 import rs.symphony.cicak.webshop.data.repository.UserRepository
 import rs.symphony.cicak.webshop.data.repository.UserRepositoryImpl
 import rs.symphony.cicak.webshop.dependencies.MyRepository
@@ -35,7 +35,7 @@ val sharedModule = module {
     singleOf(::MyRepositoryImpl).bind<MyRepository>()
     singleOf(::UserRepositoryImpl).bind<UserRepository>()
     singleOf(::CategoryRepositoryFirestore).bind<CategoryRepository>()
-    singleOf(::ProductRepositoryFake).bind<ProductRepository>()
+    singleOf(::ProductRepositoryImpl).bind<ProductRepository>()
     singleOf(::CartRepositoryFake).bind<CartRepository>()
 
     // View Models

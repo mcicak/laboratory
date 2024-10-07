@@ -1,6 +1,5 @@
 package rs.symphony.cicak.webshop.presentation.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -27,12 +26,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.painterResource
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import rs.symphony.cicak.webshop.domain.Product
 import rs.symphony.cicak.webshop.domain.ProductId
-import rs.symphony.cicak.webshop.domain.getImageResource
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -59,14 +57,13 @@ fun ProductCard(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 // Placeholder image
-                Image(
+                KamelImage(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(2.dp)
-                        .aspectRatio(1f), // Ensures the image is square
-                    painter = painterResource(item.getImageResource()),
-                    contentScale = ContentScale.Fit,
-                    contentDescription = null,
+                        .aspectRatio(1f),
+                    resource = asyncPainterResource(item.images.first()),
+                    contentDescription = null
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -133,10 +130,10 @@ private fun FavoriteButton(
                 interactionSource = remember { MutableInteractionSource() })
     ) {
         Icon(
-            imageVector = if (item.favorite) Icons.Filled.Favorite else
+            imageVector = if (item.isFavorite(emptyList())) Icons.Filled.Favorite else
                 Icons.Outlined.FavoriteBorder,
             contentDescription = null,
-            tint = if (item.favorite) Color.Red else Color.Gray
+            tint = if (item.isFavorite(emptyList())) Color.Red else Color.Gray
         )
     }
 }

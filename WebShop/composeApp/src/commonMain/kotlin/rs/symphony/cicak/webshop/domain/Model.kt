@@ -1,48 +1,43 @@
 package rs.symphony.cicak.webshop.domain
 
 import kotlinx.serialization.Serializable
-import org.jetbrains.compose.resources.DrawableResource
-import webshop.composeapp.generated.resources.Res
-import webshop.composeapp.generated.resources.p1
-import webshop.composeapp.generated.resources.p2
-import webshop.composeapp.generated.resources.p3
-import webshop.composeapp.generated.resources.p4
-import webshop.composeapp.generated.resources.p5
 
-typealias ProductId = Long
+typealias ProductId = String
 
 data class User(
     val name: String,
     val email: String
 )
 
+@Serializable
 data class Product(
     val id: ProductId,
     val title: String,
     val subtitle: String,
+    val description: String,
+    val images: List<String>,
     val price: Double,
-    val favorite: Boolean = false
-)
+    val currency: String
+) {
+    fun isFavorite(userFavorites: List<ProductId>): Boolean {
+        return userFavorites.contains(this.id)
+    }
 
-fun Product.getImageResource(): DrawableResource {
-    return when (id % 5) {
-        0L -> Res.drawable.p1
-        1L -> Res.drawable.p2
-        2L -> Res.drawable.p3
-        3L -> Res.drawable.p4
-        else -> Res.drawable.p5
+    companion object {
+        fun empty(): Product {
+            return Product(
+                id = "",
+                title = "",
+                subtitle = "",
+                description = "",
+                images = emptyList(),
+                price = 0.0,
+                currency = ""
+            )
+        }
     }
 }
 
-data class ProductDetails(
-    val id: ProductId,
-    val title: String,
-    val subtitle: String,
-    val description: String,
-    val images: List<DrawableResource>, // convert to URLs
-    val price: Double,
-    val currency: String
-)
 
 @Serializable
 data class Category(

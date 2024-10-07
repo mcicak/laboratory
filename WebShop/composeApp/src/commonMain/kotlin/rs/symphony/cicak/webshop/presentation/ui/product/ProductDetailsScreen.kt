@@ -40,11 +40,12 @@ import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import rs.symphony.cicak.webshop.domain.Product
-import rs.symphony.cicak.webshop.domain.ProductDetails
 import rs.symphony.cicak.webshop.domain.ProductId
 import rs.symphony.cicak.webshop.presentation.components.ProductCard
 import webshop.composeapp.generated.resources.Res
 import webshop.composeapp.generated.resources.p1
+
+val placeholderImage = "https://www.valusource.com/wp-content/uploads/woocommerce-placeholder-600x600.png"
 
 @Composable
 fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit, onRecommendedProductClick: (ProductId) -> Unit) {
@@ -57,18 +58,22 @@ fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit, onRecommended
 
     val recommended = listOf(
         Product(
-            id = 3,
+            id = "3",
             title = "Lamborghini Countach",
             subtitle = "",
+            description = "",
             price = 120000.0,
-            favorite = false
+            currency = "USD",
+            images = listOf(placeholderImage),
         ),
         Product(
-            id = 4,
+            id = "4",
             title = "Marantz SR 2000 Stereo",
             subtitle = "",
+            description = "",
             price = 220.0,
-            favorite = false
+            currency = "USD",
+            images = listOf(placeholderImage)
         )
     )
 
@@ -115,7 +120,7 @@ fun TopBar(backgroundColor: Color, onBack: () -> Unit) {
 
 @Composable
 fun ProductPage(
-    product: ProductDetails,
+    product: Product,
     recommended: List<Product>,
     listState: LazyListState
 ) {

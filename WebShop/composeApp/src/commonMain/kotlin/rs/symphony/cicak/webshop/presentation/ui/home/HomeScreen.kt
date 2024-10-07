@@ -24,7 +24,7 @@ import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel, onProductClick: (ProductId) -> Unit) {
-    val state by viewModel.homeScreenState.collectAsState()
+    val state by viewModel.screenState.collectAsState()
 
     LaunchedEffect(true) {
         viewModel.fetchHomeProducts()
@@ -69,7 +69,10 @@ fun HomeScreen(viewModel: HomeViewModel, onProductClick: (ProductId) -> Unit) {
             }
 
             is HomeScreenState.Error -> {
-                Text("Error fetching data")
+                Text(
+                    modifier = Modifier.padding(20.dp),
+                    text = "Error fetching data"
+                )
             }
         }
     }
