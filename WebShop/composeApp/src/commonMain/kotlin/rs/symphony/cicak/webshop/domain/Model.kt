@@ -5,8 +5,10 @@ import kotlinx.serialization.Serializable
 typealias ProductId = String
 
 data class User(
+    val id: String,
     val name: String,
-    val email: String
+    val email: String,
+    val favorite: List<ProductId> = emptyList()
 )
 
 @Serializable

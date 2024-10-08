@@ -199,7 +199,8 @@ fun RecommendedItems(recommended: List<Product>) {
                         modifier = Modifier
                             .weight(1f) // Each product takes equal space
                             .padding(8.dp),
-                        item = product
+                        item = product,
+                        isFavorite = false //products[index].isFavorite(successState.model.favorites)
                     )
                 }
                 // Handle cases where the row has less than 2 items

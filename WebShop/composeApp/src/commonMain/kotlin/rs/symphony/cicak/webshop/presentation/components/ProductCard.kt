@@ -37,6 +37,7 @@ import rs.symphony.cicak.webshop.domain.ProductId
 fun ProductCard(
     modifier: Modifier = Modifier,
     item: Product,
+    isFavorite: Boolean,
     onItemClicked: (ProductId) -> Unit = {},
     onFavoriteToggle: () -> Unit = {},
     onAddToCart: () -> Unit = {}
@@ -90,7 +91,7 @@ fun ProductCard(
                 }
             }
 
-            FavoriteButton(Modifier.align(Alignment.TopEnd), item, onFavoriteToggle)
+            FavoriteButton(Modifier.align(Alignment.TopEnd), item, isFavorite, onFavoriteToggle)
             AddToCartButton(Modifier.align(Alignment.BottomEnd), onAddToCart)
         }
     }
@@ -120,6 +121,7 @@ private fun AddToCartButton(
 private fun FavoriteButton(
     modifier: Modifier,
     item: Product,
+    isFavorite: Boolean,
     onFavoriteToggle: () -> Unit,
 ) {
     Box(
@@ -130,10 +132,10 @@ private fun FavoriteButton(
                 interactionSource = remember { MutableInteractionSource() })
     ) {
         Icon(
-            imageVector = if (item.isFavorite(emptyList())) Icons.Filled.Favorite else
+            imageVector = if (isFavorite) Icons.Filled.Favorite else
                 Icons.Outlined.FavoriteBorder,
             contentDescription = null,
-            tint = if (item.isFavorite(emptyList())) Color.Red else Color.Gray
+            tint = if (isFavorite) Color.Red else Color.Gray
         )
     }
 }

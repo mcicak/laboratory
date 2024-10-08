@@ -54,7 +54,7 @@ fun App() {
             val user = viewModel.user.collectAsState()
             val auth = remember { Firebase.auth }
 
-            LaunchedEffect(auth.currentUser) {
+            LaunchedEffect(Unit) {
                 auth.currentUser?.let { firebaseUser ->
                     viewModel.handleUserLogin(firebaseUser)
                 }

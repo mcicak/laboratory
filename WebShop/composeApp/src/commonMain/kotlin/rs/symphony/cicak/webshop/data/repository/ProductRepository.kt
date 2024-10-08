@@ -22,7 +22,17 @@ class ProductRepositoryImpl(
     private val firestore = Firebase.firestore
 
     override fun toggleFavorite(productId: ProductId) {
-        TODO("Not yet implemented")
+        appModel.setUser(
+            appModel.user.value?.copy(
+                favorite = appModel.user.value?.favorite?.plus(productId) ?: listOf(
+                    productId
+                )
+            )
+        )
+
+        // update in firestore
+
+        // if firestore update failed, remove favorite item from appModel.user to rollback the state
     }
 
     override fun getProducts() = flow {

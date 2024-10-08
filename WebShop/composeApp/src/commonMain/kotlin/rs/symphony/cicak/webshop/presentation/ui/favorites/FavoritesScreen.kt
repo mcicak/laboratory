@@ -92,6 +92,7 @@ fun FavoritesGridView(
     ) {
         items(favorites.size) { index ->
             ProductCard(item = favorites[index],
+                isFavorite = false, //products[index].isFavorite(successState.model.favorites),
                 onFavoriteToggle = {
                     viewModel.toggleFavorite(favorites[index].id)
                 },
