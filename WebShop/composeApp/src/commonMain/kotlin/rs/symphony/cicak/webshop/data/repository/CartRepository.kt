@@ -12,8 +12,8 @@ import rs.symphony.cicak.webshop.domain.ProductId
 interface CartRepository {
     fun getCartItems(): Flow<List<CartItem>>
     suspend fun addToCart(productId: ProductId)
-    fun removeFromCart(productId: ProductId)
-    fun updateCartItemQuantity(productId: ProductId, quantity: Int)
+    suspend fun removeFromCart(productId: ProductId)
+    suspend fun updateCartItemQuantity(productId: ProductId, quantity: Int)
     fun calculateTotalCost(): Flow<Double>
     fun getCurrency(): Currency
 }
@@ -46,22 +46,20 @@ class CartRepositoryImpl(
             val cartItemsCollection = db.collection("users").document(user.id).collection("cart")
 
             try {
-                // Step 1: Query for cart items with the given productId
                 val cartItemsSnapshot = cartItemsCollection.where { "productId" equalTo productId }.get()
 
                 if (cartItemsSnapshot.documents.isNotEmpty()) {
-                    // Step 2: If the product already exists in the cart, update the quantity
+                    // If the product already exists in the cart, increment its quantity
                     val cartItemDoc = cartItemsSnapshot.documents.first()
                     val cartItem = cartItemDoc.data<CartItem>()
 
                     cartItem.let {
                         if (it.quantity < 5) {
-                            // Increment the quantity
                             cartItemDoc.reference.update("quantity" to it.quantity + 1)
                         }
                     }
                 } else {
-                    // Step 3: If the product doesn't exist in the cart, add it
+                    // If the product doesn't exist in the cart, add it
                     val newCartItem = hashMapOf(
                         "productId" to productId,
                         "quantity" to 1
@@ -71,7 +69,6 @@ class CartRepositoryImpl(
 
             } catch (e: Exception) {
                 e.printStackTrace()
-                // Handle any exceptions such as missing permissions or network issues
                 val newCartItem = hashMapOf(
                     "productId" to productId,
                     "quantity" to 1
@@ -81,13 +78,41 @@ class CartRepositoryImpl(
         }
     }
 
+    override suspend fun removeFromCart(productId: ProductId) {
+        appModel.user.value?.let { user ->
+            val cartItemsCollection = db.collection("users").document(user.id).collection("cart")
 
-    override fun removeFromCart(productId: ProductId) {
-        TODO("Not yet implemented")
+            try {
+                val cartItemsSnapshot = cartItemsCollection.where { "productId" equalTo productId }.get()
+                if (cartItemsSnapshot.documents.isNotEmpty()) {
+                    val cartItemDoc = cartItemsSnapshot.documents.first()
+                    cartItemDoc.reference.delete()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
-    override fun updateCartItemQuantity(productId: ProductId, quantity: Int) {
-        TODO("Not yet implemented")
+    override suspend fun updateCartItemQuantity(productId: ProductId, quantity: Int) {
+        appModel.user.value?.let { user ->
+            val cartItemsCollection = db.collection("users").document(user.id).collection("cart")
+
+            try {
+                val cartItemsSnapshot = cartItemsCollection.where { "productId" equalTo productId }.get()
+
+                if (cartItemsSnapshot.documents.isNotEmpty()) {
+                    val cartItemDoc = cartItemsSnapshot.documents.first()
+
+                    if (quantity in 1..5) {
+                        cartItemDoc.reference.update("quantity" to quantity)
+                    }
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     override fun calculateTotalCost(): Flow<Double> {

@@ -61,18 +61,26 @@ class CartViewModel(
     }
 
     fun removeFromCart(productId: ProductId) {
-        cartRepository.removeFromCart(productId)
+        viewModelScope.launch {
+            cartRepository.removeFromCart(productId)
+        }
     }
 
     fun updateCartItemQuantity(productId: ProductId, quantity: Int) {
-        cartRepository.updateCartItemQuantity(productId, quantity)
+        viewModelScope.launch {
+            cartRepository.updateCartItemQuantity(productId, quantity)
+        }
     }
 
     fun increaseQuantity(cartItem: CartItemUi) {
-        cartRepository.updateCartItemQuantity(cartItem.product.id, cartItem.quantity + 1)
+        viewModelScope.launch {
+            cartRepository.updateCartItemQuantity(cartItem.product.id, cartItem.quantity + 1)
+        }
     }
 
     fun decreaseQuantity(cartItem: CartItemUi) {
-        cartRepository.updateCartItemQuantity(cartItem.product.id, cartItem.quantity - 1)
+        viewModelScope.launch {
+            cartRepository.updateCartItemQuantity(cartItem.product.id, cartItem.quantity - 1)
+        }
     }
 }
