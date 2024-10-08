@@ -50,6 +50,7 @@ val sharedModule = module {
         ProductViewModel(
             productRepository = get(),
             cartRepository = get(),
+            userRepository = get(),
             productId = productId
         )
     }

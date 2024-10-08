@@ -51,7 +51,7 @@ class UserRepositoryImpl(private val appModel: AppModel) : UserRepository {
 
             appModel.setUser(
                 appModel.user.value?.copy(
-                    favorite = favorites ?: emptyList()
+                    favorite = favorites
                 )
             )
         }

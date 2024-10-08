@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import rs.symphony.cicak.webshop.data.repository.CartRepository
 import rs.symphony.cicak.webshop.data.repository.ProductRepository
+import rs.symphony.cicak.webshop.data.repository.UserRepository
 import rs.symphony.cicak.webshop.domain.Product
 import rs.symphony.cicak.webshop.domain.ProductId
 
@@ -19,6 +20,7 @@ sealed class ProductScreenState {
 class ProductViewModel(
     private val productRepository: ProductRepository,
     private val cartRepository: CartRepository,
+    private val userRepository: UserRepository,
     private val productId: ProductId
 ) : ViewModel() {
 
@@ -31,7 +33,7 @@ class ProductViewModel(
 
     fun toggleFavorite(productId: ProductId) {
         viewModelScope.launch {
-            productRepository.toggleFavorite(productId)
+            userRepository.toggleFavorite(productId)
         }
     }
 

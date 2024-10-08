@@ -21,7 +21,6 @@ import androidx.compose.material.icons.automirrored.filled.ViewList
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.GridView
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -39,12 +38,8 @@ import rs.symphony.cicak.webshop.presentation.components.ProductRow
 @Composable
 fun FavoritesScreen(viewModel: FavoritesViewModel) {
 
-    val favorites by viewModel.favorites.collectAsState()
+    val favorites by viewModel.favorites.collectAsState(initial = emptyList())
     val isGridView by viewModel.isGridView.collectAsState()
-
-    LaunchedEffect(Unit) {
-        viewModel.fetchFavorites()
-    }
 
     Scaffold(
         topBar = { FavoritesTopBar(isGridView) { viewModel.toggleGridView() } }
@@ -69,12 +64,15 @@ fun FavoritesListView(
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
         items(favorites.size) { idx ->
-            ProductRow(item = favorites[idx], onFavoriteToggle = { productId ->
-                viewModel.toggleFavorite(productId)
-            })
+            ProductRow(
+                item = favorites[idx],
+                isFavorite = true,
+                onFavoriteToggle = { productId ->
+                    viewModel.toggleFavorite(productId)
+                }
+            )
         }
     }
-
 }
 
 @Composable
@@ -92,7 +90,7 @@ fun FavoritesGridView(
     ) {
         items(favorites.size) { index ->
             ProductCard(item = favorites[index],
-                isFavorite = false, //products[index].isFavorite(successState.model.favorites),
+                isFavorite = true,
                 onFavoriteToggle = {
                     viewModel.toggleFavorite(favorites[index].id)
                 },

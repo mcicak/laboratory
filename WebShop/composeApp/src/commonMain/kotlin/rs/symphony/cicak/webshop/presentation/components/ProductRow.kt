@@ -22,7 +22,7 @@ import rs.symphony.cicak.webshop.domain.Product
 import rs.symphony.cicak.webshop.domain.ProductId
 
 @Composable
-fun ProductRow(item: Product, onFavoriteToggle: (ProductId) -> Unit = {}) {
+fun ProductRow(item: Product, isFavorite: Boolean, onFavoriteToggle: (ProductId) -> Unit = {}) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,9 +45,9 @@ fun ProductRow(item: Product, onFavoriteToggle: (ProductId) -> Unit = {}) {
 
         IconButton(onClick = { onFavoriteToggle(item.id) }) {
             Icon(
-                imageVector = if (item.isFavorite(emptyList())) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                 contentDescription = null,
-                tint = if (item.isFavorite(emptyList())) Color.Red else Color.Gray
+                tint = if (isFavorite) Color.Red else Color.Gray
             )
         }
     }
