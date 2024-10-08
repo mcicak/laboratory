@@ -87,8 +87,8 @@ fun CartScreen(viewModel: CartViewModel) {
 @Composable
 fun FullCartView(padding: PaddingValues, viewModel: CartViewModel) {
     val cartItems by viewModel.cartItemsUi.collectAsState()
-    val totalCost by viewModel.totalCost.collectAsState()
-    val currency by viewModel.currency.collectAsState()
+    val totalCost by viewModel.totalCost.collectAsState(initial = 0.0)
+    //val currency by viewModel.currency.collectAsState()
 
     Column(
         modifier = Modifier
@@ -101,7 +101,7 @@ fun FullCartView(padding: PaddingValues, viewModel: CartViewModel) {
                 .weight(1f) // Takes up the remaining space
                 .fillMaxWidth()
         ) {
-            CartItemsListView(cartItems, currency, onDelete = {
+            CartItemsListView(cartItems, Currency.USD, onDelete = {
                 viewModel.removeFromCart(it.product.id)
             }, onDecrease = {
                 viewModel.decreaseQuantity(it)
@@ -115,7 +115,7 @@ fun FullCartView(padding: PaddingValues, viewModel: CartViewModel) {
                 .fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
-            FooterCheckoutView(totalCost, currency)
+            FooterCheckoutView(totalCost, Currency.USD)
         }
     }
 }

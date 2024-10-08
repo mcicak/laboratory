@@ -48,6 +48,7 @@ data class Category(
     val order: Int
 )
 
+@Serializable
 data class CartItem(
     val productId: ProductId,
     val quantity: Int

@@ -1,71 +1,112 @@
 package rs.symphony.cicak.webshop.data.repository
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.firestore.firestore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
 import rs.symphony.cicak.webshop.domain.CartItem
 import rs.symphony.cicak.webshop.domain.Currency
 import rs.symphony.cicak.webshop.domain.ProductId
 
 interface CartRepository {
-    fun getCartItems(): StateFlow<List<CartItem>>
-    fun addToCart(productId: ProductId)
+    fun getCartItems(): Flow<List<CartItem>>
+    suspend fun addToCart(productId: ProductId)
     fun removeFromCart(productId: ProductId)
     fun updateCartItemQuantity(productId: ProductId, quantity: Int)
-    fun calculateTotalCost(): StateFlow<Double>
-    fun getCurrency(): StateFlow<Currency>
+    fun calculateTotalCost(): Flow<Double>
+    fun getCurrency(): Currency
 }
 
-class CartRepositoryFake(private val appModel: AppModel) : CartRepository {
+class CartRepositoryImpl(
+    private val productRepository: ProductRepository,
+    private val appModel: AppModel
+) : CartRepository {
 
-    override fun getCartItems(): StateFlow<List<CartItem>> {
-        return appModel.cartItems
-    }
+    private val db = Firebase.firestore
 
-    override fun addToCart(productId: ProductId) {
-        val currentCart = appModel.cartItems.value.toMutableList()
-        val existingItem = currentCart.find { it.productId == productId }
-
-        if (existingItem != null) {
-            // Increase quantity if product is already in the cart
-            if (existingItem.quantity >= 5) return
-            val updatedItem = existingItem.copy(quantity = existingItem.quantity + 1)
-            currentCart[currentCart.indexOf(existingItem)] = updatedItem
-        } else {
-            // Add new product to cart
-            currentCart.add(CartItem(productId, 1))
+    override fun getCartItems(): Flow<List<CartItem>> = flow {
+        appModel.user.value?.let { user ->
+            try {
+                db.collection("users").document(user.id).collection("cart").snapshots
+                    .collect { snapshot ->
+                        val cartItems = snapshot.documents.map { doc ->
+                            doc.data<CartItem>()
+                        }
+                        emit(cartItems)
+                    }
+            } catch (e: Exception) {
+                emit(emptyList())
+            }
         }
-
-        appModel.updateCartItems(currentCart)
     }
+
+    override suspend fun addToCart(productId: ProductId) {
+        appModel.user.value?.let { user ->
+            val cartItemsCollection = db.collection("users").document(user.id).collection("cart")
+
+            try {
+                // Step 1: Query for cart items with the given productId
+                val cartItemsSnapshot = cartItemsCollection.where { "productId" equalTo productId }.get()
+
+                if (cartItemsSnapshot.documents.isNotEmpty()) {
+                    // Step 2: If the product already exists in the cart, update the quantity
+                    val cartItemDoc = cartItemsSnapshot.documents.first()
+                    val cartItem = cartItemDoc.data<CartItem>()
+
+                    cartItem.let {
+                        if (it.quantity < 5) {
+                            // Increment the quantity
+                            cartItemDoc.reference.update("quantity" to it.quantity + 1)
+                        }
+                    }
+                } else {
+                    // Step 3: If the product doesn't exist in the cart, add it
+                    val newCartItem = hashMapOf(
+                        "productId" to productId,
+                        "quantity" to 1
+                    )
+                    cartItemsCollection.add(newCartItem)
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                // Handle any exceptions such as missing permissions or network issues
+                val newCartItem = hashMapOf(
+                    "productId" to productId,
+                    "quantity" to 1
+                )
+                cartItemsCollection.add(newCartItem)
+            }
+        }
+    }
+
 
     override fun removeFromCart(productId: ProductId) {
-        val updatedCart = appModel.cartItems.value.filter { it.productId != productId }
-        appModel.updateCartItems(updatedCart)
+        TODO("Not yet implemented")
     }
 
     override fun updateCartItemQuantity(productId: ProductId, quantity: Int) {
-        if (quantity < 1 || quantity > 5) return
-
-        val updatedCart = appModel.cartItems.value.map { item ->
-            if (item.productId == productId) item.copy(quantity = quantity) else item
-        }
-        appModel.updateCartItems(updatedCart)
+        TODO("Not yet implemented")
     }
 
-    override fun calculateTotalCost(): StateFlow<Double> {
-        return appModel.cartItems.map { cartItems ->
-            cartItems.sumOf { cartItem ->
-                val product = appModel.products.value.find { it.id == cartItem.productId }
-                product?.price?.times(cartItem.quantity) ?: 0.0
+    override fun calculateTotalCost(): Flow<Double> {
+        val cartItemsFlow = getCartItems()
+        val productsFlow = productRepository.getProducts()
+
+        return combine(cartItemsFlow, productsFlow) { cartItems, products ->
+            var total = 0.0
+            cartItems.forEach { cartItem ->
+                val product = products.find { it.id == cartItem.productId }
+                product?.let {
+                    total += cartItem.quantity * it.price // Assuming product has a 'price' field
+                }
             }
-        }.stateIn(CoroutineScope(Dispatchers.Default), SharingStarted.Eagerly, 0.0)
+            total
+        }
     }
 
-    override fun getCurrency(): StateFlow<Currency> {
-        return appModel.currency
+    override fun getCurrency(): Currency {
+        return Currency.USD
     }
 }

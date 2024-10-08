@@ -8,7 +8,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 import rs.symphony.cicak.webshop.data.repository.AppModel
 import rs.symphony.cicak.webshop.data.repository.CartRepository
-import rs.symphony.cicak.webshop.data.repository.CartRepositoryFake
+import rs.symphony.cicak.webshop.data.repository.CartRepositoryImpl
 import rs.symphony.cicak.webshop.data.repository.CategoryRepository
 import rs.symphony.cicak.webshop.data.repository.CategoryRepositoryFirestore
 import rs.symphony.cicak.webshop.data.repository.ProductRepository
@@ -36,7 +36,7 @@ val sharedModule = module {
     singleOf(::UserRepositoryImpl).bind<UserRepository>()
     singleOf(::CategoryRepositoryFirestore).bind<CategoryRepository>()
     singleOf(::ProductRepositoryImpl).bind<ProductRepository>()
-    singleOf(::CartRepositoryFake).bind<CartRepository>()
+    singleOf(::CartRepositoryImpl).bind<CartRepository>()
 
     // View Models
     viewModelOf(::MyViewModel)
