@@ -31,6 +31,17 @@ import com.mmk.kmpauth.uihelper.google.GoogleSignInButton
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.FirebaseUser
 import dev.gitlive.firebase.auth.auth
+import io.kamel.core.config.DefaultCacheSize
+import io.kamel.core.config.KamelConfig
+import io.kamel.core.config.fileFetcher
+import io.kamel.core.config.httpFetcher
+import io.kamel.core.config.takeFrom
+import io.kamel.image.config.Default
+import io.kamel.image.config.imageBitmapDecoder
+import io.kamel.image.config.imageVectorDecoder
+import io.kamel.image.config.svgDecoder
+import io.ktor.client.plugins.HttpRequestRetry
+import io.ktor.http.isSuccess
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
@@ -55,6 +66,51 @@ fun App() {
             val auth = remember { Firebase.auth }
 
             LaunchedEffect(Unit) {
+                KamelConfig {
+                    takeFrom(KamelConfig.Default)
+
+                    // Sets the number of images to cache
+                    imageBitmapCacheSize = DefaultCacheSize
+
+                    // adds an ImageBitmapDecoder
+                    imageBitmapDecoder()
+
+                    // adds an ImageVectorDecoder (XML)
+                    imageVectorDecoder()
+
+                    // adds an SvgDecoder (SVG)
+                    svgDecoder()
+
+                    // adds a FileFetcher
+                    fileFetcher()
+
+                    // Configures Ktor HttpClient
+                    httpFetcher {
+                        // httpCache is defined in kamel-core and configures the ktor client
+                        // to install a HttpCache feature with the implementation provided by Kamel.
+                        // The size of the cache can be defined in Bytes.
+                        httpCache(10 * 1024 * 1024  /* 10 MiB */)
+
+//                        defaultRequest {
+//                            url("https://firebasestorage.googleapis.com/")
+//                            cacheControl(CacheControl.MaxAge(maxAgeSeconds = 10000))
+//                        }
+
+                        install(HttpRequestRetry) {
+                            maxRetries = 3
+                            retryIf { httpRequest, httpResponse ->
+                                !httpResponse.status.isSuccess()
+                            }
+                        }
+
+                        // Requires adding "io.ktor:ktor-client-logging:$ktor_version"
+//                        Logging {
+//                            level = LogLevel.INFO
+//                            logger = Logger.SIMPLE
+//                        }
+                    }
+                }
+
                 auth.currentUser?.let { firebaseUser ->
                     viewModel.handleUserLogin(firebaseUser)
                 }

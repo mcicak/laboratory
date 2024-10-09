@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -47,6 +48,8 @@ fun HomeScreen(viewModel: HomeViewModel, onProductClick: (ProductId) -> Unit) {
             }
 
             is HomeScreenState.Success -> {
+                val successState = (state as HomeScreenState.Success)
+                val products = remember { successState.model.products }
                 LazyVerticalGrid(
                     modifier = Modifier.fillMaxSize(),
                     columns = GridCells.Fixed(2),
@@ -54,9 +57,9 @@ fun HomeScreen(viewModel: HomeViewModel, onProductClick: (ProductId) -> Unit) {
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    val successState = (state as HomeScreenState.Success)
-                    val products = successState.model.products
-                    items(products.size) { index ->
+
+
+                    items(products.size, key = { products[it].id }) { index ->
                         ProductCard(
                             item = products[index],
                             isFavorite = products[index].isFavorite(successState.model.favorites),
