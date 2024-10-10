@@ -32,6 +32,7 @@ import androidx.compose.material.DismissState
 import androidx.compose.material.DismissValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.Text
@@ -70,8 +71,7 @@ fun CartScreen(viewModel: CartViewModel) {
             Text(
                 modifier = Modifier.padding(16.dp),
                 text = "Your Cart",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.h1
             )
         }
     ) { padding ->
