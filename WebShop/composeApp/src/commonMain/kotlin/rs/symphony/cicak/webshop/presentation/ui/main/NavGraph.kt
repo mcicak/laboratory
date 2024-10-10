@@ -7,20 +7,37 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
-import rs.symphony.cicak.webshop.presentation.ui.home.HomeScreen
-import rs.symphony.cicak.webshop.presentation.ui.home.HomeViewModel
+import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesScreen
+import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesViewModel
 import rs.symphony.cicak.webshop.presentation.ui.product.ProductDetailsScreen
+import rs.symphony.cicak.webshop.presentation.ui.products.HomeViewModel
+import rs.symphony.cicak.webshop.presentation.ui.products.ProductsScreen
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
-fun HomeNavGraph(navController: NavHostController) {
+fun NavGraph(navController: NavHostController, startDestination: Destination) {
 
-    NavHost(navController = navController, startDestination = HomeDestination) {
+    NavHost(navController = navController, startDestination = startDestination) {
 
         composable<HomeDestination> {
             val homeViewModel = koinViewModel<HomeViewModel>()
-            HomeScreen(homeViewModel, onProductClick = { productId ->
+            ProductsScreen(homeViewModel, onProductClick = { productId ->
                 navController.navigate(ProductDetailsDestination(productId))
+            })
+        }
+
+        composable<ProductsDestination> {
+            val args = it.toRoute<ProductsDestination>()
+            val homeViewModel = koinViewModel<HomeViewModel>()
+            ProductsScreen(homeViewModel, categoryId = args.categoryId, onProductClick = { productId ->
+                navController.navigate(ProductDetailsDestination(productId))
+            }, onBack = { navController.popBackStack() })
+        }
+
+        composable<CategoriesDestination> {
+            val categoriesViewModel = koinViewModel<CategoriesViewModel>()
+            CategoriesScreen(categoriesViewModel, onCategoryClick = { categoryId ->
+                navController.navigate(ProductsDestination(categoryId = categoryId))
             })
         }
 

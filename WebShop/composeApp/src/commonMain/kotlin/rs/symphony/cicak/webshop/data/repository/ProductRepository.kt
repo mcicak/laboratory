@@ -10,6 +10,7 @@ import rs.symphony.cicak.webshop.domain.ProductId
 
 interface ProductRepository {
     fun getProducts(): Flow<List<Product>>
+    fun getCategoryProducts(categoryId: String): Flow<List<Product>>
     fun getFavoriteProducts(): Flow<List<Product>>
     fun getProduct(productId: ProductId): Product
 }
@@ -22,6 +23,18 @@ class ProductRepositoryImpl(
 
     override fun getProducts() = flow {
         firestore.collection("products")
+            .snapshots.collect { snapshot ->
+                val products = snapshot.documents.map { doc ->
+                    doc.data<Product>()
+                }.sortedBy { it.title }
+                appModel.updateProducts(products)
+                emit(products)
+            }
+    }
+
+    override fun getCategoryProducts(categoryId: String) = flow {
+        firestore.collection("products")
+            .where { "category" equalTo categoryId }
             .snapshots.collect { snapshot ->
                 val products = snapshot.documents.map { doc ->
                     doc.data<Product>()

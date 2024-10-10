@@ -4,9 +4,20 @@ import kotlinx.serialization.Serializable
 import rs.symphony.cicak.webshop.domain.ProductId
 
 @Serializable
-object HomeDestination
+sealed class Destination
+
+@Serializable
+object HomeDestination : Destination()
+
+@Serializable
+data class ProductsDestination(
+    val categoryId: String? = null
+) : Destination()
+
+@Serializable
+object CategoriesDestination : Destination()
 
 @Serializable
 data class ProductDetailsDestination(
     val id: ProductId
-)
+) : Destination()

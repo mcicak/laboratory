@@ -22,7 +22,7 @@ import rs.symphony.cicak.webshop.domain.ProductId
 import rs.symphony.cicak.webshop.presentation.ui.cart.CartViewModel
 import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesViewModel
 import rs.symphony.cicak.webshop.presentation.ui.favorites.FavoritesViewModel
-import rs.symphony.cicak.webshop.presentation.ui.home.HomeViewModel
+import rs.symphony.cicak.webshop.presentation.ui.products.HomeViewModel
 import rs.symphony.cicak.webshop.presentation.ui.main.RootViewModel
 import rs.symphony.cicak.webshop.presentation.ui.product.ProductViewModel
 

@@ -35,7 +35,6 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import rs.symphony.cicak.webshop.presentation.ui.cart.CartScreen
 import rs.symphony.cicak.webshop.presentation.ui.cart.CartViewModel
-import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesScreen
 import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesViewModel
 import rs.symphony.cicak.webshop.presentation.ui.favorites.FavoritesScreen
 import rs.symphony.cicak.webshop.presentation.ui.favorites.FavoritesViewModel
@@ -150,8 +149,8 @@ fun WebShopApp() {
             contentAlignment = Alignment.Center
         ) {
             when (selectedTab) {
-                0 -> HomeNavGraph(homeNavController)
-                1 -> CategoriesScreen(categoriesViewModel)
+                0 -> NavGraph(homeNavController, HomeDestination)
+                1 -> NavGraph(categoriesNavController, CategoriesDestination)
                 2 -> FavoritesScreen(favoritesViewModel)
                 3 -> CartScreen(cartViewModel)
                 4 -> ProfileScreen()

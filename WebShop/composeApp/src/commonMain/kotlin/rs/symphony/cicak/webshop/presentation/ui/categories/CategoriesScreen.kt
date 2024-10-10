@@ -22,7 +22,7 @@ import rs.symphony.cicak.webshop.presentation.components.CategoryCard
 import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
 @Composable
-fun CategoriesScreen(viewModel: CategoriesViewModel) {
+fun CategoriesScreen(viewModel: CategoriesViewModel, onCategoryClick: (String) -> Unit) {
     val state by viewModel.screenState.collectAsState()
 
     LaunchedEffect(Unit) {
@@ -55,7 +55,7 @@ fun CategoriesScreen(viewModel: CategoriesViewModel) {
                 ) {
                     val categories = (state as CategoriesScreenState.Success).categories
                     items(categories.size) { index ->
-                        CategoryCard(item = categories[index])
+                        CategoryCard(item = categories[index], onClick = onCategoryClick)
                     }
                 }
             }

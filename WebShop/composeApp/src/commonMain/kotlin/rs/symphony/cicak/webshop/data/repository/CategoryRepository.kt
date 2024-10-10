@@ -12,7 +12,7 @@ interface CategoryRepository {
     fun getRootCategories(): Flow<List<Category>>
 }
 
-class CategoryRepositoryFirestore() : CategoryRepository {
+class CategoryRepositoryFirestore(private val appModel: AppModel) : CategoryRepository {
 
     private val firestore = Firebase.firestore
 
@@ -21,6 +21,7 @@ class CategoryRepositoryFirestore() : CategoryRepository {
             val categories = snapshot.documents.map { doc ->
                 doc.data<Category>()
             }.sortedBy { it.order }
+            appModel.updateCategories(categories)
             emit(categories)
         }
     }
