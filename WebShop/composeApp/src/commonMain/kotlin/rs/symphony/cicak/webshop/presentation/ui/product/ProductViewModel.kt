@@ -2,8 +2,10 @@ package rs.symphony.cicak.webshop.presentation.ui.product
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import rs.symphony.cicak.webshop.data.repository.CartRepository
 import rs.symphony.cicak.webshop.data.repository.ProductRepository
@@ -26,9 +28,17 @@ class ProductViewModel(
 
     private val _productScreenState = MutableStateFlow<ProductScreenState>(ProductScreenState.Loading)
     val productScreenState: StateFlow<ProductScreenState> = _productScreenState
+    val favorites: Flow<List<Product>> = productRepository.getFavoriteProducts()
 
     private fun loadProductDetails(productId: Long) {
         // Logic to load product details based on productId
+    }
+
+    // Check if a product is favorite by ID
+    fun isFavorite(productId: String): Flow<Boolean> {
+        return favorites.map { favoriteList ->
+            favoriteList.any { it.id == productId }
+        }
     }
 
     fun toggleFavorite(productId: ProductId) {

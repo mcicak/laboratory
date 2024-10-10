@@ -22,10 +22,13 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,6 +55,7 @@ fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit, onRecommended
         parameters = { parametersOf(productId) }
     )
     val product = productViewModel.getProduct(productId)
+    val isFavorite by productViewModel.isFavorite(productId).collectAsState(initial = false)
 
     val recommended = listOf(
         Product(
@@ -82,7 +86,14 @@ fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit, onRecommended
 
     Box(modifier = Modifier.fillMaxSize()) {
         // Product content (image, details, etc.) without padding
-        ProductPage(product = product, recommended = recommended, listState = listState)
+        ProductPage(
+            product = product,
+            recommended = recommended,
+            listState = listState,
+            isFavorite = isFavorite,
+            onAddToCart = { productViewModel.addToCart(productId) },
+            onFavorite = { productViewModel.toggleFavorite(productId) }
+        )
 
         // TopBar is placed on top of the content
         TopBar(backgroundColor = backgroundColor, onBack = onBack)
@@ -107,7 +118,7 @@ fun TopBar(backgroundColor: Color, onBack: () -> Unit) {
         ) {
             Icon(
                 modifier = Modifier.align(alignment = Alignment.Center),
-                imageVector = Icons.Default.ArrowBack,
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = null,
                 tint = Color.Black
             )
@@ -119,7 +130,10 @@ fun TopBar(backgroundColor: Color, onBack: () -> Unit) {
 fun ProductPage(
     product: Product,
     recommended: List<Product>,
-    listState: LazyListState
+    listState: LazyListState,
+    isFavorite: Boolean,
+    onAddToCart: () -> Unit,
+    onFavorite: () -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -170,7 +184,7 @@ fun ProductPage(
         }
 
         item {
-            ProductButtons()
+            ProductButtons(isFavorite = isFavorite, onAddToCart, onFavorite)
         }
 
         item {
@@ -213,7 +227,7 @@ fun RecommendedItems(recommended: List<Product>) {
 }
 
 @Composable
-private fun ProductButtons() {
+private fun ProductButtons(isFavorite: Boolean, onAddToCart: () -> Unit, onFavorite: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -222,17 +236,14 @@ private fun ProductButtons() {
     ) {
         ProductButton(
             modifier = Modifier.weight(1f),
-            onClick = {
-                // favorite
-            },
-            icon = Icons.Default.Favorite,
+            onClick = { onFavorite() },
+            icon = if (isFavorite) Icons.Filled.Favorite else
+                Icons.Outlined.FavoriteBorder,
             contentDescription = "Favorite"
         )
         ProductButton(
             modifier = Modifier.weight(1f),
-            onClick = {
-                // add to cart
-            },
+            onClick = { onAddToCart() },
             icon = Icons.Default.ShoppingCart,
             contentDescription = "Cart"
         )
