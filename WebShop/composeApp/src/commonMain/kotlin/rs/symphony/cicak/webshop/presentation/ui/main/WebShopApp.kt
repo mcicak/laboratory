@@ -149,8 +149,8 @@ fun WebShopApp() {
             contentAlignment = Alignment.Center
         ) {
             when (selectedTab) {
-                0 -> NavGraph(homeNavController, HomeDestination)
-                1 -> NavGraph(categoriesNavController, CategoriesDestination)
+                0 -> NavGraph(homeNavController, "start")
+                1 -> NavGraph(categoriesNavController, "categories")
                 2 -> FavoritesScreen(favoritesViewModel)
                 3 -> CartScreen(cartViewModel)
                 4 -> ProfileScreen()

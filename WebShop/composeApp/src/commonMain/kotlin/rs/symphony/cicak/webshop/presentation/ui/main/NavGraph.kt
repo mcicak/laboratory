@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesScreen
@@ -15,38 +14,40 @@ import rs.symphony.cicak.webshop.presentation.ui.products.ProductsScreen
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
-fun NavGraph(navController: NavHostController, startDestination: Destination) {
+fun NavGraph(navController: NavHostController, startDestination: String) {
 
     NavHost(navController = navController, startDestination = startDestination) {
 
-        composable<HomeDestination> {
+        composable(route = "start") {
             val homeViewModel = koinViewModel<HomeViewModel>()
             ProductsScreen(homeViewModel, onProductClick = { productId ->
-                navController.navigate(ProductDetailsDestination(productId))
+                navController.navigate("product_details/$productId")
             })
         }
 
-        composable<ProductsDestination> {
-            val args = it.toRoute<ProductsDestination>()
+        composable(route = "products/{categoryId}") { backStackEntry ->
+            val categoryId = backStackEntry.arguments?.getString("categoryId")
             val homeViewModel = koinViewModel<HomeViewModel>()
-            ProductsScreen(homeViewModel, categoryId = args.categoryId, onProductClick = { productId ->
-                navController.navigate(ProductDetailsDestination(productId))
+            ProductsScreen(homeViewModel, categoryId = categoryId, onProductClick = { productId ->
+                navController.navigate("product_details/$productId")
             }, onBack = { navController.popBackStack() })
         }
 
-        composable<CategoriesDestination> {
+        composable(route = "categories") {
             val categoriesViewModel = koinViewModel<CategoriesViewModel>()
             CategoriesScreen(categoriesViewModel, onCategoryClick = { categoryId ->
-                navController.navigate(ProductsDestination(categoryId = categoryId))
+                navController.navigate("products/$categoryId")
             })
         }
 
-        composable<ProductDetailsDestination> {
-            val args = it.toRoute<ProductDetailsDestination>()
+        composable(route = "product_details/{productId}") { backStackEntry ->
+            val productId = backStackEntry.arguments?.getString("productId")
             ProductDetailsScreen(
-                productId = args.id,
+                productId = productId ?: "",
                 onBack = { navController.popBackStack() },
-                onRecommendedProductClick = { navController.navigate(ProductDetailsDestination(it)) }
+                onRecommendedProductClick = { recommendedProductId ->
+                    navController.navigate("product_details/$recommendedProductId")
+                }
             )
         }
     }

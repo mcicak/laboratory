@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.googleServices)
+    id("com.github.ben-manes.versions") version "0.47.0"
 }
 
 kotlin {
@@ -60,7 +61,7 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.lifecycle.viewmodel)
-            implementation(libs.navigation.compose)
+            //implementation(libs.navigation.compose) // Breaks scroll on iOS
 
             implementation(compose.materialIconsExtended)
             implementation(libs.kamel.image)
