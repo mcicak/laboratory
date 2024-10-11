@@ -1,6 +1,7 @@
 package rs.symphony.cicak.webshop.presentation.ui.products
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,11 +15,10 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -31,6 +31,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import rs.symphony.cicak.webshop.domain.ProductId
 import rs.symphony.cicak.webshop.presentation.components.ProductCard
+import rs.symphony.cicak.webshop.presentation.components.Title
+import rs.symphony.cicak.webshop.presentation.ui.main.Transparent
 import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
 @Composable
@@ -51,6 +53,7 @@ fun ProductsScreen(
     }
 
     Scaffold(
+        backgroundColor = Transparent,
         topBar = {
             if (categoryId != null) {
                 Column {
@@ -64,23 +67,21 @@ fun ProductsScreen(
                     ) {
                         Icon(
                             modifier = Modifier.align(alignment = Alignment.Center),
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = null,
                             tint = Color.Black
                         )
                     }
 
-                    Text(
-                        modifier = Modifier.padding(16.dp, top = 8.dp),
-                        text = viewModel.title(categoryId),
-                        style = MaterialTheme.typography.h1,
+                    Title(
+                        modifier = Modifier.padding(16.dp, top = 16.dp + getPlatformPadding()),
+                        text = viewModel.title(categoryId)
                     )
                 }
             } else {
-                Text(
+                Title(
                     modifier = Modifier.padding(16.dp, top = 16.dp + getPlatformPadding()),
-                    text = viewModel.title(categoryId),
-                    style = MaterialTheme.typography.h1,
+                    text = viewModel.title(categoryId)
                 )
             }
         }
@@ -88,7 +89,9 @@ fun ProductsScreen(
         when (state) {
             is HomeScreenState.Loading -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(
+                        color = Color.Magenta // Neon-style progress indicator
+                    )
                 }
             }
 
@@ -112,7 +115,17 @@ fun ProductsScreen(
                             },
                             onAddToCart = {
                                 viewModel.addToCart(products[index].id)
-                            })
+                            },
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(16.dp))
+                                .background(Color.White.copy(alpha = 0.8f)) // Semi-transparent product card background
+                                .padding(8.dp)
+                                .border(
+                                    width = 1.dp,
+                                    color = Color.Cyan.copy(alpha = 0.5f), // Neon cyan border for cards
+                                    shape = RoundedCornerShape(16.dp)
+                                )
+                        )
                     }
                 }
             }
@@ -120,7 +133,8 @@ fun ProductsScreen(
             is HomeScreenState.Error -> {
                 Text(
                     modifier = Modifier.padding(20.dp),
-                    text = "Error fetching data"
+                    text = "Error fetching data",
+                    color = Color.Red // Error text in neon style
                 )
             }
         }

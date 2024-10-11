@@ -32,7 +32,6 @@ import androidx.compose.material.DismissState
 import androidx.compose.material.DismissValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.Text
@@ -61,17 +60,20 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import kotlinx.coroutines.delay
 import rs.symphony.cicak.webshop.domain.Currency
+import rs.symphony.cicak.webshop.presentation.components.Title
+import rs.symphony.cicak.webshop.presentation.ui.main.Transparent
+import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
 @Composable
 fun CartScreen(viewModel: CartViewModel) {
     val cartItems by viewModel.cartItemsUi.collectAsState()
 
     Scaffold(
+        backgroundColor = Transparent,
         topBar = {
-            Text(
-                modifier = Modifier.padding(16.dp),
-                text = "Your Cart",
-                style = MaterialTheme.typography.h1
+            Title(
+                modifier = Modifier.padding(16.dp, top = 16.dp + getPlatformPadding()),
+                text = "Your Cart"
             )
         }
     ) { padding ->
@@ -336,7 +338,7 @@ fun DeleteBackground(
 ) {
     val color = if (swipeDismissState.dismissDirection == DismissDirection.EndToStart) {
         Color.Red
-    } else Color.Transparent
+    } else Transparent
 
     Box(
         modifier = Modifier

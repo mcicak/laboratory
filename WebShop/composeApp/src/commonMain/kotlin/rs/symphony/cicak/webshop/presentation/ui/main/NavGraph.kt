@@ -1,6 +1,9 @@
 package rs.symphony.cicak.webshop.presentation.ui.main
 
+import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,7 +20,7 @@ import rs.symphony.cicak.webshop.presentation.ui.products.ProductsScreen
 @Composable
 fun NavGraph(navController: NavHostController, startDestination: Destination) {
 
-    NavHost(navController = navController, startDestination = startDestination) {
+    NavHost(modifier = Modifier.background(Transparent),navController = navController, startDestination = startDestination) {
 
         composable<HomeDestination> {
             val homeViewModel = koinViewModel<HomeViewModel>()

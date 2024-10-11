@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import rs.symphony.cicak.webshop.presentation.components.CategoryCard
+import rs.symphony.cicak.webshop.presentation.components.Title
+import rs.symphony.cicak.webshop.presentation.ui.main.Transparent
 import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
 @Composable
@@ -30,11 +31,11 @@ fun CategoriesScreen(viewModel: CategoriesViewModel, onCategoryClick: (String) -
     }
 
     Scaffold(
+        backgroundColor = Transparent,
         topBar = {
-            Text(
+            Title(
                 modifier = Modifier.padding(16.dp, top = 16.dp + getPlatformPadding()),
-                text = "Categories",
-                style = MaterialTheme.typography.h1,
+                text = "Categories"
             )
         }
     ) { padding ->

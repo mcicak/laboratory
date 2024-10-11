@@ -13,6 +13,12 @@ import webshop.composeapp.generated.resources.AcPlus_IBM_VGA_9x16
 import webshop.composeapp.generated.resources.Res
 import webshop.composeapp.generated.resources.Road_Rage
 
+// Colors
+val Pink = Color(color = 0xFFFF0033)
+val PinkFaded = Pink.copy(alpha = 0.7f)
+val PinkNeon = Color(color = 0xFFEE00FF)
+val Cyan = Color.Cyan
+val Transparent = Color.Transparent
 
 // Define the purple-based color palette
 private val LightPurpleColorPalette = lightColors(

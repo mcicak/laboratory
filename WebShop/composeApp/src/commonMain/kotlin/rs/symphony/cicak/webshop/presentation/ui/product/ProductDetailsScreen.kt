@@ -45,6 +45,7 @@ import org.koin.core.parameter.parametersOf
 import rs.symphony.cicak.webshop.domain.Product
 import rs.symphony.cicak.webshop.domain.ProductId
 import rs.symphony.cicak.webshop.presentation.components.ProductCard
+import rs.symphony.cicak.webshop.presentation.ui.main.Transparent
 
 val placeholderImage = "https://www.valusource.com/wp-content/uploads/woocommerce-placeholder-600x600.png"
 
@@ -284,7 +285,7 @@ private fun ProductButton(
         shape = RoundedCornerShape(16.dp),
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color.Transparent,
+            backgroundColor = Transparent,
             contentColor = Color.White // Icon color
         )
     ) {

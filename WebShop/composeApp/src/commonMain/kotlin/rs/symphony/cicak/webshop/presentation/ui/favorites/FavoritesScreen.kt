@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -35,6 +34,9 @@ import androidx.compose.ui.unit.sp
 import rs.symphony.cicak.webshop.domain.Product
 import rs.symphony.cicak.webshop.presentation.components.ProductCard
 import rs.symphony.cicak.webshop.presentation.components.ProductRow
+import rs.symphony.cicak.webshop.presentation.components.Title
+import rs.symphony.cicak.webshop.presentation.ui.main.Transparent
+import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
 @Composable
 fun FavoritesScreen(viewModel: FavoritesViewModel) {
@@ -43,6 +45,7 @@ fun FavoritesScreen(viewModel: FavoritesViewModel) {
     val isGridView by viewModel.isGridView.collectAsState()
 
     Scaffold(
+        backgroundColor = Transparent,
         topBar = { FavoritesTopBar(isGridView) { viewModel.toggleGridView() } }
     ) { padding ->
         if (favorites.isEmpty()) {
@@ -108,14 +111,13 @@ private fun FavoritesTopBar(isGridView: Boolean, onToggle: () -> Unit) {
 
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
+        Title(
+            modifier = Modifier.padding(16.dp, top = 16.dp + getPlatformPadding()),
             text = "Favourites",
-            style = MaterialTheme.typography.h1
         )
 
         IconButton(onClick = onToggle) {

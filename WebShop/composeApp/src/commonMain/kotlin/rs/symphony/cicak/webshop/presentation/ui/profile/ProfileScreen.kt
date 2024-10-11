@@ -45,6 +45,9 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import rs.symphony.cicak.webshop.data.repository.AppModel
+import rs.symphony.cicak.webshop.presentation.components.Title
+import rs.symphony.cicak.webshop.presentation.ui.main.Transparent
+import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
 @Composable
 fun ProfileScreen() {
@@ -52,11 +55,11 @@ fun ProfileScreen() {
     val user = appModel.user.collectAsState()
 
     Scaffold(
+        backgroundColor = Transparent,
         topBar = {
-            Text(
-                modifier = Modifier.padding(16.dp),
+            Title(
+                modifier = Modifier.padding(16.dp, top = 16.dp + getPlatformPadding()),
                 text = "Profile",
-                style = MaterialTheme.typography.h1,
             )
         }
     ) { padding ->
