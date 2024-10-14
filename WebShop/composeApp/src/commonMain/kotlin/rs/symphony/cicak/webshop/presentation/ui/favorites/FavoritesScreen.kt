@@ -35,6 +35,7 @@ import rs.symphony.cicak.webshop.domain.Product
 import rs.symphony.cicak.webshop.presentation.components.ProductCard
 import rs.symphony.cicak.webshop.presentation.components.ProductRow
 import rs.symphony.cicak.webshop.presentation.components.Title
+import rs.symphony.cicak.webshop.presentation.ui.main.Cyan
 import rs.symphony.cicak.webshop.presentation.ui.main.Transparent
 import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
@@ -124,7 +125,8 @@ private fun FavoritesTopBar(isGridView: Boolean, onToggle: () -> Unit) {
             Icon(
                 imageVector = if (isGridView) Icons.Default.GridView else
                     Icons.AutoMirrored.Filled.ViewList,
-                contentDescription = null
+                contentDescription = null,
+                tint = Cyan
             )
         }
     }

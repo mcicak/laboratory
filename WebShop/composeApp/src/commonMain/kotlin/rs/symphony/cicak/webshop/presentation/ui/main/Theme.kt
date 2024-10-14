@@ -14,13 +14,31 @@ import webshop.composeapp.generated.resources.Res
 import webshop.composeapp.generated.resources.Road_Rage
 
 // Colors
-val Pink = Color(color = 0xFFFF0033)
-val PinkFaded = Pink.copy(alpha = 0.7f)
-val PinkNeon = Color(color = 0xFFEE00FF)
-val Cyan = Color.Cyan
 val Transparent = Color.Transparent
-val Cyan2 = Color(color = 0xFF73E7DC)
-val Purple2 = Color(color = 0xFF5946AF)
+val RedBright = Color(0xFFFF0033)
+val RedBrightFaded = RedBright.copy(alpha = 0.7f)
+val Cyan = Color.Cyan
+val Cyan3 = Color(0xFF73E7DC)
+val Magenta = Color(0xFFFF33CC)
+val PurpleBright = Color(0xFF5946AF)
+
+val PurpleDark = Color(0xff1c114a)
+val PinkNeon = Color(0xffea0871)
+
+val CyanLight = Color(0xffcdfffa)
+val CyanDark = Color(0xff0d69b1)
+val PurpleDark2 = Color(0xff190c39)
+
+// main background gradient
+val PurpleBlack = Color(0xFF0F0E17)
+
+// profile item gradient
+val Pink2 = Color(0xfff612a3)
+val Blue2 = Color(0xff2e68c1)
+
+// product item gradient
+val Cyan2 = Color(0xFF5BD8F1)
+val Purple2 = Color(0xFF402E80)
 
 // Define the purple-based color palette
 private val LightPurpleColorPalette = lightColors(

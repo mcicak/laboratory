@@ -99,16 +99,16 @@ fun WebShopApp() {
                 ) {
                     BottomNavigationItem(
                         modifier = Modifier.padding(bottom = getPlatformPadding()),
-                        selectedContentColor = Pink,
-                        unselectedContentColor = PinkFaded,
+                        selectedContentColor = RedBright,
+                        unselectedContentColor = RedBrightFaded,
                         selected = selectedTab == 0,
                         onClick = { selectedTab = 0 },
                         icon = { Icon(Icons.Default.Home, contentDescription = "Home") }
                     )
                     BottomNavigationItem(
                         modifier = Modifier.padding(bottom = getPlatformPadding()),
-                        selectedContentColor = Pink,
-                        unselectedContentColor = PinkFaded,
+                        selectedContentColor = RedBright,
+                        unselectedContentColor = RedBrightFaded,
                         selected = selectedTab == 1,
                         onClick = { selectedTab = 1 },
                         icon = {
@@ -120,16 +120,16 @@ fun WebShopApp() {
                     )
                     BottomNavigationItem(
                         modifier = Modifier.padding(bottom = getPlatformPadding()),
-                        selectedContentColor = Pink,
-                        unselectedContentColor = PinkFaded,
+                        selectedContentColor = RedBright,
+                        unselectedContentColor = RedBrightFaded,
                         selected = selectedTab == 2,
                         onClick = { selectedTab = 2 },
                         icon = { Icon(Icons.Default.Favorite, contentDescription = "Favorites") }
                     )
                     BottomNavigationItem(
                         modifier = Modifier.padding(bottom = getPlatformPadding()),
-                        selectedContentColor = Pink,
-                        unselectedContentColor = PinkFaded,
+                        selectedContentColor = RedBright,
+                        unselectedContentColor = RedBrightFaded,
                         selected = selectedTab == 3,
                         onClick = { selectedTab = 3 },
                         icon = {
@@ -141,7 +141,7 @@ fun WebShopApp() {
                                         modifier = Modifier
                                             .size(20.dp)
                                             .offset(x = (8).dp, y = (-8).dp)
-                                            .background(Pink, CircleShape),
+                                            .background(RedBright, CircleShape),
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Text(
@@ -158,8 +158,8 @@ fun WebShopApp() {
                     )
                     BottomNavigationItem(
                         modifier = Modifier.padding(bottom = getPlatformPadding()),
-                        selectedContentColor = Pink,
-                        unselectedContentColor = PinkFaded,
+                        selectedContentColor = RedBright,
+                        unselectedContentColor = RedBrightFaded,
                         selected = selectedTab == 4,
                         onClick = { selectedTab = 4 },
                         icon = { Icon(Icons.Default.Person, contentDescription = "Profile") }
@@ -172,8 +172,9 @@ fun WebShopApp() {
                     .fillMaxSize()
                     .background(
                         Brush.verticalGradient(
-                            //listOf(Color(0xFF1A1A2E), Color(0xFF0F0E17)) // Deep ocean purple gradient
-                            listOf(Color(0xFFFF0033), Color(0xFF0F0E17)) // Deep ocean purple gradient
+//                            if (selectedTab == 4) listOf(Pink2, Blue2) else listOf(RedBright, PurpleBlack)
+                            //listOf(RedBright, PurpleBlack)
+                            listOf(PinkNeon, PurpleDark)
                         )
                     )
                     .drawBehind {
@@ -193,17 +194,17 @@ fun WebShopApp() {
                             style = Stroke(width = 1.dp.toPx())
                         )
                     }
-                . padding (paddingValues),
-            contentAlignment = Alignment.Center
+                    .padding(paddingValues),
+                contentAlignment = Alignment.Center
             ) {
-            when (selectedTab) {
-                0 -> NavGraph(homeNavController, HomeDestination)
-                1 -> NavGraph(categoriesNavController, CategoriesDestination)
-                2 -> FavoritesScreen(favoritesViewModel)
-                3 -> CartScreen(cartViewModel)
-                4 -> ProfileScreen()
+                when (selectedTab) {
+                    0 -> NavGraph(homeNavController, HomeDestination)
+                    1 -> NavGraph(categoriesNavController, CategoriesDestination)
+                    2 -> FavoritesScreen(favoritesViewModel)
+                    3 -> CartScreen(cartViewModel)
+                    4 -> ProfileScreen()
+                }
             }
-        }
         }
     }
 }

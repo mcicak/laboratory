@@ -75,7 +75,7 @@ fun ProductCard(
                     resource = asyncPainterResource(item.images.first()),
                     contentDescription = null
                 )
-                
+
                 Spacer(modifier = Modifier.height(2.dp))
 
                 Text(

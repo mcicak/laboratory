@@ -11,11 +11,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -32,6 +33,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -46,6 +49,10 @@ import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import rs.symphony.cicak.webshop.data.repository.AppModel
 import rs.symphony.cicak.webshop.presentation.components.Title
+import rs.symphony.cicak.webshop.presentation.ui.main.Cyan3
+import rs.symphony.cicak.webshop.presentation.ui.main.PinkNeon
+import rs.symphony.cicak.webshop.presentation.ui.main.Purple2
+import rs.symphony.cicak.webshop.presentation.ui.main.PurpleDark
 import rs.symphony.cicak.webshop.presentation.ui.main.Transparent
 import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
@@ -131,10 +138,11 @@ fun ProfileScreen() {
 @Composable
 private fun SectionTitle(title: String) {
     Text(
+        modifier = Modifier.padding(bottom = 8.dp),
         text = title,
         fontSize = 18.sp,
         fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(bottom = 8.dp)
+        color = Cyan3
     )
 }
 
@@ -149,7 +157,12 @@ private fun ProfileRow(
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp)
-            .background(color = Color(0xFFF5F5F5), shape = RoundedCornerShape(8.dp))
+            .background(
+                brush = Brush.horizontalGradient(
+                    colors = listOf(Purple2, PurpleDark)
+                ),
+                shape = RoundedCornerShape(8.dp)
+            )
             .clickable(
                 onClick = {
                     onClick()
@@ -161,20 +174,26 @@ private fun ProfileRow(
         horizontalArrangement = Arrangement.Start
     ) {
         Icon(
-            modifier = Modifier.padding(start = 16.dp, end = 8.dp),
+            modifier = Modifier
+                .padding(start = 16.dp, end = 8.dp)
+                .size(24.dp)
+                .shadow(8.dp, shape = CircleShape)
+                .background(Color.Transparent),
             imageVector = icon,
+            tint = Cyan3,
             contentDescription = null
         )
         Text(
             text = label,
             fontSize = 16.sp,
             fontWeight = if (isLogout) FontWeight.Bold else FontWeight.Normal,
-            color = if (isLogout) MaterialTheme.colors.error else MaterialTheme.colors.onBackground
+            color = if (isLogout) PinkNeon else Cyan3
         )
         Spacer(modifier = Modifier.weight(1f))
         Icon(
             modifier = Modifier.padding(end = 16.dp),
             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+            tint = PinkNeon,
             contentDescription = null
         )
     }
