@@ -1,5 +1,6 @@
 package rs.symphony.cicak.webshop.presentation.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -25,12 +26,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.dp
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import rs.symphony.cicak.webshop.domain.Product
 import rs.symphony.cicak.webshop.domain.ProductId
+import rs.symphony.cicak.webshop.presentation.ui.main.Cyan
+import rs.symphony.cicak.webshop.presentation.ui.main.Cyan2
+import rs.symphony.cicak.webshop.presentation.ui.main.Purple2
+import rs.symphony.cicak.webshop.presentation.ui.main.Transparent
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -43,42 +49,44 @@ fun ProductCard(
     onAddToCart: () -> Unit = {}
 ) {
     Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(1.dp),
+        modifier = modifier.fillMaxWidth(),
+        backgroundColor = Transparent,
+        elevation = 0.dp,
         onClick = { onItemClicked(item.id) }
     ) {
         Box(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                //.padding(16.dp),
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                // Placeholder image
                 KamelImage(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(2.dp)
-                        .aspectRatio(1f),
+                        .aspectRatio(1f)
+                        .background(
+                            brush = Brush.radialGradient(
+                                colors = listOf(Cyan2, Purple2),
+                                center = Offset.Unspecified,
+                                radius = Float.POSITIVE_INFINITY
+                            )
+                        ),
                     resource = asyncPainterResource(item.images.first()),
                     contentDescription = null
                 )
+                
+                Spacer(modifier = Modifier.height(2.dp))
 
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Product name
                 Text(
+                    modifier = Modifier.fillMaxWidth(),
                     text = item.title,
                     style = MaterialTheme.typography.h6,
-                    modifier = Modifier.fillMaxWidth()
+                    color = Cyan
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
 
-                // Price and Favorite icon
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -86,7 +94,8 @@ fun ProductCard(
                 ) {
                     Text(
                         text = "${item.price}$",
-                        style = MaterialTheme.typography.body1
+                        style = MaterialTheme.typography.body1,
+                        color = Cyan
                     )
                 }
             }
@@ -112,7 +121,7 @@ private fun AddToCartButton(
         Icon(
             imageVector = Icons.Filled.ShoppingCart,
             contentDescription = null,
-            tint = Color.Black
+            tint = Cyan
         )
     }
 }
@@ -135,7 +144,7 @@ private fun FavoriteButton(
             imageVector = if (isFavorite) Icons.Filled.Favorite else
                 Icons.Outlined.FavoriteBorder,
             contentDescription = null,
-            tint = if (isFavorite) Color.Red else Color.Gray
+            tint = Cyan
         )
     }
 }

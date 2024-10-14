@@ -1,7 +1,6 @@
 package rs.symphony.cicak.webshop.presentation.ui.products
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -101,9 +100,9 @@ fun ProductsScreen(
                 LazyVerticalGrid(
                     modifier = Modifier.fillMaxSize(),
                     columns = GridCells.Fixed(2),
-                    contentPadding = PaddingValues(16.dp),
+                    contentPadding = PaddingValues(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(30.dp),
                 ) {
                     items(products.size, key = { products[it].id }) { index ->
                         ProductCard(
@@ -118,13 +117,7 @@ fun ProductsScreen(
                             },
                             modifier = Modifier
                                 .clip(RoundedCornerShape(16.dp))
-                                .background(Color.White.copy(alpha = 0.8f)) // Semi-transparent product card background
                                 .padding(8.dp)
-                                .border(
-                                    width = 1.dp,
-                                    color = Color.Cyan.copy(alpha = 0.5f), // Neon cyan border for cards
-                                    shape = RoundedCornerShape(16.dp)
-                                )
                         )
                     }
                 }

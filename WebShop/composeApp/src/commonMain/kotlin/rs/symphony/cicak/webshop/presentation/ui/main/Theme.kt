@@ -19,6 +19,8 @@ val PinkFaded = Pink.copy(alpha = 0.7f)
 val PinkNeon = Color(color = 0xFFEE00FF)
 val Cyan = Color.Cyan
 val Transparent = Color.Transparent
+val Cyan2 = Color(color = 0xFF73E7DC)
+val Purple2 = Color(color = 0xFF5946AF)
 
 // Define the purple-based color palette
 private val LightPurpleColorPalette = lightColors(
