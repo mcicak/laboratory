@@ -69,7 +69,7 @@ fun WebShopApp() {
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(Color(0xFF1A1A2E), Color(0xFF0F0E17)) // Deep purple gradient
+                    colors = listOf(Color(0xFF1A1A2E), Color(0xFF0F0E17))
                 )
             )
             .drawBehind {
