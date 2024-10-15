@@ -7,6 +7,7 @@ androidx-activityCompose = "1.9.2"
 compose-multiplatform = "1.7.0-rc01"
 kamelImage = "0.9.0"
 kmpauthGoogle = "2.0.0"
+kmpnotifier = "1.0.0"
 kotlin = "2.0.20"
 
 koin = "3.6.0-Beta4"
@@ -27,6 +28,7 @@ kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamelImage" }
 kmpauth-firebase = { module = "io.github.mirzemehdi:kmpauth-firebase", version.ref = "kmpauthGoogle" }
 kmpauth-google = { module = "io.github.mirzemehdi:kmpauth-google", version.ref = "kmpauthGoogle" }
 kmpauth-uihelper = { module = "io.github.mirzemehdi:kmpauth-uihelper", version.ref = "kmpauthGoogle" }
+kmpnotifier = { module = "io.github.mirzemehdi:kmpnotifier", version.ref = "kmpnotifier" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 

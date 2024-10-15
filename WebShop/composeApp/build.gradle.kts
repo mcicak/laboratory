@@ -26,6 +26,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
+            //export(project("io.github.mirzemehdi:kmpnotifier:1.3.0"))
             baseName = "ComposeApp"
             isStatic = true
         }
@@ -70,6 +71,8 @@ kotlin {
             implementation(libs.kmpauth.google) //Google One Tap Sign-In
             implementation(libs.kmpauth.firebase) //Integrated Authentications with Firebase
             implementation(libs.kmpauth.uihelper) //UiHelper SignIn buttons (AppleSignIn, GoogleSignInButton)
+
+            api(libs.kmpnotifier)
         }
 
         nativeMain.dependencies {

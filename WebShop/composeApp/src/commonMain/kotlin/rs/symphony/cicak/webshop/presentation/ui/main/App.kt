@@ -28,6 +28,8 @@ import com.mmk.kmpauth.google.GoogleAuthCredentials
 import com.mmk.kmpauth.google.GoogleAuthProvider
 import com.mmk.kmpauth.uihelper.apple.AppleSignInButton
 import com.mmk.kmpauth.uihelper.google.GoogleSignInButton
+import com.mmk.kmpnotifier.notification.NotifierManager
+import com.mmk.kmpnotifier.notification.PayloadData
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.FirebaseUser
 import dev.gitlive.firebase.auth.auth
@@ -110,6 +112,33 @@ fun App() {
 //                        }
                     }
                 }
+
+                NotifierManager.getPushNotifier().getToken().let {
+                    println("TOKEN: $it")
+                }
+
+                NotifierManager.addListener(object : NotifierManager.Listener {
+
+                    override fun onNewToken(token: String) {
+                        super.onNewToken(token)
+                        println("TOKEN: $token")
+                    }
+
+                    override fun onPayloadData(data: PayloadData) {
+                        super.onPayloadData(data)
+                        println("onPayloadData: $data")
+                    }
+
+                    override fun onPushNotification(title: String?, body: String?) {
+                        super.onPushNotification(title, body)
+                        println("onPushNotification: $title, $body")
+                    }
+
+                    override fun onNotificationClicked(data: PayloadData) {
+                        super.onNotificationClicked(data)
+                        println("onNotificationClicked: $data")
+                    }
+                })
 
                 auth.currentUser?.let { firebaseUser ->
                     viewModel.handleUserLogin(firebaseUser)
