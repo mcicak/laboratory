@@ -1,6 +1,8 @@
 package rs.symphony.cicak.webshop.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -27,11 +30,23 @@ import rs.symphony.cicak.webshop.presentation.ui.main.Cyan2
 import rs.symphony.cicak.webshop.presentation.ui.main.Purple2
 
 @Composable
-fun ProductRow(item: Product, isFavorite: Boolean, onFavoriteToggle: (ProductId) -> Unit = {}) {
+fun ProductRow(
+    item: Product,
+    isFavorite: Boolean,
+    onFavoriteToggle: (ProductId) -> Unit = {},
+    onItemClicked: (ProductId) -> Unit = {}
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
+            .clickable(
+                onClick = {
+                    onItemClicked(item.id)
+                },
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            )
     ) {
         // Placeholder image
 

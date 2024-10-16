@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import rs.symphony.cicak.webshop.domain.Product
+import rs.symphony.cicak.webshop.domain.ProductId
 import rs.symphony.cicak.webshop.presentation.components.ProductCard
 import rs.symphony.cicak.webshop.presentation.components.ProductRow
 import rs.symphony.cicak.webshop.presentation.components.Title
@@ -40,7 +41,7 @@ import rs.symphony.cicak.webshop.presentation.ui.main.Transparent
 import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
 @Composable
-fun FavoritesScreen(viewModel: FavoritesViewModel) {
+fun FavoritesScreen(viewModel: FavoritesViewModel, onProductClick: (ProductId) -> Unit) {
 
     val favorites by viewModel.favorites.collectAsState(initial = emptyList())
     val isGridView by viewModel.isGridView.collectAsState()
@@ -53,9 +54,9 @@ fun FavoritesScreen(viewModel: FavoritesViewModel) {
             EmptyFavouritesView(padding)
         } else {
             if (isGridView) {
-                FavoritesGridView(padding, favorites, viewModel)
+                FavoritesGridView(padding, favorites, viewModel, onProductClick)
             } else {
-                FavoritesListView(padding, favorites, viewModel)
+                FavoritesListView(padding, favorites, viewModel, onProductClick)
             }
         }
     }
@@ -65,7 +66,8 @@ fun FavoritesScreen(viewModel: FavoritesViewModel) {
 fun FavoritesListView(
     padding: PaddingValues,
     favorites: List<Product>,
-    viewModel: FavoritesViewModel
+    viewModel: FavoritesViewModel,
+    onProductClick: (ProductId) -> Unit
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
         items(favorites.size) { idx ->
@@ -74,7 +76,8 @@ fun FavoritesListView(
                 isFavorite = true,
                 onFavoriteToggle = { productId ->
                     viewModel.toggleFavorite(productId)
-                }
+                },
+                onItemClicked = onProductClick,
             )
         }
     }
@@ -84,7 +87,8 @@ fun FavoritesListView(
 fun FavoritesGridView(
     padding: PaddingValues,
     favorites: List<Product>,
-    viewModel: FavoritesViewModel
+    viewModel: FavoritesViewModel,
+    onProductClick: (ProductId) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize().padding(padding),
@@ -101,7 +105,8 @@ fun FavoritesGridView(
                 },
                 onAddToCart = {
                     viewModel.addToCart(favorites[index].id)
-                }
+                },
+                onItemClicked = onProductClick
             )
         }
     }

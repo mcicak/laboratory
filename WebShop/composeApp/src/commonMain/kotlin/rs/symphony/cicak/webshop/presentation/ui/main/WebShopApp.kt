@@ -37,10 +37,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
-import rs.symphony.cicak.webshop.presentation.ui.cart.CartScreen
 import rs.symphony.cicak.webshop.presentation.ui.cart.CartViewModel
 import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesViewModel
-import rs.symphony.cicak.webshop.presentation.ui.favorites.FavoritesScreen
 import rs.symphony.cicak.webshop.presentation.ui.favorites.FavoritesViewModel
 import rs.symphony.cicak.webshop.presentation.ui.profile.ProfileScreen
 import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
@@ -200,8 +198,8 @@ fun WebShopApp() {
                 when (selectedTab) {
                     0 -> NavGraph(homeNavController, HomeDestination)
                     1 -> NavGraph(categoriesNavController, CategoriesDestination)
-                    2 -> FavoritesScreen(favoritesViewModel)
-                    3 -> CartScreen(cartViewModel)
+                    2 -> NavGraph(favoritesNavController, FavoritesDestination)
+                    3 -> NavGraph(cartNavController, CartDestination)
                     4 -> ProfileScreen()
                 }
             }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -62,6 +63,7 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import kotlinx.coroutines.delay
 import rs.symphony.cicak.webshop.domain.Currency
+import rs.symphony.cicak.webshop.domain.ProductId
 import rs.symphony.cicak.webshop.presentation.components.Title
 import rs.symphony.cicak.webshop.presentation.ui.main.Cyan
 import rs.symphony.cicak.webshop.presentation.ui.main.PinkNeon
@@ -71,7 +73,7 @@ import rs.symphony.cicak.webshop.presentation.ui.main.Transparent
 import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
 @Composable
-fun CartScreen(viewModel: CartViewModel) {
+fun CartScreen(viewModel: CartViewModel, onProductClick: (ProductId) -> Unit) {
     val cartItems by viewModel.cartItemsUi.collectAsState()
 
     Scaffold(
@@ -85,7 +87,7 @@ fun CartScreen(viewModel: CartViewModel) {
     ) { padding ->
 
         if (cartItems.isNotEmpty()) {
-            FullCartView(padding, viewModel)
+            FullCartView(padding, viewModel, onProductClick)
         } else {
             EmptyCartView(padding)
         }
@@ -93,7 +95,7 @@ fun CartScreen(viewModel: CartViewModel) {
 }
 
 @Composable
-fun FullCartView(padding: PaddingValues, viewModel: CartViewModel) {
+fun FullCartView(padding: PaddingValues, viewModel: CartViewModel, onProductClick: (ProductId) -> Unit) {
     val cartItems by viewModel.cartItemsUi.collectAsState()
     val totalCost by viewModel.totalCost.collectAsState(initial = 0.0)
     //val currency by viewModel.currency.collectAsState()
@@ -109,13 +111,15 @@ fun FullCartView(padding: PaddingValues, viewModel: CartViewModel) {
                 .weight(1f) // Takes up the remaining space
                 .fillMaxWidth()
         ) {
-            CartItemsListView(cartItems, Currency.USD, onDelete = {
-                viewModel.removeFromCart(it.product.id)
-            }, onDecrease = {
-                viewModel.decreaseQuantity(it)
-            }, onIncrease = {
-                viewModel.increaseQuantity(it)
-            })
+            CartItemsListView(cartItems, Currency.USD,
+                onProductClick = onProductClick,
+                onDelete = {
+                    viewModel.removeFromCart(it.product.id)
+                }, onDecrease = {
+                    viewModel.decreaseQuantity(it)
+                }, onIncrease = {
+                    viewModel.increaseQuantity(it)
+                })
         }
 
         Box(
@@ -132,9 +136,10 @@ fun FullCartView(padding: PaddingValues, viewModel: CartViewModel) {
 private fun CartItemsListView(
     cartItems: List<CartItemUi>,
     currency: Currency,
+    onProductClick: (ProductId) -> Unit,
     onDelete: (CartItemUi) -> Unit,
     onIncrease: (CartItemUi) -> Unit,
-    onDecrease: (CartItemUi) -> Unit
+    onDecrease: (CartItemUi) -> Unit,
 ) {
     LazyColumn(
         //verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -145,7 +150,13 @@ private fun CartItemsListView(
                 cartItem,
                 onDelete = onDelete
             ) {
-                CartItemRow(cartItem, currency, onIncrease = onIncrease, onDecrease = onDecrease)
+                CartItemRow(
+                    cartItem,
+                    currency,
+                    onProductClick = onProductClick,
+                    onIncrease = onIncrease,
+                    onDecrease = onDecrease
+                )
             }
         }
     }
@@ -155,6 +166,7 @@ private fun CartItemsListView(
 private fun CartItemRow(
     cartItem: CartItemUi,
     currency: Currency,
+    onProductClick: (ProductId) -> Unit,
     onIncrease: (CartItemUi) -> Unit,
     onDecrease: (CartItemUi) -> Unit
 ) {
@@ -169,6 +181,13 @@ private fun CartItemRow(
             )
             .height(85.dp)
             .padding(start = 8.dp, end = 8.dp)
+            .clickable(
+                onClick = {
+                    onProductClick(cartItem.product.id)
+                },
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            )
     ) {
         KamelImage(
             modifier = Modifier

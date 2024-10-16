@@ -18,6 +18,12 @@ data class ProductsDestination(
 object CategoriesDestination : Destination()
 
 @Serializable
+object FavoritesDestination : Destination()
+
+@Serializable
+object CartDestination : Destination()
+
+@Serializable
 data class ProductDetailsDestination(
     val id: ProductId
 ) : Destination()
