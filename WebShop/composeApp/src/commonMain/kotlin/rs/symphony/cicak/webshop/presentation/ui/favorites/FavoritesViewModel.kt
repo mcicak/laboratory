@@ -2,7 +2,6 @@ package rs.symphony.cicak.webshop.presentation.ui.favorites
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -18,10 +17,19 @@ class FavoritesViewModel(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
-    val favorites: Flow<List<Product>> = productRepository.getFavoriteProducts()
+    private val _favorites = MutableStateFlow<List<Product>>(emptyList())
+    val favorites: StateFlow<List<Product>> = _favorites
 
     private val _isGridView = MutableStateFlow(true) // Initial value of isGridView
     val isGridView: StateFlow<Boolean> = _isGridView
+
+    init {
+        viewModelScope.launch {
+            productRepository.getFavoriteProducts().collect {
+                _favorites.value = it
+            }
+        }
+    }
 
     // Toggle favorite status in repository
     fun toggleFavorite(productId: ProductId) {

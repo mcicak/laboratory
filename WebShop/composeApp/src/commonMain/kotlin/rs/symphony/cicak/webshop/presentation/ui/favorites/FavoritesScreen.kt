@@ -43,7 +43,7 @@ import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 @Composable
 fun FavoritesScreen(viewModel: FavoritesViewModel, onProductClick: (ProductId) -> Unit) {
 
-    val favorites by viewModel.favorites.collectAsState(initial = emptyList())
+    val favorites by viewModel.favorites.collectAsState()
     val isGridView by viewModel.isGridView.collectAsState()
 
     Scaffold(
