@@ -14,7 +14,8 @@ struct ContentView: View {
     var body: some View {
         ComposeView()
             //.background(.black)
-            //.ignoresSafeArea(edges: .all)
+            .ignoresSafeArea(edges: .all)
             .ignoresSafeArea(.keyboard) // Compose has own keyboard handler
     }
 }
+	

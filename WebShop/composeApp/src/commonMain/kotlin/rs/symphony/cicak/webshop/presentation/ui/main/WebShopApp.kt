@@ -2,10 +2,13 @@ package rs.symphony.cicak.webshop.presentation.ui.main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -38,8 +41,6 @@ import androidx.navigation.compose.rememberNavController
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import rs.symphony.cicak.webshop.presentation.ui.cart.CartViewModel
-import rs.symphony.cicak.webshop.presentation.ui.categories.CategoriesViewModel
-import rs.symphony.cicak.webshop.presentation.ui.favorites.FavoritesViewModel
 import rs.symphony.cicak.webshop.presentation.ui.profile.ProfileScreen
 import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 
@@ -47,10 +48,6 @@ import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
 @Composable
 fun WebShopApp() {
     var selectedTab by remember { mutableStateOf(0) }
-    val navController = rememberNavController()
-
-    val categoriesViewModel = koinViewModel<CategoriesViewModel>()
-    val favoritesViewModel = koinViewModel<FavoritesViewModel>()
     val cartViewModel = koinViewModel<CartViewModel>()
 
     val homeNavController = rememberNavController()
@@ -61,13 +58,13 @@ fun WebShopApp() {
 
     val totalCartItemCount by cartViewModel.totalCartItemCount.collectAsState()
 
-    // Root Box with grid background applied here
+    val insets = WindowInsets.systemBars.asPaddingValues()
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(Color(0xFF1A1A2E), Color(0xFF0F0E17))
+                    if (selectedTab == 4) listOf(Pink2, Blue2) else listOf(PinkNeon, PurpleDark)
                 )
             )
             .drawBehind {
@@ -88,9 +85,9 @@ fun WebShopApp() {
                 )
             }
     ) {
-        // Scaffold and rest of the UI
         Scaffold(
-            backgroundColor = Color.Yellow,
+            modifier = Modifier.padding(top = insets.calculateTopPadding(), bottom = insets.calculateBottomPadding()),
+            backgroundColor = Transparent,
             bottomBar = {
                 BottomNavigation(
                     backgroundColor = Color(0xFF1A1A2E)
@@ -166,34 +163,7 @@ fun WebShopApp() {
             }
         ) { paddingValues ->
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        Brush.verticalGradient(
-//                            if (selectedTab == 4) listOf(Pink2, Blue2) else listOf(RedBright, PurpleBlack)
-                            //listOf(RedBright, PurpleBlack)
-                            listOf(PinkNeon, PurpleDark)
-                        )
-                    )
-                    .drawBehind {
-                        // Pink grid pattern
-                        drawPath(
-                            path = Path().apply {
-                                for (i in 0..size.width.toInt() step 80) {
-                                    moveTo(i.toFloat(), 0f)
-                                    lineTo(i.toFloat(), size.height)
-                                }
-                                for (i in 0..size.height.toInt() step 80) {
-                                    moveTo(0f, i.toFloat())
-                                    lineTo(size.width, i.toFloat())
-                                }
-                            },
-                            color = PinkNeon.copy(alpha = 0.6f), // Neon pink grid
-                            style = Stroke(width = 1.dp.toPx())
-                        )
-                    }
-                    .padding(paddingValues),
-                contentAlignment = Alignment.Center
+                modifier = Modifier.fillMaxSize().padding(paddingValues)
             ) {
                 when (selectedTab) {
                     0 -> NavGraph(homeNavController, HomeDestination)
