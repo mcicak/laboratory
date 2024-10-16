@@ -49,7 +49,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
-import rs.symphony.cicak.webshop.presentation.util.isAndroid
 import rs.symphony.cicak.webshop.presentation.util.isApple
 import webshop.composeapp.generated.resources.Res
 import webshop.composeapp.generated.resources.login_background
@@ -114,35 +113,32 @@ fun App() {
                     }
                 }
 
-                if (isAndroid()) {
-                    NotifierManager.getPushNotifier().getToken().let {
-                        println("TOKEN: $it")
-                    }
-
-                    NotifierManager.addListener(object : NotifierManager.Listener {
-
-                        override fun onNewToken(token: String) {
-                            super.onNewToken(token)
-                            println("TOKEN: $token")
-                        }
-
-                        override fun onPayloadData(data: PayloadData) {
-                            super.onPayloadData(data)
-                            println("onPayloadData: $data")
-                        }
-
-                        override fun onPushNotification(title: String?, body: String?) {
-                            super.onPushNotification(title, body)
-                            println("onPushNotification: $title, $body")
-                        }
-
-                        override fun onNotificationClicked(data: PayloadData) {
-                            super.onNotificationClicked(data)
-                            println("onNotificationClicked: $data")
-                        }
-                    })
+                NotifierManager.getPushNotifier().getToken().let {
+                    println("TOKEN: $it")
                 }
 
+                NotifierManager.addListener(object : NotifierManager.Listener {
+
+                    override fun onNewToken(token: String) {
+                        super.onNewToken(token)
+                        println("TOKEN: $token")
+                    }
+
+                    override fun onPayloadData(data: PayloadData) {
+                        super.onPayloadData(data)
+                        println("onPayloadData: $data")
+                    }
+
+                    override fun onPushNotification(title: String?, body: String?) {
+                        super.onPushNotification(title, body)
+                        println("onPushNotification: $title, $body")
+                    }
+
+                    override fun onNotificationClicked(data: PayloadData) {
+                        super.onNotificationClicked(data)
+                        println("onNotificationClicked: $data")
+                    }
+                })
 
                 auth.currentUser?.let { firebaseUser ->
                     viewModel.handleUserLogin(firebaseUser)

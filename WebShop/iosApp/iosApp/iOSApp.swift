@@ -10,16 +10,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
         
-        Messaging.messaging().delegate = self
-        UNUserNotificationCenter.current().delegate = self
-
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(
-          options: authOptions,
-          completionHandler: { _, _ in }
+        NotifierManager.shared.initialize(configuration: NotificationPlatformConfigurationIos(
+            showPushNotification: true,
+            askNotificationPermissionOnStart: true, notificationSoundName: nil)
         )
-
-        application.registerForRemoteNotifications()
                 
         return true
     }
@@ -36,29 +30,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        print("Got APNS Token")
         Messaging.messaging().apnsToken = deviceToken
-    }
-}
-
-extension AppDelegate: MessagingDelegate {
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        if let token = fcmToken {
-            print("TOKEN: \(token))")
-        }
-    }
-}
-
-extension AppDelegate: UNUserNotificationCenterDelegate {
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
-        print("DID RECEIVE NOTIF: \(response.notification.request.content.title)")
-        print("DATA: \(response.notification.request.content.userInfo)")
-        print("===============================================================")
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
-        return [.banner, .badge, .sound]
     }
 }
 
