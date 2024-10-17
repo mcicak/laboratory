@@ -37,8 +37,8 @@ val Pink2 = Color(0xfff612a3)
 val Blue2 = Color(0xff2e68c1)
 
 // product item gradient
-val Cyan2 = Color(0xFF5BD8F1)
-val Purple2 = Color(0xFF402E80)
+val Cyan2 = Color(0xFF7DF9FF)
+val Purple2 = Color(0xFFFF6EC7)
 
 // Define the purple-based color palette
 private val LightPurpleColorPalette = lightColors(
