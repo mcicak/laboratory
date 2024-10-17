@@ -4,14 +4,14 @@ import android.app.Application
 import com.mmk.kmpnotifier.notification.NotifierManager
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import org.koin.android.ext.koin.androidContext
-import rs.symphony.cicak.webshop.di.initKoin
+import rs.symphony.cicak.webshop.di.AppInitializer
 
 class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
-        initKoin {
+        AppInitializer.initialize {
             androidContext(this@MyApplication)
 
             NotifierManager.initialize(
