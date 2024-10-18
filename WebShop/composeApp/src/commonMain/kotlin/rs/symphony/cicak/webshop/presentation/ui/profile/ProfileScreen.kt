@@ -49,9 +49,9 @@ import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import rs.symphony.cicak.webshop.data.repository.AppModel
 import rs.symphony.cicak.webshop.presentation.components.Title
+import rs.symphony.cicak.webshop.presentation.ui.main.BlueDark2
 import rs.symphony.cicak.webshop.presentation.ui.main.Cyan3
 import rs.symphony.cicak.webshop.presentation.ui.main.PinkNeon
-import rs.symphony.cicak.webshop.presentation.ui.main.Purple2
 import rs.symphony.cicak.webshop.presentation.ui.main.PurpleDark
 import rs.symphony.cicak.webshop.presentation.ui.main.Transparent
 import rs.symphony.cicak.webshop.presentation.util.getPlatformPadding
@@ -159,7 +159,7 @@ private fun ProfileRow(
             .height(48.dp)
             .background(
                 brush = Brush.horizontalGradient(
-                    colors = listOf(Purple2, PurpleDark)
+                    colors = listOf(BlueDark2, PurpleDark)
                 ),
                 shape = RoundedCornerShape(8.dp)
             )

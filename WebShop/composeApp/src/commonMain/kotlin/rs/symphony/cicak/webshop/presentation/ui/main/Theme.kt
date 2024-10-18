@@ -40,6 +40,10 @@ val Blue2 = Color(0xff2e68c1)
 val Cyan2 = Color(0xFF7DF9FF)
 val Purple2 = Color(0xFFFF6EC7)
 
+val BlueDark2 = Color(0xFF402E80)
+
+
+
 // Define the purple-based color palette
 private val LightPurpleColorPalette = lightColors(
     primary = Color(0xFF6200EA),
