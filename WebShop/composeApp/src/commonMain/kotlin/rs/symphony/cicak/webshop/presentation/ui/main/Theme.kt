@@ -15,6 +15,7 @@ import webshop.composeapp.generated.resources.Road_Rage
 
 // Colors
 val Transparent = Color.Transparent
+val White = Color.White
 val RedBright = Color(0xFFFF0033)
 val RedBrightFaded = RedBright.copy(alpha = 0.7f)
 val Cyan = Color.Cyan

@@ -45,6 +45,9 @@ import org.koin.core.parameter.parametersOf
 import rs.symphony.cicak.webshop.domain.Product
 import rs.symphony.cicak.webshop.domain.ProductId
 import rs.symphony.cicak.webshop.presentation.components.ProductCard
+import rs.symphony.cicak.webshop.presentation.ui.main.Cyan
+import rs.symphony.cicak.webshop.presentation.ui.main.PinkNeon
+import rs.symphony.cicak.webshop.presentation.ui.main.PurpleDark
 import rs.symphony.cicak.webshop.presentation.ui.main.Transparent
 
 val placeholderImage = "https://www.valusource.com/wp-content/uploads/woocommerce-placeholder-600x600.png"
@@ -139,7 +142,7 @@ fun ProductPage(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.White),
+            .background(Brush.verticalGradient(listOf(PinkNeon, PurpleDark))),
         state = listState
     ) {
         item {
@@ -156,16 +159,18 @@ fun ProductPage(
                 Text(
                     text = product.title,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
+                    color = Cyan
                 )
-                Text(text = product.subtitle)
+                Text(text = product.subtitle, color = Cyan)
                 Row(
                     modifier = Modifier.padding(top = 8.dp),
                 ) {
-                    Text("Price: ")
+                    Text("Price: ", color = Cyan)
                     Text(
                         text = product.price.toString() + " " + product.currency,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = Cyan
                     )
                 }
             }
@@ -178,9 +183,10 @@ fun ProductPage(
                 Text(
                     modifier = Modifier.padding(bottom = 8.dp),
                     text = "Description",
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = Cyan
                 )
-                Text(text = product.description)
+                Text(text = product.description, color = Cyan)
             }
         }
 
@@ -200,7 +206,8 @@ fun RecommendedItems(recommended: List<Product>) {
         Text(
             modifier = Modifier.padding(8.dp),
             text = "Recommended Products",
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = Cyan
         )
 
         val chunkedItems = recommended.chunked(2) // Split into rows of 2 products
