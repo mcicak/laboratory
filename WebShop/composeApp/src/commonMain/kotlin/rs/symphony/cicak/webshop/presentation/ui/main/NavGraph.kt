@@ -26,7 +26,11 @@ fun NavGraph(navController: NavHostController, startDestination: Destination) {
     NavHost(
         modifier = Modifier.background(Transparent),
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
+        enterTransition = { push() },
+        exitTransition = { slideToParallaxLeft() },
+        popEnterTransition = { slideFromParallaxLeft() },
+        popExitTransition = { slideToRight() }
     ) {
 
         composable<HomeDestination> {
