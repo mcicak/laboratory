@@ -13,12 +13,6 @@ import rs.symphony.cicak.webshop.data.repository.UserRepository
 import rs.symphony.cicak.webshop.domain.Product
 import rs.symphony.cicak.webshop.domain.ProductId
 
-sealed class ProductScreenState {
-    object Loading : ProductScreenState()
-    data class Success(val products: List<Product>) : ProductScreenState()
-    data class Error(val message: String) : ProductScreenState()
-}
-
 class ProductViewModel(
     private val productRepository: ProductRepository,
     private val cartRepository: CartRepository,
@@ -26,15 +20,15 @@ class ProductViewModel(
     private val productId: ProductId
 ) : ViewModel() {
 
-    private val _productScreenState = MutableStateFlow<ProductScreenState>(ProductScreenState.Loading)
-    val productScreenState: StateFlow<ProductScreenState> = _productScreenState
     val favorites: Flow<List<Product>> = productRepository.getFavoriteProducts()
+
+    private val _recommendedProducts = MutableStateFlow<List<Product>>(emptyList())
+    val recommendedProducts: StateFlow<List<Product>> = _recommendedProducts
 
     private fun loadProductDetails(productId: Long) {
         // Logic to load product details based on productId
     }
 
-    // Check if a product is favorite by ID
     fun isFavorite(productId: String): Flow<Boolean> {
         return favorites.map { favoriteList ->
             favoriteList.any { it.id == productId }
@@ -55,5 +49,15 @@ class ProductViewModel(
 
     fun getProduct(productId: ProductId): Product {
         return productRepository.getProduct(productId)
+    }
+
+    fun loadRecommendedProducts() {
+        viewModelScope.launch {
+            val product = productRepository.getProduct(productId)
+            productRepository.getRecommendedProducts(productId, product.category)
+                .collect { recommended ->
+                    _recommendedProducts.value = recommended
+                }
+        }
     }
 }

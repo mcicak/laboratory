@@ -13,6 +13,7 @@ interface ProductRepository {
     fun getCategoryProducts(categoryId: String): Flow<List<Product>>
     fun getFavoriteProducts(): Flow<List<Product>>
     fun getProduct(productId: ProductId): Product
+    fun getRecommendedProducts(productId: ProductId, categoryId: String): Flow<List<Product>>
 }
 
 class ProductRepositoryImpl(
@@ -59,5 +60,18 @@ class ProductRepositoryImpl(
 
     override fun getProduct(productId: ProductId): Product {
         return appModel.products.value.find { it.id == productId } ?: Product.empty()
+    }
+
+    override fun getRecommendedProducts(productId: ProductId, categoryId: String) = flow {
+        firestore.collection("products")
+            .where { "category" equalTo categoryId }
+            .where { "__name__" notEqualTo productId }
+            .limit(2)
+            .snapshots.collect { snapshot ->
+                val products = snapshot.documents.map { doc ->
+                    doc.data<Product>()
+                }.sortedBy { it.title }
+                emit(products)
+            }
     }
 }

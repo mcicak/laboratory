@@ -19,7 +19,8 @@ data class Product(
     val description: String,
     val images: List<String>,
     val price: Double,
-    val currency: String
+    val currency: String,
+    val category: String
 ) {
     fun isFavorite(userFavorites: List<ProductId>): Boolean {
         return userFavorites.contains(this.id)
@@ -34,7 +35,8 @@ data class Product(
                 description = "",
                 images = emptyList(),
                 price = 0.0,
-                currency = ""
+                currency = "",
+                category = ""
             )
         }
     }

@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -50,8 +51,6 @@ import rs.symphony.cicak.webshop.presentation.ui.main.PinkNeon
 import rs.symphony.cicak.webshop.presentation.ui.main.PurpleDark
 import rs.symphony.cicak.webshop.presentation.ui.main.Transparent
 
-val placeholderImage = "https://www.valusource.com/wp-content/uploads/woocommerce-placeholder-600x600.png"
-
 @Composable
 fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit, onRecommendedProductClick: (ProductId) -> Unit) {
 
@@ -61,26 +60,11 @@ fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit, onRecommended
     val product = productViewModel.getProduct(productId)
     val isFavorite by productViewModel.isFavorite(productId).collectAsState(initial = false)
 
-    val recommended = listOf(
-        Product(
-            id = "3",
-            title = "Lamborghini Countach",
-            subtitle = "",
-            description = "",
-            price = 120000.0,
-            currency = "USD",
-            images = listOf(placeholderImage),
-        ),
-        Product(
-            id = "4",
-            title = "Marantz SR 2000 Stereo",
-            subtitle = "",
-            description = "",
-            price = 220.0,
-            currency = "USD",
-            images = listOf(placeholderImage)
-        )
-    )
+    val recommended by productViewModel.recommendedProducts.collectAsState()
+
+    LaunchedEffect(Unit) {
+        productViewModel.loadRecommendedProducts()
+    }
 
     val listState = rememberLazyListState()
 
