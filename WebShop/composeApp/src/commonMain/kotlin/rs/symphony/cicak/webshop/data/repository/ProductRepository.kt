@@ -66,9 +66,9 @@ class ProductRepositoryImpl(
         firestore.collection("products")
             .where { "category" equalTo categoryId }
             .where { "__name__" notEqualTo productId }
-            .limit(2)
+            .limit(10)
             .snapshots.collect { snapshot ->
-                val products = snapshot.documents.map { doc ->
+                val products = snapshot.documents.shuffled().take(2).map { doc ->
                     doc.data<Product>()
                 }.sortedBy { it.title }
                 emit(products)
