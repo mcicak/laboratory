@@ -80,7 +80,8 @@ fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit, onRecommended
             listState = listState,
             isFavorite = isFavorite,
             onAddToCart = { productViewModel.addToCart(productId) },
-            onFavorite = { productViewModel.toggleFavorite(productId) }
+            onFavorite = { productViewModel.toggleFavorite(productId) },
+            onRecommendedProductClick = onRecommendedProductClick
         )
 
         // TopBar is placed on top of the content
@@ -121,7 +122,8 @@ fun ProductPage(
     listState: LazyListState,
     isFavorite: Boolean,
     onAddToCart: () -> Unit,
-    onFavorite: () -> Unit
+    onFavorite: () -> Unit,
+    onRecommendedProductClick: (ProductId) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -179,13 +181,13 @@ fun ProductPage(
         }
 
         item {
-            RecommendedItems(recommended)
+            RecommendedItems(recommended, onRecommendedProductClick)
         }
     }
 }
 
 @Composable
-fun RecommendedItems(recommended: List<Product>) {
+fun RecommendedItems(recommended: List<Product>, onRecommendedProductClick: (ProductId) -> Unit) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
             modifier = Modifier.padding(8.dp),
@@ -206,7 +208,8 @@ fun RecommendedItems(recommended: List<Product>) {
                             .weight(1f) // Each product takes equal space
                             .padding(8.dp),
                         item = product,
-                        isFavorite = false //products[index].isFavorite(successState.model.favorites)
+                        isFavorite = false,
+                        onItemClicked = { onRecommendedProductClick(product.id) }
                     )
                 }
                 // Handle cases where the row has less than 2 items
