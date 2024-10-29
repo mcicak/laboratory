@@ -4,6 +4,7 @@ import android.app.Application
 import com.mmk.kmpnotifier.notification.NotifierManager
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import org.koin.android.ext.koin.androidContext
+import rs.symphony.cicak.webshop.dependencies.NotificationHandler
 import rs.symphony.cicak.webshop.di.AppInitializer
 
 class MyApplication : Application() {
@@ -11,7 +12,7 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        AppInitializer.initialize {
+        AppInitializer.initialize(notificationHandler = NotificationHandler(applicationContext)) {
             androidContext(this@MyApplication)
 
             NotifierManager.initialize(

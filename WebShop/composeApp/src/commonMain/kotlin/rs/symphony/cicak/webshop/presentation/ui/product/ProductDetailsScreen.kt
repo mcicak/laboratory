@@ -52,7 +52,7 @@ import rs.symphony.cicak.webshop.presentation.ui.main.PurpleDark
 import rs.symphony.cicak.webshop.presentation.ui.main.Transparent
 
 @Composable
-fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit, onRecommendedProductClick: (ProductId) -> Unit) {
+fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit, onRecommendedProductClick: ((ProductId) -> Unit)?) {
 
     val productViewModel = koinViewModel<ProductViewModel>(
         parameters = { parametersOf(productId) }
@@ -62,8 +62,10 @@ fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit, onRecommended
 
     val recommended by productViewModel.recommendedProducts.collectAsState()
 
-    LaunchedEffect(Unit) {
-        productViewModel.loadRecommendedProducts()
+    if (onRecommendedProductClick != null) {
+        LaunchedEffect(Unit) {
+            productViewModel.loadRecommendedProducts()
+        }
     }
 
     val listState = rememberLazyListState()
@@ -81,7 +83,7 @@ fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit, onRecommended
             isFavorite = isFavorite,
             onAddToCart = { productViewModel.addToCart(productId) },
             onFavorite = { productViewModel.toggleFavorite(productId) },
-            onRecommendedProductClick = onRecommendedProductClick
+            onRecommendedProductClick = onRecommendedProductClick ?: {}
         )
 
         // TopBar is placed on top of the content
@@ -180,8 +182,10 @@ fun ProductPage(
             ProductButtons(isFavorite = isFavorite, onAddToCart, onFavorite)
         }
 
-        item {
-            RecommendedItems(recommended, onRecommendedProductClick)
+        if (recommended.isNotEmpty()) {
+            item {
+                RecommendedItems(recommended, onRecommendedProductClick)
+            }
         }
     }
 }

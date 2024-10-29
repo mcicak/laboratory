@@ -10,7 +10,10 @@ import com.google.firebase.FirebaseApp
 import com.mmk.kmpnotifier.extensions.onCreateOrOnNewIntent
 import com.mmk.kmpnotifier.notification.NotifierManager
 import com.mmk.kmpnotifier.permission.permissionUtil
+import org.koin.compose.KoinContext
 import rs.symphony.cicak.webshop.presentation.ui.main.App
+import rs.symphony.cicak.webshop.presentation.ui.main.MyAppTheme
+import rs.symphony.cicak.webshop.presentation.ui.product.ProductDetailsScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -34,6 +37,27 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         NotifierManager.onCreateOrOnNewIntent(intent)
+    }
+}
+
+class ProductDetailsActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Retrieve the productId from the intent
+        val productId = intent.getStringExtra("productId") ?: ""
+
+        setContent {
+            MyAppTheme {
+                KoinContext {
+                    ProductDetailsScreen(
+                        productId = productId,
+                        onBack = { finish() },
+                        onRecommendedProductClick = null
+                    )
+                }
+            }
+        }
     }
 }
 

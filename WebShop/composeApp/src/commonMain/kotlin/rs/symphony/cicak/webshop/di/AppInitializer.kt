@@ -15,13 +15,14 @@ import io.ktor.client.plugins.HttpRequestRetry
 import io.ktor.http.isSuccess
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
+import rs.symphony.cicak.webshop.dependencies.NotificationHandler
 
 object AppInitializer {
 
-    fun initialize(config: KoinAppDeclaration? = null) {
+    fun initialize(notificationHandler: NotificationHandler, config: KoinAppDeclaration? = null) {
         initKoin(config)
         initKamel()
-        initNotifier()
+        initNotifier(notificationHandler = notificationHandler)
     }
 
     private fun initKoin(config: KoinAppDeclaration?) {
@@ -78,7 +79,8 @@ object AppInitializer {
         }
     }
 
-    private fun initNotifier() {
+    private fun initNotifier(notificationHandler: NotificationHandler) {
+
         NotifierManager.addListener(object : NotifierManager.Listener {
 
             override fun onNewToken(token: String) {
@@ -98,7 +100,9 @@ object AppInitializer {
 
             override fun onNotificationClicked(data: PayloadData) {
                 super.onNotificationClicked(data)
-                println("onNotificationClicked: $data")
+
+                val productId = "ferrari_testarossa_model"
+                notificationHandler.showProductDetails(productId)
             }
         })
     }
