@@ -4,17 +4,23 @@ import GoogleSignIn
 import FirebaseMessaging
 import ComposeApp
 
-class AppDelegate: NSObject, UIApplicationDelegate {
+class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
+                        
+        Task {
+            do {
+                let result = try await UNUserNotificationCenter.current().requestAuthorization(options:[.alert, .badge, .sound])
+                print("APPROVED: \(result)")
+            } catch {
+                print("Error requesting notification")
+            }
+        }
         
-        NotifierManager.shared.initialize(configuration: NotificationPlatformConfigurationIos(
-            showPushNotification: true,
-            askNotificationPermissionOnStart: true, notificationSoundName: nil)
-        )
-                
+        UNUserNotificationCenter.current().delegate = self
+        
         return true
     }
     
@@ -31,6 +37,28 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) async -> UIBackgroundFetchResult {
+        print("didReceiveRemoteNotification: \(userInfo)")
+        NotifierManager.shared.onApplicationDidReceiveRemoteNotification(userInfo: userInfo)
+        return .newData
+    }
+    
+    // MARK: UNUserNotificationCenterDelegate
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+        [ .banner, .badge, .sound ]
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        print("GOT NOTIF: \(response.notification.request.content.userInfo)")
+        let productId = "apple_mac_128k"
+        
+        if let rootVC = UIApplication.shared.windows.first?.rootViewController {
+            let vc = MainViewControllerKt.ProductDetailsViewController(productId: productId, parent: rootVC)
+            rootVC.present(vc, animated: true)
+        }
     }
 }
 
