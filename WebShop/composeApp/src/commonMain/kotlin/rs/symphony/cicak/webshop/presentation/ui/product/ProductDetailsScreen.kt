@@ -72,7 +72,7 @@ fun ProductDetailsScreen(productId: ProductId, onBack: () -> Unit, onRecommended
 
     val scrollOffset = calculateTotalScrollOffset(listState)
     val topBarAlpha = if (scrollOffset <= 300) 1f - (scrollOffset / 300f) else 0f
-    val backgroundColor = Color.White.copy(alpha = 1f - topBarAlpha)
+    val backgroundColor = PinkNeon.copy(alpha = 1f - topBarAlpha)
 
     Box(modifier = Modifier.fillMaxSize()) {
         // Product content (image, details, etc.) without padding

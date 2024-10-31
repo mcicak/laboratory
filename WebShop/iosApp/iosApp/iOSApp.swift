@@ -52,12 +52,12 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
-        print("GOT NOTIF: \(response.notification.request.content.userInfo)")
         let productId = "apple_mac_128k"
         
         if let rootVC = UIApplication.shared.windows.first?.rootViewController {
             let vc = MainViewControllerKt.ProductDetailsViewController(productId: productId, parent: rootVC)
-            rootVC.present(vc, animated: true)
+            let nc = UINavigationController(rootViewController: vc)
+            rootVC.present(nc, animated: true)
         }
     }
 }

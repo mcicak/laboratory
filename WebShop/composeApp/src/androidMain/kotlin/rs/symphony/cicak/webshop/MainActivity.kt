@@ -44,7 +44,6 @@ class ProductDetailsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Retrieve the productId from the intent
         val productId = intent.getStringExtra("productId") ?: ""
 
         setContent {

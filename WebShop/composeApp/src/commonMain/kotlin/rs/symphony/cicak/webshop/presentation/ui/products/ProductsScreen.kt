@@ -65,7 +65,13 @@ fun ProductsScreen(
 
     Box(
         modifier = Modifier.fillMaxSize()
-            .background(Brush.verticalGradient(listOf(PinkNeon, PurpleDark))),
+            .then(
+                if (categoryId != null) {
+                    Modifier.background(Brush.verticalGradient(listOf(PinkNeon, PurpleDark)))
+                } else {
+                    Modifier
+                }
+            )
     ) {
         Scaffold(
             backgroundColor = Transparent,
