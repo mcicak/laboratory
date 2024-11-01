@@ -42,6 +42,7 @@ val Cyan2 = Color(0xFF7DF9FF)
 val Purple2 = Color(0xFFFF6EC7)
 
 val BlueDark2 = Color(0xFF402E80)
+val BlueDark3 = Color(0xFF1A1A2E)
 
 
 
