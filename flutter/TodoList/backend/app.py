@@ -7,6 +7,11 @@ import shutil
 from uuid import uuid4
 import json
 from pydantic import BaseModel
+import base64
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
 
 class RegisterUserRequest(BaseModel):
     firstname: str
@@ -128,6 +133,27 @@ def get_image(filename: str):
     if not os.path.exists(filepath):
         raise HTTPException(status_code=404, detail="Image not found")
     return FileResponse(filepath)
+
+@app.post("/auth/login")
+def login(request: LoginRequest):
+    # Extract username and password from the request
+    username = request.username
+    password = request.password
+
+    # Check if user exists
+    if username not in users:
+        raise HTTPException(status_code=401, detail="Invalid username or password")
+
+    # Verify password
+    stored_password = users[username]["password"]
+    if stored_password != password:
+        raise HTTPException(status_code=401, detail="Invalid username or password")
+
+    # Generate token (base64-encoded "username:password")
+    token = base64.b64encode(f"{username}:{password}".encode()).decode()
+
+    # Return the token
+    return JSONResponse(content={"token": token})
 
 @app.post("/auth/register")
 def register_user(request: RegisterUserRequest):
