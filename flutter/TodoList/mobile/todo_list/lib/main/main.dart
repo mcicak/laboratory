@@ -32,18 +32,50 @@ void setupDependencies() {
   );
 }
 
+class AppRoutes {
+  static const String login = '/login';
+  static const String register = '/register';
+  static const String main = '/main';
+// Add other routes as needed
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: AppRoutes.login,
+      routes: {
+        AppRoutes.login: (context) => const LoginPage(),
+        AppRoutes.register: (context) => const RegisterPage(),
+        AppRoutes.main: (context) => const MainPage(),
+      },
       title: 'Notes App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
       home: const LoginPage(),
+    );
+  }
+}
+
+class MainPage extends StatelessWidget {
+  const MainPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Main Page'),
+      ),
+      body: const Center(
+        child: Text(
+          'Main',
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
     );
   }
 }
@@ -109,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
         body: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthSuccess) {
-              Navigator.pushNamed(context, '/notes');
+              Navigator.pushNamedAndRemoveUntil(context, AppRoutes.main, (route) => false);
             } else if (state is AuthFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.message)),
@@ -148,18 +180,15 @@ class _LoginPageState extends State<LoginPage> {
                       }
 
                       context.read<AuthBloc>().add(LoginEvent(
-                        username: username,
-                        password: password,
-                      ));
+                            username: username,
+                            password: password,
+                          ));
                     },
                     child: const Text("Login"),
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const RegisterPage()),
-                      );
+                      Navigator.pushNamed(context, AppRoutes.register);
                     },
                     child: const Text("Register"),
                   ),
